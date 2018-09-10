@@ -1,0 +1,9 @@
+.idea
+/JSON2OWL/taudem.owl
+/TauDEM/taudem.json
+__pycache__
+catalog-v001.xml
+/CSDMS/csdms1.json
+/CSDMS/csdms2.json
+*.xlsx
+*.csv
