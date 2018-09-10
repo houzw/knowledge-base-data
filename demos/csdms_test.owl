@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:model="http://www.egc.org/ont/model/geospatial#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#platform_other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N37648a9adaa2474f813930105eb2b492">
+    <model:institute>Department of Geological Sciences, University of Colorado
+</model:institute>
+    <model:postcode>80309-0399
+</model:postcode>
+    <model:city>Boulder
+</model:city>
+    <model:email>
+</model:email>
+    <model:type>Model developer
+</model:type>
+    <model:state>Colorado
+</model:state>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Contact"/>
+    <model:phone>8048404514
+</model:phone>
+    <model:last_name>Shobe
+</model:last_name>
+    <model:post_address>UCB 399
+</model:post_address>
+    <model:fax>
+</model:fax>
+    <model:first_name>Charles
+</model:first_name>
+    <model:country>United States
+</model:country>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N99f374edcb0d4bbe8e255e8a855652b9">
+    <model:vis_soft_other>
+</model:vis_soft_other>
+    <model:post_soft_des>
+</model:post_soft_des>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#InputOutput"/>
+    <model:vis_soft_need>No
+</model:vis_soft_need>
+    <model:pre_soft_des>
+</model:pre_soft_des>
+    <model:vis_soft>
+</model:vis_soft>
+    <model:post_soft_need>No
+</model:post_soft_need>
+    <model:pre_soft_need>No
+</model:pre_soft_need>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#component">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf560bd935316401cad40880181ccfed5">
+    <model:source_csdms>
+</model:source_csdms>
+    <model:dist_processors>
+</model:dist_processors>
+    <model:license>GPL v2
+</model:license>
+    <model:code>
+</model:code>
+    <model:end_year>
+</model:end_year>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#TechnicalSpecs"/>
+    <model:run_time>
+</model:run_time>
+    <model:multi_processors>
+</model:multi_processors>
+    <model:license_other>
+</model:license_other>
+    <model:availability>As code
+</model:availability>
+    <model:source>Through CSDMS repository
+</model:source>
+    <model:in_dev>Yes
+</model:in_dev>
+    <model:platform_other>
+</model:platform_other>
+    <model:program_lang_other>
+</model:program_lang_other>
+    <model:platform>Unix, Linux, Mac OS, Windows
+</model:platform>
+    <model:source_web>
+</model:source_web>
+    <model:program_lang>Matlab
+</model:program_lang>
+    <model:shared_processors>
+</model:shared_processors>
+    <model:start_year>2016
+</model:start_year>
+    <model:memory>
+</model:memory>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#collaborating">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd2c0a990298740098e3f8f06e2a00083">
+    <model:manual_available>No
+</model:manual_available>
+    <model:model_web>
+</model:model_web>
+    <model:collaborating>
+</model:collaborating>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Other"/>
+    <model:comments>This model was initially published as Shobe et al in Geophysical Research Letters, May 2016: </model:comments>
+    <model:manual>
+</model:manual>
+    <model:forum>
+</model:forum>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0b296dc0c6dd422dbf5932423a34c99f">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Other"/>
+    <model:manual_available>No
+</model:manual_available>
+    <model:forum>
+</model:forum>
+    <model:model_web>
+</model:model_web>
+    <model:manual>
+</model:manual>
+    <model:collaborating>
+</model:collaborating>
+    <model:comments>Questions which arise about the module, the model it implements, and the associated theory, may be addressed by the preprint available at </model:comments>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Output">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc732aa73e1264e7385c649b542710255">
+    <model:in_dev>Yes
+</model:in_dev>
+    <model:program_lang>Python
+</model:program_lang>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#TechnicalSpecs"/>
+    <model:end_year>
+</model:end_year>
+    <model:source_web>
+</model:source_web>
+    <model:start_year>2015
+</model:start_year>
+    <model:code>Single Processor
+</model:code>
+    <model:source>Through web repository, Through CSDMS repository
+</model:source>
+    <model:program_lang_other>
+</model:program_lang_other>
+    <model:platform_other>
+</model:platform_other>
+    <model:source_csdms>
+</model:source_csdms>
+    <model:memory>
+</model:memory>
+    <model:run_time>minutes to hours
+</model:run_time>
+    <model:shared_processors>
+</model:shared_processors>
+    <model:multi_processors>
+</model:multi_processors>
+    <model:license_other>
+</model:license_other>
+    <model:license>LGPL
+</model:license>
+    <model:dist_processors>
+</model:dist_processors>
+    <model:platform>Unix, Linux, Mac OS, Windows
+</model:platform>
+    <model:availability>As code
+</model:availability>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N626b6e4fc1994f0a9034e2aae7822c17">
+    <model:title> Shobe, Charles M., Tucker, Gregory E., Anderson, Robert S., 2016. Hillslope-derived blocks retard river incision. Geophysical Research Letters, 43, 5070-5078. </model:title>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Publication"/>
+    <model:model>BRaKE</model:model>
+    <model:year>2016</model:year>
+    <model:ref_type>Model overview
+</model:ref_type>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf71a7a68912f45f998c5079834a1ad43">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Contact"/>
+    <model:first_name>Jacob
+</model:first_name>
+    <model:post_address>Department of Statistics
+</model:post_address>
+    <model:email>
+</model:email>
+    <model:state>California
+</model:state>
+    <model:postcode>94709
+</model:postcode>
+    <model:city>Berkeley
+</model:city>
+    <model:phone>
+</model:phone>
+    <model:country>United States
+</model:country>
+    <model:last_name>Calvert
+</model:last_name>
+    <model:fax>
+</model:fax>
+    <model:institute>University of California, Berkeley
+</model:institute>
+    <model:type>Model developer
+</model:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#shared_processors">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0394554733904d158b1ae0019eedc4e3">
+    <model:wmt>No but possible
+</model:wmt>
+    <model:openmi>No but possible
+</model:openmi>
+    <model:model_doi>
+</model:model_doi>
+    <model:file_link>None</model:file_link>
+    <model:couple_with>None</model:couple_with>
+    <model:model_version>None</model:model_version>
+    <model:year_version>None</model:year_version>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Component"/>
+    <model:bmi>No but possible
+</model:bmi>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfa11dae094aa41038d1aaeaf3b294e0f">
+    <model:calib_data>
+</model:calib_data>
+    <model:data>
+</model:data>
+    <model:ideal_data>
+</model:ideal_data>
+    <model:calib_data_des>
+</model:calib_data_des>
+    <model:data_des>
+</model:data_des>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Testing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#last_name">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#fax">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#license_other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#source_web">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#vis_soft_need">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Process">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Input">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#calib_data_des">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nafc8eb5ceb784d83878fb051f2fd78ed">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Output"/>
+    <model:format>
+</model:format>
+    <model:format_other>.npy array data structures
+</model:format_other>
+    <model:params>Elevation and slope arrays as well as optional information about bed cover and shear stress distributions, as well as block size distributions and incision rate records.
+</model:params>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Testing">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#limits">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#vis_soft_other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#start_year">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Component">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N219083ca10234db38bf2712ed0def937">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Process"/>
+    <model:time_scale_reso>There is no conservation of mass on adjacent hillslopes, which presents a natural time limitation of ~10^6 years.
+</model:time_scale_reso>
+    <model:params_eqs>Shear stress-driven fluvial erosion, primarily modulated by bed erodibility, critical bed shear stress, block delivery, and block size.
+</model:params_eqs>
+    <model:limits>Model is solved implicitly, but can become inaccurate at very large (~1000 year) timesteps. When baselevel forcing is mild and block effects are significant, slope-inversion instabilities can develop. The model catches these and will not continue running.
+</model:limits>
+    <model:processes>Fluvial bedrock erosion; hillslope block delivery; block transport and degradation
+</model:processes>
+    <model:len_scale_reso>This model is intended for a CHANNEL REACH of CONSTANT DRAINAGE AREA.
+</model:len_scale_reso>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Publication">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Contact">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#pre_soft_need">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nff2842faf5aa418490386f4e656b704b">
+    <model:vis_soft>
+</model:vis_soft>
+    <model:vis_soft_other>
+</model:vis_soft_other>
+    <model:pre_soft_des>
+</model:pre_soft_des>
+    <model:post_soft_need>No
+</model:post_soft_need>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#InputOutput"/>
+    <model:post_soft_des>
+</model:post_soft_des>
+    <model:pre_soft_need>No
+</model:pre_soft_need>
+    <model:vis_soft_need>No
+</model:vis_soft_need>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ned1a96bfc268424199949aa1290ddeed">
+    <model:couple_with>None</model:couple_with>
+    <model:wmt>No but possible
+</model:wmt>
+    <model:model_version>None</model:model_version>
+    <model:model_doi>
+</model:model_doi>
+    <model:openmi>No but possible
+</model:openmi>
+    <model:file_link>None</model:file_link>
+    <model:year_version>None</model:year_version>
+    <model:bmi>No but possible
+</model:bmi>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Component"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#1D_Particle-Based_Hillslope_Evolution_Model">
+    <model:other rdf:nodeID="N0b296dc0c6dd422dbf5932423a34c99f"/>
+    <model:io rdf:nodeID="Nff2842faf5aa418490386f4e656b704b"/>
+    <model:process rdf:nodeID="N57102b2e72f1481887db1143bd25fa42"/>
+    <model:testing rdf:nodeID="Nfa11dae094aa41038d1aaeaf3b294e0f"/>
+    <model:component rdf:nodeID="N0394554733904d158b1ae0019eedc4e3"/>
+    <model:input rdf:nodeID="Ncfca3fcac95848ea8a4b0f46165caadf"/>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    <model:contact rdf:nodeID="Nf71a7a68912f45f998c5079834a1ad43"/>
+    <model:output rdf:nodeID="Ne2ad75e15d3743b2ae5f9187ad04ee3e"/>
+    <model:technical rdf:nodeID="Nf560bd935316401cad40880181ccfed5"/>
+    <skos:prefLabel xml:lang="en">1D Particle-Based Hillslope Evolution Model</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne8482bac917a43e282db3f113342aaf1">
+    <model:data_des>
+</model:data_des>
+    <model:data>
+</model:data>
+    <model:calib_data>
+</model:calib_data>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Testing"/>
+    <model:ideal_data>
+</model:ideal_data>
+    <model:calib_data_des>
+</model:calib_data_des>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#BRaKE">
+    <model:process rdf:nodeID="N219083ca10234db38bf2712ed0def937"/>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    <model:input rdf:nodeID="N28e1ed17faa8485188314665084c852d"/>
+    <model:io rdf:nodeID="N99f374edcb0d4bbe8e255e8a855652b9"/>
+    <model:testing rdf:nodeID="Ne8482bac917a43e282db3f113342aaf1"/>
+    <model:publications rdf:nodeID="N626b6e4fc1994f0a9034e2aae7822c17"/>
+    <model:technical rdf:nodeID="Nc732aa73e1264e7385c649b542710255"/>
+    <model:other rdf:nodeID="Nd2c0a990298740098e3f8f06e2a00083"/>
+    <model:output rdf:nodeID="Nafc8eb5ceb784d83878fb051f2fd78ed"/>
+    <skos:prefLabel xml:lang="en">BRaKE</skos:prefLabel>
+    <model:component rdf:nodeID="Ned1a96bfc268424199949aa1290ddeed"/>
+    <model:contact rdf:nodeID="N37648a9adaa2474f813930105eb2b492"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#state">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#testing">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#comments">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#format_other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#process">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#run_time">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#dist_processors">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ncfca3fcac95848ea8a4b0f46165caadf">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Input"/>
+    <model:params>The model takes as input (i) p, dynamics asymmetry parameter; (ii) L, the hillslope length; (iii) H, the hillslope height; (iv) N, the number of steps of the simulation; and (v) a choice of initial hillslope profile.
+</model:params>
+    <model:format_other>
+</model:format_other>
+    <model:format>
+</model:format>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#TechnicalSpecs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N28e1ed17faa8485188314665084c852d">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Input"/>
+    <model:format>
+</model:format>
+    <model:params>Domain size/length/spacing, time to run, timestep, hillslope response timescale, baselevel lowering rate, bed erodibility, block erodibility, bed critical shear stress, block critical shear stress, block delivery coefficient, initial block size, roughness length scale, channel width, mean discharge, discharge variability, and data recording time interval.
+</model:params>
+    <model:format_other>
+</model:format_other>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#output">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#params">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#model_version">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#io">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#model_web">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#file_link">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne2ad75e15d3743b2ae5f9187ad04ee3e">
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Output"/>
+    <model:format>
+</model:format>
+    <model:params>The model can be customized to produce many different kinds of output but, typically, the output consists of (i) h, a final hillslope profile; (ii) h_diffs, a vector which summarizes how the profile changed over the duration of the simulation; and (iii) a vector expressing the fluxes of particles through a site along the hillslope.
+However, the same code can be used to produce a video of the hillslope evolution, a vector containing the absolute difference between the hillslope profile and a reference profile, and many other observables of interest.
+
+</model:params>
+    <model:format_other>
+</model:format_other>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#processes">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#title">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#manual">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#InputOutput">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#institute">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#input">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#post_soft_des">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#calib_data">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#data_des">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#phone">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#pre_soft_des">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#Other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N57102b2e72f1481887db1143bd25fa42">
+    <model:limits>
+</model:limits>
+    <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Process"/>
+    <model:time_scale_reso>The time scale over which the simulation occurs is specified in zrp.m as an input parameter. Since the module is computationally lightweight, millions of time steps can be simulated quickly.
+</model:time_scale_reso>
+    <model:processes>Overall, the module simulates a particle-based model of hillslope evolution in 1D.
+The module contains several scripts and functions, the most important of which are the following.
+(1) zrp.m is the script wherein the parameters are set and from which the following functions are called.
+(2) init_x.m is the function which generates an initial profile for the hillslope.
+(3) make_moves.m is the function which samples the probabilistic dynamics.
+(4) calc_rates.m is the function which determines the rates at which the particles are moving.
+In addition to these, there are the following.
+(5) perturb.m is the function which implements the hillslope perturbation and is called by the main script.
+(6) calc_flux.m and calc_fluxes.m are the functions which infer fluxes along the hillslope.
+
+</model:processes>
+    <model:params_eqs>The key physical parameters are the hillslope length and height, as well as a parameter which specifies the underlying asymmetry in the particle dynamics. The process of determining these parameters is described in the simulation section of a corresponding paper (which can be accessed here: https://arxiv.org/abs/1801.02810).
+</model:params_eqs>
+    <model:len_scale_reso>Although the hillslope length and height are specified, these are dimensionless numbers from the perspective of the module. Accordingly, the resolutions supported by the module are primarily constrained by the language in which it is implemented. However, the process of "dimensionalizing" the module's outputs may place practical constraints on resolution. The associated paper discusses this issue.
+</model:len_scale_reso>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#postcode">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#source">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#post_address">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#params_eqs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#contact">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#forum">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#first_name">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#technical">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#program_lang">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#availability">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#country">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#ideal_data">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#ref_type">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#email">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#license">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#couple_with">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#post_soft_need">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#source_csdms">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#openmi">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#type">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#format">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#year_version">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#program_lang_other">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#wmt">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#vis_soft">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#memory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#manual_available">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#year">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#code">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#city">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#in_dev">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#platform">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#multi_processors">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#len_scale_reso">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#model">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#time_scale_reso">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#end_year">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#model_doi">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#data">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#bmi">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </rdf:Description>
+</rdf:RDF>
