@@ -20,7 +20,7 @@ with onto:
 		pass
 
 
-	class Parameter(Thing):
+	class TauDEMParameter(Thing):
 		pass
 
 
@@ -38,12 +38,22 @@ for d in data:
 	tool_name = d['title'].strip().replace(' ', '_')
 	tool = TauDEMTool(tool_name, prefLabel=locstr(d['title'], lang='en'))
 	for k, v in d.items():
+		# 外层
 		if k == 'parameter' and type(v) == list:
-			for item in v:
-				param = Parameter()
-				k_name = 'has' + k.capitalize() + 'Object'
-				create_onto_class(k_name, ObjectProperty)
-				tool.__getattr__(k_name).append(param)
+			for index, item in enumerate(v):
+				localname = v[index]['parameter']
+				param = TauDEMParameter(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+				k_name = 'hasParameterObject'
+				k_class = create_onto_class(k_name, ObjectProperty)
+				if localname.lower().startswith('input', 0, len('input')):
+					create_onto_class('hasInputParameter', k_class)
+					tool.__getattr__('hasInputParameter').append(param)
+				elif localname.lower().startswith('output', 0, len('output')):
+					create_onto_class('hasOutputParameter', k_class)
+					tool.__getattr__('hasOutputParameter').append(param)
+				else:
+					tool.__getattr__(k_name).append(param)
+				# 具体参数
 				for itemK, itemV in item.items():
 					itemK_name = 'has' + itemK.capitalize()
 					create_onto_class(itemK_name, DataProperty)
@@ -63,4 +73,3 @@ for d in data:
 				tool.__getattr__(k_name).append(v)
 
 onto.save(file='taudem.owl', format="rdfxml")
-
