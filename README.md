@@ -35,3 +35,13 @@ scrapy genspider example example.com
   - csdms2owl.py
   - taudem2owl.py
 - 检查修正
+
+## 性能设置
+settings.py
+- CONCURRENT_REQUESTS
+- DOWNLOAD_DELAY
+
+
+
+地球科学辞典
+http://www.gsdkj.net:81/dict.aspx

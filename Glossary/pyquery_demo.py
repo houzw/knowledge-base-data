@@ -16,6 +16,8 @@ html_doc = etree.fromstring("<html></html>")
 
 # d is like the $ in jquery
 d_doc = pq(html_doc)
+d = pq(url="http://www.gsdkj.net:81/DictView.aspx?ID=2")
+print(d('.R224').text())
 '''
 d = pq(url="http://www.opengeospatial.org/ogc/glossary/a")
 dls = d(".field-item.even>dl").items()
