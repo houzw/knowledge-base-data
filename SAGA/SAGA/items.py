@@ -5,10 +5,13 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Item, Field
 
 
-class SagaItem(scrapy.Item):
-    # define the fields for your item here like:
-    name = scrapy.Field()
-    pass
+class SagaItem(Item):
+	# define the fields for your item here like:
+	name = Field()
+	comment = Field()
+	parameter = Field()
+	command = Field()
+	pass

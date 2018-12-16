@@ -21,11 +21,11 @@ class TaudemSpider(scrapy.Spider):
 
 	def parse_tool(self, resp):
 		item = TaudemItem()
-		item['title'] = resp.xpath("//h1[@class='gpHeading']/text()").extract_first()
+		item['title'] = resp.xpath("//h1[@class='gpHeading']/text()").extract_first().strip()
 		# 不止一个文本节点，因此使用 //text() 并使用 extract()
-		item['summary'] = resp.xpath("//div[@class='gpItemInfo'][1]//p/span//text()").extract()
-		item['usage'] = resp.xpath("//div[@class='gpItemInfo'][2]//p//span//text()").extract()
-		item['syntax'] = resp.xpath("//h2[text()='Syntax'][1]/following-sibling::div/p/text()").extract_first()
+		item['summary'] = resp.xpath("//div[@class='gpItemInfo'][1]//p/span//text()").extract().strip()
+		item['usage'] = resp.xpath("//div[@class='gpItemInfo'][2]//p//span//text()").extract().strip()
+		item['syntax'] = resp.xpath("//h2[text()='Syntax'][1]/following-sibling::div/p/text()").extract_first().strip()
 		item['parameter'] = self.parse_parameter(resp)
 		return item
 
@@ -35,9 +35,9 @@ class TaudemSpider(scrapy.Spider):
 		params = []
 		for tr in trs:
 			param = {
-				"parameter": tr.xpath("./td[1]/text()").extract_first(),
-				"explanation": tr.xpath("./td[2]/div//span//text()").extract(),
-				"dataType": tr.xpath("./td[3]/text()").extract_first()
+				"parameter": tr.xpath("./td[1]/text()").extract_first().strip(),
+				"explanation": tr.xpath("./td[2]/div//span//text()").extract().strip(),
+				"dataType": tr.xpath("./td[3]/text()").extract_first().strip()
 			}
 			if tr.xpath("./td[1][contains(text(),'Optional')]"):
 				param.update({"optional": True})

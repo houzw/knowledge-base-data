@@ -2,7 +2,6 @@
 from scrapy import Spider, Item, Request
 from CSDMS.items import CsdmsItem
 
-
 class CsdmsSpider(Spider):
 	name = 'csdms'
 	allowed_domains = ['csdms.colorado.edu']
