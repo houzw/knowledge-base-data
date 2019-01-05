@@ -14,4 +14,6 @@ class SagaItem(Item):
 	comment = Field()
 	parameter = Field()
 	command = Field()
+	manual_url = Field()
+	keywords = Field()
 	pass

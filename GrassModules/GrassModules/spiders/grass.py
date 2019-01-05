@@ -4,7 +4,7 @@
 
 from scrapy import Spider, Request
 from GrassModules.items import GrassModulesItem
-
+import re
 
 class GrassSpider(Spider):
 	name = 'grass'
@@ -32,11 +32,11 @@ class GrassSpider(Spider):
 	def parse_detail(self, response):
 		"""处理模块命令详情页"""
 		item = GrassModulesItem()
-		item['manual_url'] = response.url
+		item['manual_url'] = response.url.replace('file://127.0.0.1/H:/gisdemo/grass-7.5_html_manual/manuals/',"https://grass.osgeo.org/grass77/manuals/")
 		content = response.css("#container")
 		item['name'] = content.css("#name>b::text").extract_first()
-		print('name %s' % item['name'])
-		item['definition'] = content.xpath('./h2[1][contains(text(),"NAME")]/following-sibling::text()[2]').extract()
+		# print('name %s' % item['name'])
+		item['definition'] = content.xpath('normalize-space(./h2[1][contains(text(),"NAME")]/following-sibling::text()[2])').extract_first()
 		item['keywords'] = self.parse_keywords(content)
 		item['synopsis'] = self.parse_synopsis(content)
 		item['parameters'] = self.parse_params(content)
@@ -65,27 +65,35 @@ class GrassSpider(Spider):
 		# print('synopsis: %s' % ''.join(synopsis))
 		return ''.join(synopsis).strip()
 
-	def parse_params(self, selector):
+	def parse_flags(self, selector):
+		"""解析flags，当做parameters"""
 		dl = selector.xpath('./div[@id="flags"]/dl')
-		flags_dt = dl.xpath('//dt')
-		parameters = []
+		flags_dt = dl.xpath('.//dt')
+		flags = []
 		for i in range(0, len(flags_dt)):
 			flag = flags_dt[i].xpath('./b/text()').extract_first()
 			# print('flag %s' % dt)
 			dds = flags_dt[i].xpath('./following-sibling::dd[following-sibling::dt[1]]')
 			flag_exp = dds.xpath('.//text()').extract()
-			parameters.append(
+			flags.append(
 				{'parameter': str(flag).replace("-", ""), 'flag': flag, 'explanation': ' '.join(flag_exp),
 				 'optional': True, })
+		return flags
+
+	def parse_params(self, selector):
+		parameters = self.parse_flags(selector)
 		dts = selector.css("#parameters>dl>dt")
-		input_file = False
-		out_file = False
-		optional = True
-		data_type = 'String'
 		for i in range(0, len(dts)):
+			parameter = dict()
+			data_type = 'String'
+			input_file = False
+			out_file = False
+			optional = True
 			dt = dts[i]
 			# key
 			dt_id = dt.xpath('./b[1]/text()').extract_first().strip()
+			parameter['parameter'] = dt_id
+			parameter['flag'] = dt_id
 			if dt_id == 'input':
 				input_file = True
 			elif dt_id == 'output':
@@ -94,16 +102,20 @@ class GrassSpider(Spider):
 			param_type = dt.xpath('string(./em//text())').extract()
 			if param_type == 'name':
 				data_type = 'String'
+			elif param_type == 'name[,name,...]':
+				data_type = 'List'
 			elif param_type == 'value':
 				data_type = 'Double'
 			elif param_type == 'character':
 				data_type = 'String'
 			elif param_type == 'float':
 				data_type = 'Float'
+			parameter['dataType'] = data_type
 			# required
 			require = dt.xpath('./b[2]/text()').extract_first()
 			if require == '[required]':
 				optional = False
+			parameter['optional'] = optional
 			# 后面的所有非空节点
 			dds_test = dt.xpath('./following-sibling::node()[not(string-length(text())=0)]')
 			dd_list = []
@@ -115,34 +127,59 @@ class GrassSpider(Spider):
 			# print("dd_list %s" % dd_list)
 			# dds = dt.xpath('./following-sibling::dd[following-sibling::dt[1] or not(following-sibling::dt)]')
 			# print("dds %s" % dds)
-			explanation = None
-			alternatives = None
-			default = None
-			# length = len(dd_list)
-			for j, item in enumerate(dd_list):
-				if j == 0 and item:
-					explanation = item.css('dd::text').extract_first().strip()
-					# print("explanation %s" % explanation)
+			(explanation, alternatives, default) = self.parse_explanation(dd_list)
+			parameter['explanation'] = explanation
+			parameter['defaultValue'] = default
+			parameter['alternatives'] = alternatives
+			if re.search('Name of input', explanation) is not None:
+				input_file = True
+			if re.search('Name for output',explanation) is not None:
+				out_file = True
+			parameter['isInputFile'] = input_file
+			parameter['isOutputFile'] = out_file
+			# parameter['supportFormats'] = ''
+			parameters.append(parameter)
+		# print("parameters %s" % parameters)
+		return parameters
+
+	def parse_explanation(self, dd_list):
+		"""explanation"""
+		explanation = None
+		alternatives = None
+		default = None
+		# length = len(dd_list)
+		for j, item in enumerate(dd_list):
+			if j == 0 and item:
+				explanation = item.css('dd::text').extract_first().strip()
+				# print("explanation %s" % explanation)
+				continue
+			if alternatives is None:
+				# 若alternatives已经有值了，则不再处理
+				alternatives = item.xpath('./em[parent::dd[contains(normalize-space(text()),"Options:")]][1]/text()').extract_first()
+				if alternatives is not None:
+					# print("alternatives %s" % alternatives)
+					alternatives = str(alternatives).replace('Options:', '')
 					continue
-				alternatives = item.xpath('./em[parent::dd[contains(text(),"Options")]][1]/text()').extract_first()
-				if not alternatives:
+				else:
 					alternatives = item.xpath(
-						'./text()[parent::dd[contains(text(),"Special characters")]]').extract_first()
-				if alternatives:
-					alternatives = str(alternatives).replace('Special characters:', '')
-					print("alternatives %s" % alternatives)
-					continue
-				default = item.xpath('./em[parent::dd[contains(text(),"Default")]][1]/text()').extract_first()
+						'./text()[parent::dd[contains(normalize-space(text()),"Special characters:")]]').extract_first()
+					if alternatives is not None:
+						alternatives = str(alternatives).replace('Special characters:', '')
+						# print("alternatives %s" % alternatives)
+						continue
+			if default is None:
+				default = item.xpath('./em[parent::dd[contains(normalize-space(text()),"Default:")]][1]/text()').extract_first()
 				if not default:
 					continue
-				print("default %s" % default)
-			print("explanation %s" % explanation)
-			parameters.append(
-				{'parameter': dt_id, 'flag': dt_id, 'optional': optional, 'explanation': explanation,
-				 'dataType': data_type, 'defaultValue': default, 'isInputFile': input_file, 'isOutputFile': out_file,
-				 'alternatives': alternatives})
-			print("parameters %s" % parameters)
-		return parameters
+				# print("default %s" % default)
+		# 整理格式
+		if alternatives is not None:
+			alternatives = alternatives.split(',')
+			alternatives = [x.strip() for x in alternatives]
+		# if default is not None:
+		# 	default = default.split(',')
+		# 	default = [x.strip() for x in default]
+		return explanation, alternatives, default
 
 	def parse_des(self, selector):
 		desc_selector = selector.xpath(".//a[@name='description']/parent::h2")
