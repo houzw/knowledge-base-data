@@ -22,6 +22,14 @@ with onto:
 		pass
 
 
+	class SagaInput(SagaParameter):
+		pass
+
+
+	class SagaOutput(SagaParameter):
+		pass
+
+
 	class SagaOption(geoprocessor.Option):
 		pass
 
@@ -51,7 +59,8 @@ def get_property(option, prop_type):
 	config = OWLUtils.get_config('config.ini')
 	_prop = OWLUtils.get_option(config, 'saga', option)
 	if _prop is None:
-		OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
+		if onto.__getattr__('has' + option.capitalize()) is None:
+			OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
 		return 'has' + option.capitalize()
 	else:
 		return _prop
@@ -78,12 +87,14 @@ def handle_inout(item_value, in_or_out):
 		io_name = ioD['name']
 		if io_name is None:
 			io_name = in_or_out
-		# localname = OWLUtils.name_underline(io_name)
-		param = SagaParameter(prefLabel=locstr(io_name, lang='en'))
-		# param = SagaParameter(localname, prefLabel=locstr(io_name, lang='en'))
+		# localname = OWLUtils.name_underline(ioD['identifier'])
 		if in_or_out == 'input':
+			param = SagaInput(prefLabel=locstr(io_name, lang='en'))
+			# param =SagaInput('input_'+localname, prefLabel=locstr(io_name, lang='en'))
 			tool.hasInputParameter.append(param)
 		else:
+			param = SagaOutput(prefLabel=locstr(io_name, lang='en'))
+			# param =SagaOutput('output_'+localname, prefLabel=locstr(io_name, lang='en'))
 			tool.hasOutputParameter.append(param)
 		for k, v in ioD.items():
 			if k == 'type' and get_format(v) is not None:
@@ -104,8 +115,10 @@ def handle_options(option):
 	op_name = option['name']
 	if op_name is None:
 		op_name = 'option'
+	# localname = OWLUtils.name_underline(option['identifier'])
 	# localname = OWLUtils.name_underline(op_name)
-	indi = SagaOption(prefLabel=locstr(name, lang='en'))
+	indi = SagaOption( prefLabel=locstr(name, lang='en'))
+	# indi = SagaOption('option_'+localname,prefLabel=locstr(name, lang='en'))
 	tool.hasOption.append(indi)
 	for k, v in option.items():
 		if k == "constraints" and v is not None:

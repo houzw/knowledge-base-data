@@ -77,7 +77,8 @@ class OWLUtils(object):
 
 	@staticmethod
 	def name_underline(name: str):
-		name = re.sub("\([a-zA-Z /]+\)", '', name.lower()).strip()
+		name = re.sub("\([a-zA-Z0-9* /]+\)", '', name.lower()).strip()
+		name = re.sub("\[[()a-zA-Z0-9*^\- /]+\]", '', name).strip()
 		return name.replace(" ", "_").replace(',', '').replace("(*)", '')
 
 	@staticmethod

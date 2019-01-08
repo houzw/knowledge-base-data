@@ -9,6 +9,8 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 model_uri = 'http://www.egc.org/ont/process/taudem'
 onto = get_ontology(model_uri)
 onto, soft, geoprocessor, task, data = OWLUtils.load_common_for_process_tool(onto)
+
+
 # print(onto.imported_ontologies)
 
 def get_property(option, prop_type):
@@ -23,12 +25,22 @@ def get_property(option, prop_type):
 
 	"""
 	config = OWLUtils.get_config('config.ini')
-	prop = OWLUtils.get_option(config, 'taudem', option)
-	if prop is None:
-		OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
-		return 'has' + option.capitalize()
+	_prop = OWLUtils.get_option(config, 'taudem', option)
+	# 返回配置的属性或是已有的属性（has[Name]）
+	if _prop is not None:
+		return _prop
 	else:
-		return prop
+		_prop = geoprocessor.__getattr__('has' + option.capitalize())
+		if _prop is None:
+			OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
+	return 'has' + option.capitalize()
+
+
+# if prop is None:
+# 	OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
+# 	return 'has' + option.capitalize()
+# else:
+# 	return prop
 
 
 def get_format(option):
@@ -46,12 +58,21 @@ with onto:
 		pass
 
 
+	class TauDEMInput(TauDEMParameter):
+		pass
+
+
+	class TauDEMOutput(TauDEMParameter):
+		pass
+
+
 	class TauDEMOption(geoprocessor.Option):
 		pass
 with open('taudem.json', 'r') as f:
 	jdata = json.load(f)  # list
 
-def handle_params(tool_param,param_item):
+
+def handle_params(tool_param, param_item):
 	# 具体参数
 	for itemK, itemV in param_item.items():
 		# 数据格式
@@ -69,6 +90,7 @@ def handle_params(tool_param,param_item):
 			else:
 				tool_param.__setattr__(_prop, itemV)
 
+
 for d in jdata:
 	# 实例
 	tool_name = d['title'].strip().replace(' ', '_')
@@ -84,15 +106,15 @@ for d in jdata:
 			for i, item in enumerate(v):
 				localname = v[i]['parameter']
 				if localname.lower().startswith('input_', 0, len('input_')):
-					param = TauDEMParameter(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+					param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 					tool.hasInputParameter.append(param)
 					handle_params(param, item)
 				elif localname.lower().startswith('output_', 0, len('output_')):
-					param = TauDEMParameter(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+					param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 					tool.hasOutputParameter.append(param)
 					handle_params(param, item)
 				else:
-					o = TauDEMOption(localname,prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+					o = TauDEMOption(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 					tool.hasOption.append(o)
 					handle_params(o, item)
 
@@ -106,7 +128,7 @@ for d in jdata:
 			else:
 				tool.__getattr__(prop).append(v)
 
-onto.save(file='taudem_test.owl', format="rdfxml")
+onto.save(file='taudem.owl', format="rdfxml")
 # update task ontology
 task.save()
 print('Done!')

@@ -25,3 +25,18 @@ name =OWLUtils.toolname_underline(name)
 print(name)
 a= 'fffff'
 print(' '.join(a))
+
+from owlready2 import *
+onto  = get_ontology("http://aaa")
+with onto:
+	class Aaa(Thing):
+		pass
+	class p(DataProperty):
+		pass
+
+a1 = Aaa('test')
+a1.p = ['aaa']
+print(a1.p)
+print(a1.__getattr__('p'))
+print(a1.__getattr__('y'))
+# print(a1['y'])
