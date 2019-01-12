@@ -10,15 +10,15 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/saga'
 onto = get_ontology(model_uri)
-onto, soft, geoprocessor, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class SagaTool(geoprocessor.Geoprocessor):
+	class SagaTool(gp.ProcessingTool):
 		pass
 
 
-	class SagaParameter(geoprocessor.Parameter):
+	class SagaParameter(gp.Parameter):
 		pass
 
 
@@ -30,15 +30,15 @@ with onto:
 		pass
 
 
-	class SagaOption(geoprocessor.Option):
+	class SagaOption(gp.Option):
 		pass
 
 
-	class SagaConstraint(geoprocessor.Constraint):
+	class SagaConstraint(gp.Constraint):
 		pass
 
 
-	class SagaAvailableChoice(geoprocessor.AvailableChoice):
+	class SagaAvailableChoice(gp.AvailableChoice):
 		pass
 
 with open('saga.json', 'r') as f:

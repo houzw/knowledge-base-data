@@ -36,14 +36,14 @@ class OWLUtils(object):
 	def load_common_for_process_tool(onto: Ontology):
 		onto = OWLUtils.load_common(onto)
 		soft = get_ontology('/GeospatialSoftwares.owl').load(only_local=True)
-		geoprocessor = get_ontology('/geoprocessors-base.owl').load(only_local=True)
+		gp = get_ontology('/geoprocessors-base.owl').load(only_local=True)
 		task = get_ontology('/task.owl').load(only_local=True)
 		data = get_ontology('/DataDescription.owl').load(only_local=True)
 		onto.imported_ontologies.append(soft)
 		onto.imported_ontologies.append(geoprocessor)
 		onto.imported_ontologies.append(task)
 		onto.imported_ontologies.append(data)
-		return onto, soft, geoprocessor, task,data
+		return onto, soft, gp, task,data
 
 	@staticmethod
 	def create_onto_class(onto: Ontology, name, parent_class):

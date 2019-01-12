@@ -8,7 +8,7 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/taudem'
 onto = get_ontology(model_uri)
-onto, soft, geoprocessor, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
 
 
 # print(onto.imported_ontologies)
@@ -30,7 +30,7 @@ def get_property(option, prop_type):
 	if _prop is not None:
 		return _prop
 	else:
-		_prop = geoprocessor.__getattr__('has' + option.capitalize())
+		_prop = gp.__getattr__('has' + option.capitalize())
 		if _prop is None:
 			OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
 	return 'has' + option.capitalize()
@@ -50,11 +50,11 @@ def get_format(option):
 
 
 with onto:
-	class TauDEMAnalysis(geoprocessor.Geoprocessor):
+	class TauDEMAnalysis(gp.ProcessingTool):
 		pass
 
 
-	class TauDEMParameter(geoprocessor.Parameter):
+	class TauDEMParameter(gp.Parameter):
 		pass
 
 
@@ -66,7 +66,7 @@ with onto:
 		pass
 
 
-	class TauDEMOption(geoprocessor.Option):
+	class TauDEMOption(gp.Option):
 		pass
 with open('taudem.json', 'r') as f:
 	jdata = json.load(f)  # list
