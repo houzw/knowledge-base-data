@@ -1,0 +1,739 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.egc.org/ont/gis/software#"
+     xml:base="http://www.egc.org/ont/gis/software"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:uni="http://www.geodata.cn/onto/base/uni/props#"
+     xmlns:cyber="http://www.egc.org/ont/cyber#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://www.egc.org/ont/gis/software">
+        <!-- <owl:imports rdf:resource="http://www.egc.org/ont/cyber"/>-->
+        <dc:title xml:lang="en">Geospatial Software Ontology</dc:title>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/URI -->
+
+    <rdfs:Datatype rdf:about="http://purl.org/dc/terms/URI"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/cyber#Database -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/cyber#Database"/>
+    
+
+
+    <!-- http://www.egc.org/ont/cyber#OpenSourceOrganization -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/cyber#OpenSourceOrganization"/>
+    
+
+
+    <!-- http://www.egc.org/ont/cyber#Software -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/cyber#Software"/>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ContentManagementSystems -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#ContentManagementSystems">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#DataAnalysisTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#DataAnalysisTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#DesktopGIS -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#DesktopGIS">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeospatialInternetOfThings -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#GeospatialInternetOfThings">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeospatialLibraries -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#GeospatialLibraries">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeospatialSoftware -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#GeospatialSoftware">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/cyber#Software"/>
+        <uni:reference>http://www.osgeo.org/</uni:reference>
+        <uni:reference>https://en.wikipedia.org/wiki/List_of_geographic_information_systems_software</uni:reference>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MetadataCatalogs -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#MetadataCatalogs">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#RemoteSensingSoftware -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#RemoteSensingSoftware">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#SpatialDatabase -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#SpatialDatabase">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/cyber#Database"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#WebMapServer -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#WebMapServer">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#WebMapping -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#WebMapping">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#WebProcessingServer -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/software#WebProcessingServer">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ArcGIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ArcGIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+        <skos:narrowMatch rdf:resource="http://www.egc.org/ont/gis/software#ArcInfo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ArcInfo -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ArcInfo">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#AutoCAD_Map -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#AutoCAD_Map">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+        <skos:broader rdf:resource="http://www.egc.org/ont/gis/software#Autodesk"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Autodesk -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Autodesk">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#Company"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ENVI -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ENVI">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#RemoteSensingSoftware"/>
+        <dc:description xml:lang="en">Utilized for image analysis, exploitation, and hyperspectral analysis.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ERDAS_IMAGINE -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ERDAS_IMAGINE">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#RemoteSensingSoftware"/>
+        <dc:description xml:lang="en">Products include Leica Photogrammetry Suite, ERDAS ER Mapper, ERDAS ECW/JP2 SDK (ECW (file format)) are used throughout the entire mapping community (GIS, Remote Sensing, Photogrammetry, and image compression) and ERDAS APOLLO.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ESRI -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ESRI">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#Company"/>
+        <owl:sameAs rdf:resource="http://www.egc.org/ont/gis/software#Environmental_Systems_Research_Institute"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Environmental_Systems_Research_Institute -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Environmental_Systems_Research_Institute">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#Company"/>
+        <uni:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Esri</uni:hasAbbreviation>
+        <skos:prefLabel xml:lang="zh-cn">美国环境系统研究所公司</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#FDO -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#FDO">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GDAL -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GDAL">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <uni:abbreviationOf rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geospatial Data Abstraction Library</uni:abbreviationOf>
+        <dc:description xml:lang="en">GDAL  is a translator library for raster and vector geospatial data formats that is released under an X/MIT style Open Source license by the Open Source Geospatial Foundation. As a library, it presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing.</dc:description>
+        <dc:description xml:lang="zh-cn">GDAL 是一个栅格和矢量空间数据格式转换库，以 Open Source Geospatial Foundation 的 X/MIT style 开源许可发布. 作为一个程序库, 它为所有支持的格式向调用它的应用程序提供了单一栅格抽象数据模型（single raster abstract data model ）和单一矢量抽象数据模型（ single vector abstract data model. 他同时也包括了一系列数据转换和处理的实用的命令行方法</dc:description>
+        <skos:definition xml:lang="en">Geospatial Data Abstraction Library</skos:definition>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GEOS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GEOS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <dc:description xml:lang="en">GEOS (Geometry Engine - Open Source) is a C++ port of the Java Topology Suite (JTS). As such, it aims to contain the complete functionality of JTS in C++. This includes all the OpenGIS Simple Features for SQL spatial predicate functions and spatial operators, as well as specific JTS enhanced topology functions.
+
+GEOS is available under the terms of GNU Lesser General Public License (LGPL).</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GRASS_GIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GRASS_GIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+        <uni:abbreviationOf rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geographic Resources Analysis Support System</uni:abbreviationOf>
+        <dc:description xml:lang="en">GRASS GIS, commonly referred to as GRASS (Geographic Resources Analysis Support System), is a free and open source Geographic Information System (GIS) software suite used for geospatial data management and analysis, image processing, graphics and maps production, spatial modeling, and visualization. GRASS GIS is currently used in academic and commercial settings around the world, as well as by many governmental agencies and environmental consulting companies. It is a founding member of the Open Source Geospatial Foundation (OSGeo).</dc:description>
+        <skos:definition xml:lang="en">Geographic Resources Analysis Support System</skos:definition>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeoMOOSE -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GeoMOOSE">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeoNetwork -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GeoNetwork">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#MetadataCatalogs"/>
+        <dc:description xml:lang="en">GeoNetwork is a catalog application to manage spatially referenced resources. It provides powerfulmetadata editing and search functions as well as an interactive web map viewer. It is currently used innumerous Spatial Data Infrastructure initiatives across the world.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeoNode -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GeoNode">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#ContentManagementSystems"/>
+        <dc:description xml:lang="en">GeoNode is a web-based application and platform for developing geospatial information systems (GIS) and for deploying spatial data infrastructures (SDI).
+It is designed to be extended and modified, and can be integrated into existing platforms.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeoServer -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GeoServer">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapServer"/>
+        <dc:description xml:lang="en">Java based open source server software that allows users to edit and share geospatial data and uses open standards to spublish GIS data.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#GeoTools -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#GeoTools">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <dc:description xml:lang="en">GeoTools is an open source (LGPL) Java code library which provides standards compliant methods for the manipulation of geospatial data, for example to implement Geographic Information Systems (GIS). The GeoTools library implements Open Geospatial Consortium (OGC) specifications as they are developed.</dc:description>
+        <dc:description xml:lang="en">Open source GIS toolkit written in Java, using Open Geospatial Consortium specifications.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Geomedia -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Geomedia">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Global_Mapper -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Global_Mapper">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Manifold_GIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Manifold_GIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapFish -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapFish">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+        <dc:description xml:lang="en">An open source mapping development framework for web mapping applications based on the Pylon Pythons web framework.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapGIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapGIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapGuide_Open_Source -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapGuide_Open_Source">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapServer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapInfo -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapInfo">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapServer -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapServer">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapServer"/>
+        <dc:description xml:lang="en">MapServer is an Open Source development environment for building spatially enabled Internet applications. The software builds upon other popular Open Source or freeware systems like Shapelib, FreeType, Proj.4, libTIFF, Perl and others.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MapWindow -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MapWindow">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Mapbender -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Mapbender">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Mapnik -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Mapnik">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Marble -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Marble">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#MetaCRS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#MetaCRS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <dc:description xml:lang="en">MetaCRS is a project encompassing several projections, and coordinate system related technologies. Our plan is to treat a variety of coordinate system activities as one Project from an OSGeo point of view. This helps provide enough “project mass” to justify the full OSGeo project treatment. But more importantly it would give us a forum to cooperate. Sharing things like coordinate system dictionaries, test suites and mathematical formulations.
+
+Sub-projects
+
+The following are sub-projects of MetaCRS:
+
+PROJ.4 - lead - Frank Warmerdam
+Proj4js - lead - Mike Adair
+CS-Map - lead - Hugues Wisiewski
+GeoTIFF/libgeotiff - lead - Frank Warmerdam
+SpatialReference.org - lead - Howard? Chris?
+Proj4J - lead - Martin Davis</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#North52_WPS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#North52_WPS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebProcessingServer"/>
+        <cyber:implementationLanguage rdf:resource="http://www.egc.org/ont/cyber#Java"/>
+        <cyber:supportsLanguage rdf:resource="http://www.egc.org/ont/cyber#Java"/>
+        <dc:description xml:lang="en">The 52°North Web Processing Service enables the deployment of geo-processes on the web in a standardized way. It features a pluggable architecture for processes and data encodings. The implementation is based on the current OpenGIS specification: 05-007r7 .</dc:description>
+        <skos:prefLabel xml:lang="en">52°North WPS</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OGR -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OGR">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <cyber:implementationLanguage rdf:resource="http://www.egc.org/ont/cyber#C"/>
+        <skos:closeMatch rdf:resource="http://www.egc.org/ont/gis/software#GDAL"/>
+        <dc:description xml:lang="zh-cn">GDAL 是一个栅格和矢量空间数据格式转换库，以 Open Source Geospatial Foundation 的 X/MIT style 开源许可发布. 作为一个程序库, 它为所有支持的格式向调用它的应用程序提供了单一栅格抽象数据模型（single raster abstract data model ）和单一矢量抽象数据模型（ single vector abstract data model. 他同时也包括了一系列数据转换和处理的实用的命令行方法</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OSGEO -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OSGEO">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#OpenSourceOrganization"/>
+        <owl:sameAs rdf:resource="http://www.egc.org/ont/gis/software#Open_Source_Geospatial_Foundation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OSSIM -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OSSIM">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OpenLayers -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OpenLayers">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+        <cyber:implementationLanguage rdf:resource="http://www.egc.org/ont/cyber#JavaScript"/>
+        <dc:description xml:lang="en">Javascript library that is open source for displaying GIS data within a browser environment</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OpenWebGIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OpenWebGIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Open_Source_Geospatial_Foundation -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Open_Source_Geospatial_Foundation">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#OpenSourceOrganization"/>
+        <uni:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OSGeo</uni:hasAbbreviation>
+        <dc:description xml:lang="zh-cn">OSGeo（开源地理空间基金会）（Open Source Geospatial Foundation）是一个非盈利组织。其主要目标是支持和推广开源地理空间技术和数据的协作开发。OSGeo基金会向许多开源地理空间社区提供了财政、组织和法律方面的支持。它同时也是独立的法人组织机构，社区成员可以贡献代码、资金和其他资源。这些贡献的资源将会以公众利益为目标来维护。OSGeo也作为开源地理空间社区的延伸，提供了公共论坛以及跨项目协作的共享基础。</dc:description>
+        <dc:description xml:lang="en">The Open Source Geospatial Foundation (OSGeo) is a not-for-profit organization whose mission is to foster global adoption of open geospatial technology by being an inclusive software foundation devoted to an open philosophy and participatory community driven development.
+
+The foundation provides financial, organizational and legal support to the broader open source geospatial community. It also serves as an independent legal entity to which community members can contribute code, funding and other resources, secure in the knowledge that their contributions will be maintained for public benefit. OSGeo also serves as an outreach and advocacy organization for the open source geospatial community, and provides a common forum and shared infrastructure for improving cross-project collaboration.
+
+The foundation&apos;s projects are all freely available and useable under an Open Source Initiative certified open source license.
+
+OSGeo has US 501(c)(4) legal status as a not-for-profit organization.</dc:description>
+        <skos:altLabel xml:lang="zh-cn">开源地理空间基金会</skos:altLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Oracle_Spatial -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Oracle_Spatial">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#SpatialDatabase"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#OrfeoToolBox -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#OrfeoToolBox">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <dc:description xml:lang="en">Orfeo ToolBox (OTB) is an open-source C++ library for remote sensing images processing, distributed under the CeCILL-v2 license. It has been initiated and funded by CNES (French space agency) in the frame of a program named ORFEO to prepare, accompany and promote the use and the exploitation of the images derived from Pléiades satellites (PHR). Orfeo ToolBox aims at enabling large images state-of-the-art processing even on limited resources laptops, and is shipped with a set of extensible ready-to-use tools for classical remote sensing tasks, as well as a fully integrated, end-users oriented software called Monteverdi.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#PostGIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#PostGIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#GeospatialLibraries"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#SpatialDatabase"/>
+        <dc:description xml:lang="en">PostGIS is a spatial database extender for PostgreSQL object-relational database. It adds support for geographic objects allowing location queries to be run in SQL.
+In addition to basic location awareness, PostGIS offers many features rarely found in other competing spatial databases such as Oracle Locator/Spatial and SQL Server. Refer to PostGIS Feature List for more details.
+PostGIS is released under the GNU General Public License (GPLv2).</dc:description>
+        <dc:description xml:lang="en">Spatial extensions for the open source PostgreSQL database, allowing geospatial queries.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#PyWPS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#PyWPS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebProcessingServer"/>
+        <cyber:implementationLanguage rdf:resource="http://www.egc.org/ont/cyber#Python"/>
+        <cyber:supportsLanguage rdf:resource="http://www.egc.org/ont/cyber#Python"/>
+        <dc:description xml:lang="en">PyWPS is an implementation of the Web Processing Service standard from the Open Geospatial Consortium. PyWPS is written in Python.
+PyWPS enables integration, publishing and execution of Python processes via the WPS standard.
+PyWPS is Open Source and released under an MIT license.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#QGIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#QGIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+        <dc:description xml:lang="en">A Free and Open Source Geographic Information System</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#SAGA_GIS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#SAGA_GIS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Smallworld -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Smallworld">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#SpatiaLite -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#SpatiaLite">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#SpatialDatabase"/>
+        <dc:description xml:lang="en">Spatial extensions for the open source SQLite database, allowing geospatial queries.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#SuperMap -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#SuperMap">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#TauDEM -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#TauDEM">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DataAnalysisTool"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#Whitebox_GAT -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#Whitebox_GAT">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#ZOO-Project -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#ZOO-Project">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebProcessingServer"/>
+        <dc:description xml:lang="en">ZOO-Project is a WPS (Web Processing Service) implementation written in C, Python and JavaScript. It is an open source platform which implements the WPS 1.0.0 and WPS 2.0.0 standards edited by the Open Geospatial Consortium(OGC).</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#deegree -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#deegree">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#geomajas -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#geomajas">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+        <dc:description xml:lang="en">Written in java, GeoMajas is an open source GIS framework for the web.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#gvSIG -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#gvSIG">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#istSOS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#istSOS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#WebMapping"/>
+        <dc:description xml:lang="en">istSOS is an OGC SOS server implementation written in Python. istSOS allows for managing and dispatch observations from monitoring sensors according to the Sensor Observation Service standard.
+
+The project provides also a Graphical user Interface that allows for easing the daily operations and a RESTful Web api for automatizing administration procedures.
+
+istSOS is released under the GPL License, and runs on all major platforms (Windows, Linux, Mac OS X), even though tests were conducted under a Linux environment.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#pycsw -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#pycsw">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#MetadataCatalogs"/>
+        <dc:description xml:lang="en">pycsw is an OGC CSW server implementation written in Python. Started in 2010 (more formally announced in 2011), pycsw allows for the publishing and discovery of geospatial metadata via numerous APIs (CSW 2/CSW 3, OpenSearch, OAI-PMH, SRU), providing a standards-based metadata and catalogue component of spatial data infrastructures. pycsw is Open Source, released under an MIT license, and runs on all major platforms (Windows, Linux, Mac OS X).</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#uDig -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#uDig">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DesktopGIS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#whitebox-tools -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#whitebox-tools">
+        <rdf:type rdf:resource="http://www.egc.org/ont/gis/software#DataAnalysisTool"/>
+        <skos:closeMatch rdf:resource="http://www.egc.org/ont/gis/software#Whitebox_GAT"/>
+        <cyber:codeRepository rdf:datatype="http://purl.org/dc/terms/URI">https://github.com/jblindsay/whitebox-tools</cyber:codeRepository>
+        <cyber:isOpenSource rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isOpenSource>
+        <dc:description xml:lang="en">WhiteboxTools is an advanced geospatial data analysis platform developed at the University of Guelph&apos;s Geomorphometry and Hydrogeomatics Research Group (GHRG). The project began in January 2017 and quickly evolved in terms of its analytical capabilities.
+(1)Contains more than 395 tools for processing various types of geospatial data.
+(2)Many tools operate in parallel, taking full advantage of your multi-core processor.
+(3)Written in the safe and cross-platform systems programming language Rust and compiled to highly efficient native code.
+(4)Small stand-alone application with no external dependencies, making installation as easy as downloading the 8Mb zip file and decompressing it.
+(5)Simple yet powerful Python scripting interface that allows users to develop custom scripted workflows.
+(6)Embed WhiteboxTools functions into hetergenous scripting environments along with ArcPy, GDAL, and other geoprocessing libraries.
+(7)Serves as an analytical back-end for other GIS and remote sensing software (e.g. the QGIS Whitebox for Processing plugin).
+(8)Permissive MIT open-source license allows for ready integration with other software.
+(9)Transparent software philosopy allows for easy source code inspection and rapid innovation and development.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#中地数码 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#中地数码">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#Company"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/software#超图 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/software#超图">
+        <rdf:type rdf:resource="http://www.egc.org/ont/cyber#Company"/>
+    </owl:NamedIndividual>
+    <rdf:Description>
+        <rdfs:comment>bv</rdfs:comment>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+

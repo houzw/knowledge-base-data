@@ -40,7 +40,7 @@ class OWLUtils(object):
 		task = get_ontology('/task.owl').load(only_local=True)
 		data = get_ontology('/DataDescription.owl').load(only_local=True)
 		onto.imported_ontologies.append(soft)
-		onto.imported_ontologies.append(geoprocessor)
+		onto.imported_ontologies.append(gp)
 		onto.imported_ontologies.append(task)
 		onto.imported_ontologies.append(data)
 		return onto, soft, gp, task,data

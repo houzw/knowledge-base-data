@@ -28,8 +28,10 @@ scrapy genspider example example.com
   `scrapy crawl taudem -o taudem.json`
 - 在 SAGA 目录下执行
     `scrapy crawl saga -o saga.json`
-- Grass 下
+- GrassModules 下
     `scrapy crawl grass -o grass.json`
+- ArcGIS 下
+    `scrapy crawl arcgis -o arcgis.json`
 
 ## 转换为owl本体
 - 去除csv或json中不合法的Unicode字符
@@ -57,3 +59,5 @@ from PIL import Image
 ImportError: DLL load failed: 找不到指定的模块。
 ```
 >https://github.com/python-pillow/Pillow/issues/2945
+
+LOG_LEVEL = 'WARNING'

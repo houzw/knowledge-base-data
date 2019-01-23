@@ -16,5 +16,7 @@ class GdalItem(Item):
 	syntax = Field()
 	manual_url = Field()
 	example = Field()
-	usage = Field()
+	options = Field()
+	description = Field()
+	exec = Field()
 	pass

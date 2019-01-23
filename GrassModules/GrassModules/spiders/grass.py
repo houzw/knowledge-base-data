@@ -6,6 +6,7 @@ from scrapy import Spider, Request
 from GrassModules.items import GrassModulesItem
 import re
 
+
 class GrassSpider(Spider):
 	name = 'grass'
 	# allowed_domains = ['grass.osgeo.org']
@@ -32,7 +33,7 @@ class GrassSpider(Spider):
 	def parse_detail(self, response):
 		"""处理模块命令详情页"""
 		item = GrassModulesItem()
-		item['manual_url'] = response.url.replace('file://127.0.0.1/H:/gisdemo/grass-7.5_html_manual/manuals/',"https://grass.osgeo.org/grass77/manuals/")
+		item['manual_url'] = response.url.replace('file://127.0.0.1/H:/gisdemo/grass-7.5_html_manual/manuals/', "https://grass.osgeo.org/grass77/manuals/")
 		content = response.css("#container")
 		item['name'] = content.css("#name>b::text").extract_first()
 		# print('name %s' % item['name'])
@@ -133,7 +134,7 @@ class GrassSpider(Spider):
 			parameter['alternatives'] = alternatives
 			if re.search('Name of input', explanation) is not None:
 				input_file = True
-			if re.search('Name for output',explanation) is not None:
+			if re.search('Name for output', explanation) is not None:
 				out_file = True
 			parameter['isInputFile'] = input_file
 			parameter['isOutputFile'] = out_file
@@ -171,7 +172,7 @@ class GrassSpider(Spider):
 				default = item.xpath('./em[parent::dd[contains(normalize-space(text()),"Default:")]][1]/text()').extract_first()
 				if not default:
 					continue
-				# print("default %s" % default)
+			# print("default %s" % default)
 		# 整理格式
 		if alternatives is not None:
 			alternatives = alternatives.split(',')
@@ -186,15 +187,15 @@ class GrassSpider(Spider):
 		em = desc_selector.xpath("normalize-space(./following-sibling::em/text())").extract_first()
 		# print('em %s' % em)
 		des = desc_selector.xpath(
-			"normalize-space(./following-sibling::em/following-sibling::text()[1])").extract_first()
+			"normalize-space(./following-sibling::em/following-sibling::text())").extract()
 		# print('des %s' % des)
-		return str(em) + str(des)
+		return str(em) + ' ' + str(' '.join(des))
 
 	def parse_notes(self, selector):
 		notes = selector.xpath(
 			"normalize-space(.//text()[preceding-sibling::h2[child::a[@name='notes']] and following-sibling::h2[child::a[@name='see-also']]])").extract()
 		# print('notes %s' % notes)
-		return ''.join(notes)
+		return ' '.join(notes)
 
 	def parse_see_also(self, selector):
 		also_selector = selector.xpath(".//a[@name='see-also']/parent::h2")
