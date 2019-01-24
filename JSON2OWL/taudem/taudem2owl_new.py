@@ -54,15 +54,11 @@ with onto:
 		pass
 
 
-	class TauDEMParameter(gp.Parameter):
+	class TauDEMInput(gp.InputData):
 		pass
 
 
-	class TauDEMInput(TauDEMParameter):
-		pass
-
-
-	class TauDEMOutput(TauDEMParameter):
+	class TauDEMOutput(gp.OutputData):
 		pass
 
 
@@ -128,11 +124,11 @@ for d in jdata:
 				localname = v[i]['parameter']
 				if localname.lower().startswith('input_', 0, len('input_')):
 					param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-					tool.hasInputParameter.append(param)
+					tool.hasInputData.append(param)
 					handle_params(param, item)
 				elif localname.lower().startswith('output_', 0, len('output_')):
 					param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-					tool.hasOutputParameter.append(param)
+					tool.hasOutputData.append(param)
 					handle_params(param, item)
 				else:
 					o = TauDEMOption(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))

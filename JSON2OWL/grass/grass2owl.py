@@ -17,22 +17,18 @@ with onto:
 		pass
 
 
-	class GrassParameter(gp.Parameter):
+	class GrassInput(gp.InputData):
 		pass
 
 
-	class GrassInput(GrassParameter):
-		pass
-
-
-	class GrassOutput(GrassParameter):
+	class GrassOutput(gp.OutputData):
 		pass
 
 
 	class GrassOption(gp.Option):
 		pass
 module_path = os.path.dirname(__file__)
-with open(module_path+'/grass.json', 'r') as f:
+with open(module_path + '/grass.json', 'r') as f:
 	jdata = json.load(f)  # list
 
 onto.metadata.creator.append('houzhiwei')
@@ -53,7 +49,7 @@ def get_property(option, prop_type):
 	Returns: created property name
 
 	"""
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'grass', option)
 	if _prop is None:
 		if onto.__getattr__('has' + option.capitalize()) is None:
@@ -67,11 +63,11 @@ def handle_parameters(param):
 	# 部分parameter不包含isInputFile等属性
 	if 'isInputFile' in param.keys() and param['isInputFile']:
 		p = GrassInput(0, prefLabel=locstr(param['parameter'], lang='en'))
-		tool.hasInputParameter.append(p)
+		tool.hasInputData.append(p)
 		tool.isInputFile = param['isInputFile']
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
 		p = GrassOutput(0, prefLabel=locstr(param['parameter'], lang='en'))
-		tool.hasOutputParameter.append(p)
+		tool.hasOutputData.append(p)
 		tool.isOutputFile = param['isOutputFile']
 	else:
 		p = GrassOption(0, prefLabel=locstr(param['parameter'], lang='en'))
@@ -90,7 +86,7 @@ def handle_parameters(param):
 
 
 def handle_task(tool_name, en_str, keywords):
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	tasks = config.options('task')
 	for task_item in tasks:
 		# print(task_item)
@@ -104,9 +100,9 @@ def handle_task(tool_name, en_str, keywords):
 			# avoid duplicate
 			if not task[task_name]:
 				task_ins = task[task_cls](task_name, prefLabel=locstr(en_str, lang='en'))
-				# tool.usedByTask.append(task_ins)
-				# # print(task_ins)
-				# task_ins.hasProcessingTool.append(tool)
+			# tool.usedByTask.append(task_ins)
+			# # print(task_ins)
+			# task_ins.hasProcessingTool.append(tool)
 			else:
 				task_ins = task[task_name]
 			if (task_ins in tool.usedByTask) is False:

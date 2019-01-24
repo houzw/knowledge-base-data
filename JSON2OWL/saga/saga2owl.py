@@ -18,15 +18,11 @@ with onto:
 		pass
 
 
-	class SagaParameter(gp.Parameter):
+	class SagaInput(gp.InputData):
 		pass
 
 
-	class SagaInput(SagaParameter):
-		pass
-
-
-	class SagaOutput(SagaParameter):
+	class SagaOutput(gp.OutputData):
 		pass
 
 
@@ -95,11 +91,11 @@ def handle_inout(item_value, in_or_out):
 		if in_or_out == 'input':
 			param = SagaInput(0,prefLabel=locstr(io_name, lang='en'))
 			# param =SagaInput('input_'+localname, prefLabel=locstr(io_name, lang='en'))
-			tool.hasInputParameter.append(param)
+			tool.hasInputData.append(param)
 		else:
 			param = SagaOutput(0,prefLabel=locstr(io_name, lang='en'))
 			# param =SagaOutput('output_'+localname, prefLabel=locstr(io_name, lang='en'))
-			tool.hasOutputParameter.append(param)
+			tool.hasOutputData.append(param)
 		for k, v in ioD.items():
 			if k == 'type' and v:
 				vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?",v)

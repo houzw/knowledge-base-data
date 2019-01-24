@@ -19,15 +19,11 @@ with onto:
 		pass
 
 
-	class ArcGISParameter(gp.Parameter):
+	class ArcGISInput(gp.InputData):
 		pass
 
 
-	class ArcGISInput(ArcGISParameter):
-		pass
-
-
-	class ArcGISOutput(ArcGISParameter):
+	class ArcGISOutput(gp.OutputData):
 		pass
 
 
@@ -69,11 +65,11 @@ def handle_parameters(param):
 	# 部分parameter不包含isInputFile等属性
 	if 'isInputFile' in param.keys() and param['isInputFile']:
 		p = ArcGISInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasInputParameter.append(p)
+		tool.hasInputData.append(p)
 		tool.isInputFile = param['isInputFile']
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
 		p = ArcGISOutput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasOutputParameter.append(p)
+		tool.hasOutputData.append(p)
 		tool.isOutputFile = param['isOutputFile']
 	else:
 		p = ArcGISOption(0, prefLabel=locstr(param['name'], lang='en'))
@@ -133,5 +129,5 @@ for d in jdata:
 onto.save(file='arcgis.owl', format="rdfxml")
 # update task ontology
 task.save()
-data.save()
+# data.save()
 print('ArcGIS Done!')
