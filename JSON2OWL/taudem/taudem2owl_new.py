@@ -8,7 +8,7 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/taudem'
 onto = get_ontology(model_uri)
-onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto,  gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 
 
 # print(onto.imported_ontologies)
@@ -30,7 +30,7 @@ def get_property(option, prop_type):
 	if _prop is not None:
 		return _prop
 	else:
-		_prop = gp.__getattr__('has' + option.capitalize())
+		_prop = gb.__getattr__('has' + option.capitalize())
 		if _prop is None:
 			OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
 	return 'has' + option.capitalize()
@@ -50,19 +50,19 @@ def get_format(option):
 
 
 with onto:
-	class TauDEMAnalysis(gp.ProcessingTool):
+	class TauDEMAnalysis(gb.ProcessingTool):
 		pass
 
 
-	class TauDEMInput(gp.InputData):
+	class TauDEMInput(gb.InputData):
 		pass
 
 
-	class TauDEMOutput(gp.OutputData):
+	class TauDEMOutput(gb.OutputData):
 		pass
 
 
-	class TauDEMOption(gp.Option):
+	class TauDEMOption(gb.Option):
 		pass
 module_path = os.path.dirname(__file__)
 with open(module_path + '/taudem.json', 'r') as f:
@@ -80,7 +80,7 @@ def handle_params(tool_param, param_item):
 	for itemK, itemV in param_item.items():
 		# 数据格式
 		if itemK == 'dataType' and get_format(itemV) is not None:
-			tool_param.hasSupportsDataFormat.append(data[get_format(itemV)])
+			tool_param.supportsDataFormat.append(data[get_format(itemV)])
 		_prop = get_property(itemK, DataProperty)
 		try:
 			if type(itemV) == list:
@@ -94,13 +94,14 @@ def handle_params(tool_param, param_item):
 				tool_param.__setattr__(_prop, itemV)
 
 
-def handle_task(tool_name, en_str):
-	if task[tool_name] is None:
-		task_ins = task['HydrologicalAnalysis'](name, prefLabel=locstr(en_str, lang='en'))
+def handle_task(tool_name, en_str,des):
+	if task[tool_name+"_task"] is None:
+		task_ins = task['HydrologicalAnalysis'](tool_name+"_task", prefLabel=locstr(en_str+" task", lang='en'))
+		task_ins.description.append(locstr(des,lang='en'))
 	# tool.usedByTask.append(task_ins)
 	# task_ins.hasProcessingTool.append(tool)
 	else:
-		task_ins = task[tool_name]
+		task_ins = task[tool_name+"_task"]
 	if (task_ins in tool.usedByTask) is False:
 		tool.usedByTask.append(task_ins)
 	if (tool in tool.hasProcessingTool) is False:
@@ -110,13 +111,8 @@ def handle_task(tool_name, en_str):
 for d in jdata:
 	# 实例
 	name = d['title'].strip().replace(' ', '_')
-	tool = TauDEMAnalysis(name, prefLabel=locstr(d['title'], lang='en'))
-	tool.isToolOfSoftware.append(soft.TauDEM)
-	# task
-	handle_task(name, d['title'])
-	# task_ins = task['HydrologicalAnalysis'](name, prefLabel=locstr(d['title'], lang='en'))
-	# tool.usedByTask.append(task_ins)
-	# task_ins.hasProcessingTool.append(tool)
+	tool = onto.TauDEMAnalysis(name, prefLabel=locstr(d['title'], lang='en'))
+	tool.isToolOfSoftware.append(gb.TauDEM)
 	for k, v in d.items():
 		# 外层, 参数
 		if k == 'parameter' and type(v) == list:
@@ -143,6 +139,8 @@ for d in jdata:
 					tool.__getattr__(prop).append(''.join(v))
 			else:
 				tool.__getattr__(prop).append(v)
+	# task
+	handle_task(name, d['title'], ' '.join(d['summary']))
 
 onto.save(file='taudem.owl', format="rdfxml")
 # update task ontology

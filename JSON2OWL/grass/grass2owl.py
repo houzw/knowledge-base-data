@@ -9,23 +9,23 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/grass'
 onto = get_ontology(model_uri)
-onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class GrassTool(gp.ProcessingTool):
+	class GrassTool(gb.ProcessingTool):
 		pass
 
 
-	class GrassInput(gp.InputData):
+	class GrassInput(gb.InputData):
 		pass
 
 
-	class GrassOutput(gp.OutputData):
+	class GrassOutput(gb.OutputData):
 		pass
 
 
-	class GrassOption(gp.Option):
+	class GrassOption(gb.Option):
 		pass
 module_path = os.path.dirname(__file__)
 with open(module_path + '/grass.json', 'r') as f:
@@ -80,12 +80,13 @@ def handle_parameters(param):
 	if 'defaultValue' in param.keys():
 		if param['defaultValue'] is not None: p.hasDefaultValue = param['defaultValue']
 	p.isOptional = param['optional']
+	# p.isMandatory = not param['optional']
 	if 'alternatives' in param.keys():
 		if param['alternatives']:
-			p.hasAlternatives.append('; '.join(param['alternatives']))
+			p.hasAlternatives.append(', '.join(param['alternatives']))
 
 
-def handle_task(tool_name, en_str, keywords):
+def handle_task(tool_name, en_str, keywords,des):
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	tasks = config.options('task')
 	for task_item in tasks:
@@ -98,33 +99,33 @@ def handle_task(tool_name, en_str, keywords):
 			task_name = task_name.replace('.', '_')
 			# print(tool_name)
 			# avoid duplicate
-			if not task[task_name]:
-				task_ins = task[task_cls](task_name, prefLabel=locstr(en_str, lang='en'))
+			if not task[task_name+"_task"]:
+				task_ins = task[task_cls](task_name+"_task", prefLabel=locstr(en_str+" task", lang='en'))
+				task_ins.description.append(locstr(des, lang='en'))
 			# tool.usedByTask.append(task_ins)
 			# # print(task_ins)
 			# task_ins.hasProcessingTool.append(tool)
 			else:
-				task_ins = task[task_name]
+				task_ins = task[task_name+"_task"]
 			if (task_ins in tool.usedByTask) is False:
 				tool.usedByTask.append(task_ins)
 			if (tool in tool.hasProcessingTool) is False:
 				task_ins.hasProcessingTool.append(tool)
-
 
 for d in jdata:
 	name = d['name']
 	if not name: continue
 	if str(name).strip().find(' ') > 0: continue
 	tool = GrassTool(name, prefLabel=locstr(name, lang='en'))
-	tool.isToolOfSoftware.append(soft.GRASS_GIS)
+	tool.isToolOfSoftware.append(gb.GRASS_GIS)
 	tool.hasIdentifier = name
 	tool.hasManualPageURL.append(d['manual_url'])
 	tool.description.append(locstr(d['description'], lang='en'))
 	if d['source_code']: tool.hasSourceCodeURL.append(d['source_code'])
 	tool.abstract.append(d['notes'])
-	tool.hasAuthors.append('; '.join(d['authors']))
+	tool.hasAuthors.append(', '.join(d['authors']))
 	tool.definition.append(d['definition'])
-	tool.hasKeywords.append('; '.join(d['keywords']))
+	tool.hasKeywords.append(', '.join(d['keywords']))
 	tool.hasSyntax.append(d['synopsis'])
 	r = re.match('[a-z.]+ ', d['synopsis'])
 	if r: tool.hasExecutable = str(r.group()).strip()
@@ -133,7 +134,7 @@ for d in jdata:
 		tool.seeAlso.append(alsotool)
 	for parameter in d['parameters']:
 		handle_parameters(parameter)
-	handle_task(name, name, d['keywords'])
+	handle_task(name, name, d['keywords'],d['description'])
 
 onto.save(file='grass.owl', format="rdfxml")
 # update task ontology

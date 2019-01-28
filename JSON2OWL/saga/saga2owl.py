@@ -10,40 +10,41 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/saga'
 onto = get_ontology(model_uri)
-onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class SagaTool(gp.ProcessingTool):
+	class SagaTool(gb.ProcessingTool):
 		pass
 
 
-	class SagaInput(gp.InputData):
+	class SagaInput(gb.InputData):
 		pass
 
 
-	class SagaOutput(gp.OutputData):
+	class SagaOutput(gb.OutputData):
 		pass
 
 
-	class SagaOption(gp.Option):
+	class SagaOption(gb.Option):
 		pass
 
 
-	class SagaConstraint(gp.Constraint):
-		pass
+	# class SagaConstraint(cyber.Constraint):
+	# 	pass
 
-
-	class SagaAvailableChoice(gp.AvailableChoice):
+	class SagaAvailableChoice(gb.AvailableChoice):
 		pass
 module_path = os.path.dirname(__file__)
-with open(module_path+'/saga.json', 'r') as f:
+with open(module_path + '/saga.json', 'r') as f:
 	jdata = json.load(f)  # list
 
 onto.metadata.creator.append('houzhiwei')
 onto.metadata.title.append('SAGA GIS Tools')
 import datetime
+
 onto.metadata.created.append(datetime.datetime.today())
+
 
 def get_property(option, prop_type):
 	"""
@@ -56,7 +57,7 @@ def get_property(option, prop_type):
 	Returns: created property name
 
 	"""
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'saga', option)
 	if _prop is None:
 		if onto.__getattr__('has' + option.capitalize()) is None:
@@ -68,7 +69,7 @@ def get_property(option, prop_type):
 
 def get_format(option):
 	"""对应的数据格式"""
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'format', option)
 	return _prop
 
@@ -89,23 +90,23 @@ def handle_inout(item_value, in_or_out):
 			io_name = in_or_out
 		# localname = OWLUtils.name_underline(ioD['identifier'])
 		if in_or_out == 'input':
-			param = SagaInput(0,prefLabel=locstr(io_name, lang='en'))
+			param = SagaInput(0, prefLabel=locstr(io_name, lang='en'))
 			# param =SagaInput('input_'+localname, prefLabel=locstr(io_name, lang='en'))
 			tool.hasInputData.append(param)
 		else:
-			param = SagaOutput(0,prefLabel=locstr(io_name, lang='en'))
+			param = SagaOutput(0, prefLabel=locstr(io_name, lang='en'))
 			# param =SagaOutput('output_'+localname, prefLabel=locstr(io_name, lang='en'))
 			tool.hasOutputData.append(param)
 		for k, v in ioD.items():
 			if k == 'type' and v:
-				vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?",v)
+				vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?", v)
 				# print(v)
 				dformat = vr.group().strip()
 				# print(dformat)
 				if not get_format(dformat):
 					continue
 				# print(data[get_format(dformat)])
-				param.hasSupportsDataFormat.append(data[get_format(dformat)])
+				param.supportsDataFormat.append(data[get_format(dformat)])
 			if v is not None or v:
 				p = get_property(k, DataProperty)
 				if type(v) is str:
@@ -132,7 +133,7 @@ def handle_options(option):
 				# functional 属性不能使用append
 				if itemK == 'availableChoices':
 					for choice in itemV:
-						availableChoices = SagaAvailableChoice(0,prefLabel=locstr(op_name + ' available choice', lang='en'))
+						availableChoices = SagaAvailableChoice(0, prefLabel=locstr(op_name + ' available choice', lang='en'))
 						availableChoices.hasChoice.append(choice['choice'])
 						if choice['description'] is not None and (choice['description'] != ' ' or choice['description'] != '-'):
 							availableChoices.description.append(choice['description'].strip())
@@ -159,19 +160,21 @@ def handle_options(option):
 			op.__getattr__(p).append(v)
 
 
-def handle_task(tool_name, en_str, keywords):
-	config = OWLUtils.get_config(module_path+'/config.ini')
+def handle_task(tool_name, en_str, keywords, des):
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	tasks = config.options('task')
 	for task_item in tasks:
 		# print(task_item)
 		if task_item in keywords:
 			task_cls = config.get('task', task_item)
-			if task[tool_name] is None:
-				task_ins = task[task_cls](tool_name, prefLabel=locstr(en_str.replace('Tool', ''), lang='en'))
-				# tool.usedByTask.append(task_ins)
-				# task_ins.hasProcessingTool.append(tool)
+			if task[tool_name + "_task"] is None:
+				task_ins = task[task_cls](tool_name + "_task", prefLabel=locstr(en_str.replace('Tool', '') + " task", lang='en'))
+				# print(des)
+				task_ins.description.append(locstr(des, lang='en'))
+			# tool.usedByTask.append(task_ins)
+			# task_ins.hasProcessingTool.append(tool)
 			else:
-				task_ins = task[tool_name]
+				task_ins = task[tool_name + "_task"]
 			if (task_ins in tool.usedByTask) is False:
 				tool.usedByTask.append(task_ins)
 			if (tool in tool.hasProcessingTool) is False:
@@ -182,8 +185,11 @@ for d in jdata:
 	name = re.sub("^Tool [0-9: ]*", '', d['name']).strip()
 	name = OWLUtils.toolname_underline(name)
 	tool = SagaTool(name, prefLabel=locstr(d['name'], lang='en'))
-	tool.isToolOfSoftware.append(soft.SAGA_GIS)
+	tool.isToolOfSoftware.append(gb.SAGA_GIS)
 	tool.hasIdentifier = name
+	# task
+	des = ' '.join(d['comment'])
+	handle_task(name, d['name'], d['keywords'], des)
 	for key, value in d.items():
 		if type(value) is str:
 			string_value(key, value)
@@ -194,7 +200,7 @@ for d in jdata:
 			tool.hasExecutable = _exe
 			tool.hasUsage.append(value['cmd_line'])
 		elif key == 'keywords':
-			tool.hasKeywords.append('; '.join(value))
+			tool.hasKeywords.append(', '.join(value))
 		elif key == 'comment':
 			tool.comment.append(' '.join(value))
 		elif key == 'parameter' and value is not None:
@@ -206,8 +212,6 @@ for d in jdata:
 				elif item == 'options':
 					for optionItem in itemValue:
 						handle_options(optionItem)
-	# task
-	handle_task(name, d['name'], d['keywords'])
 
 onto.save(file='saga.owl', format="rdfxml")
 # update task ontology

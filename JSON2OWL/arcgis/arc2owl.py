@@ -11,23 +11,23 @@ import datetime
 
 model_uri = 'http://www.egc.org/ont/process/arcgis'
 onto = get_ontology(model_uri)
-onto, soft, gp, task, data = OWLUtils.load_common_for_process_tool(onto)
+onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class ArcGISTool(gp.ProcessingTool):
+	class ArcGISTool(gb.ProcessingTool):
 		pass
 
 
-	class ArcGISInput(gp.InputData):
+	class ArcGISInput(gb.InputData):
 		pass
 
 
-	class ArcGISOutput(gp.OutputData):
+	class ArcGISOutput(gb.OutputData):
 		pass
 
 
-	class ArcGISOption(gp.Option):
+	class ArcGISOption(gb.Option):
 		pass
 module_path = os.path.dirname(__file__)
 with open(module_path + '/arcgis.json', 'r') as f:
@@ -39,7 +39,7 @@ onto.metadata.title.append('ArcGIS Tools')
 onto.metadata.created.append(datetime.datetime.today())
 
 
-def handle_task(full_name, task_name):
+def handle_task(full_name, task_name, des):
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	task_types = re.findall("\([a-zA-Z0-9*\-' ]+\)", full_name)
 	# print(full_name)
@@ -51,14 +51,15 @@ def handle_task(full_name, task_name):
 	task_cls = config.get('task', task_type)
 	tool.hasKeywords.append(task_type)
 	# avoid duplicate
-	if not task[task_name]:
-		task_ins = task[task_cls](task_name, prefLabel=locstr(task_name.replace('_', ' '), lang='en'))
+	if not task[task_name + "_task"]:
+		task_ins = task[task_cls](task_name + "_task", prefLabel=locstr(task_name.replace('_', ' ') + " task", lang='en'))
 	else:
-		task_ins = task[task_name]
+		task_ins = task[task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
 		tool.usedByTask.append(task_ins)
 	if (tool in tool.hasProcessingTool) is False:
 		task_ins.hasProcessingTool.append(tool)
+	task_ins.description.append(locstr(des, lang='en'))
 
 
 def handle_parameters(param):
@@ -79,12 +80,13 @@ def handle_parameters(param):
 		p.hasDataTypeStr.append(param['type'])
 	p.description.append(param['desc'])
 	p.isOptional = param['isOptional']
+	# p.isMandatory = not param['isOptional']
 	datatype = param['type']
 	if datatype:
 		datatypes = []
 		if ";" in datatype: datatypes = str(datatype).split(";")
-		if "|" in datatype: datatypes = str(datatype).split("|")
-		if "," in datatype: datatypes = str(datatype).split(",")
+		elif "|" in datatype: datatypes = str(datatype).split("|")
+		elif "," in datatype: datatypes = str(datatype).split(",")
 		if len(datatypes) > 0:
 			for dt in datatypes:
 				dt = dt.strip().lower().replace(' ', '_')
@@ -113,16 +115,16 @@ for d in jdata:
 	else:
 		continue
 	tool = ArcGISTool(name_str, prefLabel=locstr(name_str, lang='en'))
-	tool.isToolOfSoftware.append(soft.ArcGIS)
+	tool.isToolOfSoftware.append(gb.ArcGIS)
 	tool.hasIdentifier = name_str
 	# tool.hasManualPageURL.append(d['manual_url'])
 	# tool.description.append(locstr(d['description'], lang='en'))
-	tool.abstract.append(d['summary'])
+	tool.abstract.append(locstr(d['summary'], lang='en'))
 	# tool.definition.append(d['definition'])
 	tool.hasUsage.append(' '.join(d['usage']))
 	tool.hasSyntax.append(d['syntax'])
 	tool.example.append(handle_example(d['example']))
-	handle_task(d['name'], name_str)
+	handle_task(d['name'], name_str, d['summary'])
 	for parameter in d['parameters']:
 		handle_parameters(parameter)
 
