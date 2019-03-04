@@ -6,6 +6,7 @@ from owlready2 import *
 from configparser import ConfigParser, NoOptionError
 from os import path
 
+
 class OWLUtils(object):
 
 	@staticmethod
@@ -24,24 +25,25 @@ class OWLUtils(object):
 		Returns: Ontology with imported ontologies
 		"""
 		onto_path.append(path.normpath(path.dirname(__file__)) + '/')
+		shacl = get_ontology('/shacl.rdf').load(only_local=True)
 		skos = get_ontology('/skos.rdf').load(only_local=True)
 		dcterms = get_ontology('/dcterms.rdf').load(only_local=True)
 		props = get_ontology('/UniProps.owl').load(only_local=True)
+		onto.imported_ontologies.append(shacl)
 		onto.imported_ontologies.append(props)
 		onto.imported_ontologies.append(skos)
 		onto.imported_ontologies.append(dcterms)
-		return onto
+		return onto,shacl,skos,dcterms,props
 
 	@staticmethod
 	def load_common_for_process_tool(onto: Ontology):
-		onto = OWLUtils.load_common(onto)
+		data = get_ontology('/data.owl').load(only_local=True)
 		gb = get_ontology('/gis-base.owl').load(only_local=True)
 		task = get_ontology('/task.owl').load(only_local=True)
-		data = get_ontology('/DataDescription.owl').load(only_local=True)
 		onto.imported_ontologies.append(gb)
 		onto.imported_ontologies.append(task)
 		onto.imported_ontologies.append(data)
-		return onto, gb, task,data
+		return onto, gb, task, data
 
 	@staticmethod
 	def create_onto_class(onto: Ontology, name, parent_class):
@@ -77,8 +79,19 @@ class OWLUtils(object):
 	def name_underline(name: str):
 		name = re.sub("\([a-zA-Z0-9* /]+\)", '', name.lower()).strip()
 		name = re.sub("\[[()a-zA-Z0-9*^\- /]+\]", '', name).strip()
-		return name.replace(" ", "_").replace(',', '').replace("(*)", '')
+		return name.replace(" ", "_").replace(',', '')
 
 	@staticmethod
 	def toolname_underline(name: str):
-		return name.lower().strip().replace('(', '').replace(')', '').replace(" ", "_").replace(',', '').replace("(*)", '')
+		name = re.sub('[()*&,]','',name.lower().strip())
+		name = re.sub('[ /]','_',name)
+		name = re.sub('[_]+','_',name)
+		return name
+
+	@staticmethod
+	def declear_prefix(prefix,onto):
+		o = Thing(onto.ontology.base_iri,namespace=onto.get_namespace(onto.ontology.base_iri))
+		pre = onto.get_namespace(base_iri='http://www.w3.org/ns/shacl#').PrefixDeclaration(prefix)
+		pre.prefix = [prefix]
+		pre.namespace = [onto.ontology.base_iri]
+		o.declare.append(pre)

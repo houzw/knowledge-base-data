@@ -45,8 +45,135 @@ test3 = "Available Choices: [0] Difference to left neighbour " \
 t = "Menu: Spatial and Geostatistics|Geographically Weighted Regression"
 t = t.replace("Menu: ", '')
 # print(re.split("\|", t))
-name= "Tool 13: Reprojecting a shapes layer"
-name = re.sub("^Tool [0-9]+: ",'',name)
+name = "Tool 13: Reprojecting a shapes layer"
+name = re.sub("^Tool [0-9]+: ", '', name)
 print(name)
-name2="Measured Points (PC)"
-print(re.sub("\([a-zA-Z ]+\)",'',name2))
+name2 = "Measured Points (PC)"
+print(re.sub("\([a-zA-Z ]+\)", '', name2))
+ttt = None
+if ttt:
+	print(True)
+else:
+	print(False)
+st = " / ? abscd, () *"
+st_r = re.sub('[()/?,*]', '', st)
+print(st_r)
+
+
+def get_choices(_options):
+	to_append_id = -1
+	to_remove_ids = []
+	for i, option in enumerate(_options):
+		if option['data_type'] == 'Choices':
+			to_append_id = i
+			print(to_append_id)
+			_options[to_append_id]['availableChoices'] = []
+			print(option['parameter_name'])
+		else:
+			if option['data_type'] == 'Choice':
+				to_remove_ids.append(i)
+				choice = dict()
+				print(option['parameter_name'])
+				choice['choice'] = option['parameter_name'].lower()
+				choice['description'] = option['explanation']
+				_options[to_append_id]['availableChoices'].append(choice)
+			else:
+				to_append_id = -1
+	# 倒序移除，避免移除时原列表变化导致索引超出范围
+	# to_remove_ids.sort(reverse=True) # sort 会修改 to_remove_ids 并返回None！
+	for i in sorted(to_remove_ids,reverse=True):
+		_options.pop(i)
+	return _options
+
+
+options = [
+	{
+	"flag": "channel",
+	"parameter_name": "Selected Channel",
+	"data_type": "Int",
+	"explanation": []
+	}, {
+	"flag": "ram",
+	"parameter_name": "Available RAM (Mb)",
+	"data_type": "Int",
+	"explanation": []
+	},
+	{
+		"flag": "structype",
+		"parameter_name": "Structuring Element Type",
+		"data_type": "Choices",
+		"explanation": []
+		},
+	{
+		"flag": "structype ball",
+		"parameter_name": "Ball",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "structype cross",
+		"parameter_name": "Cross",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "structype.ball.xradius",
+		"parameter_name": "The Structuring Element X Radius",
+		"data_type": "Int",
+		"explanation": [
+			"The Structuring Element X Radius."
+			]
+		},
+	{
+		"flag": "structype.ball.yradius",
+		"parameter_name": "The Structuring Element Y Radius",
+		"data_type": "Int",
+		"explanation": [
+			"The Structuring Element Y Radius."
+			]
+		},
+	{
+		"flag": "filter",
+		"parameter_name": "Morphological Operation",
+		"data_type": "Choices",
+		"explanation": []
+		},
+	{
+		"flag": "filter dilate",
+		"parameter_name": "Dilate",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "filter erode",
+		"parameter_name": "Erode",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "filter opening",
+		"parameter_name": "Opening",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "filter closing",
+		"parameter_name": "Closing",
+		"data_type": "Choice",
+		"explanation": []
+		},
+	{
+		"flag": "inxml",
+		"parameter_name": "Load otb application from xml file",
+		"data_type": "XML input parameters file",
+		"explanation": []
+		},
+	{
+		"flag": "outxml",
+		"parameter_name": "Save otb application to xml file",
+		"data_type": "XML output parameters file",
+		"explanation": []
+		}
+	]
+
+print(get_choices(options))

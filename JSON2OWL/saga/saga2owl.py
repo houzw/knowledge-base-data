@@ -10,11 +10,16 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/saga'
 onto = get_ontology(model_uri)
+onto, sh, skos, dcterms, props = OWLUtils.load_common(onto)
 onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
+# sh:declare
+# TODO TEST
+OWLUtils.declear_prefix('ns_saga', onto)
+
 with onto:
-	class SagaTool(gb.ProcessingTool):
+	class SagaTool(gb.GeoprocessingTool):
 		pass
 
 
@@ -30,10 +35,11 @@ with onto:
 		pass
 
 
-	# class SagaConstraint(cyber.Constraint):
-	# 	pass
+	class SagaConstraint(gb.Constraint):
+		pass
 
-	class SagaAvailableChoice(gb.AvailableChoice):
+
+	class SagaAvailableChoices(gb.AvailableChoices):
 		pass
 module_path = os.path.dirname(__file__)
 with open(module_path + '/saga.json', 'r') as f:
@@ -74,13 +80,14 @@ def get_format(option):
 	return _prop
 
 
-def string_value(str_key, str_value):
-	s_prop = get_property(str_key, DataProperty)
-	if not str_value or str_value == '' or str_value == '-':
-		pass
-	else:
-		tool.__getattr__(s_prop).append(str_value)
-
+# def string_value(str_key, str_value):
+# 	s_prop = get_property(str_key, DataProperty)
+# 	if not str_value or str_value == '' or str_value == '-':
+# 		pass
+# 	else:
+# 		if tool.__getattr__(s_prop) is None:
+# 			tool.__setattr__(s_prop, str_value)
+# 		else:tool.__getattr__(s_prop).append(str_value)
 
 def handle_inout(item_value, in_or_out):
 	for ioD in item_value:
@@ -88,79 +95,74 @@ def handle_inout(item_value, in_or_out):
 		io_name = ioD['name']
 		if io_name is None:
 			io_name = in_or_out
-		# localname = OWLUtils.name_underline(ioD['identifier'])
 		if in_or_out == 'input':
-			param = SagaInput(0, prefLabel=locstr(io_name, lang='en'))
-			# param =SagaInput('input_'+localname, prefLabel=locstr(io_name, lang='en'))
+			param = SagaInput(prefLabel=locstr(io_name, lang='en'))
+			# param = SagaInput(0,prefLabel=locstr(io_name, lang='en')) # blank node prefix with _:
 			tool.hasInputData.append(param)
+			param.isInputFile = True
 		else:
-			param = SagaOutput(0, prefLabel=locstr(io_name, lang='en'))
-			# param =SagaOutput('output_'+localname, prefLabel=locstr(io_name, lang='en'))
+			param = SagaOutput(prefLabel=locstr(io_name, lang='en'))
+			# param =SagaOutput(0, prefLabel=locstr(io_name, lang='en'))
 			tool.hasOutputData.append(param)
-		for k, v in ioD.items():
-			if k == 'type' and v:
-				vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?", v)
-				# print(v)
-				dformat = vr.group().strip()
-				# print(dformat)
-				if not get_format(dformat):
-					continue
-				# print(data[get_format(dformat)])
-				param.supportsDataFormat.append(data[get_format(dformat)])
-			if v is not None or v:
-				p = get_property(k, DataProperty)
-				if type(v) is str:
-					v = v.strip()
-				if v == {}:
-					continue
-				if param.__getattr__(p) is None or isinstance(param.__getattr__(p), bool):
-					param.__setattr__(p, v)
-				else:
-					param.__getattr__(p).append(v)
+			param.isOutputFile = True
+		if ioD['type']:
+			vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?", ioD['type'])
+			dformat = vr.group().strip()
+			if not get_format(dformat):
+				continue
+			param.supportsDataFormat.append(data[get_format(dformat)])
+		param.hasParameterName = ioD['name']
+		param.description.append(ioD['description'])
+		param.hasFlag.append(ioD['identifier'])
+		param.isOptional = ioD['optional']
 
 
 def handle_options(option):
 	op_name = option['name']
 	if op_name is None:
 		op_name = 'option'
-	op = SagaOption(0, prefLabel=locstr(name, lang='en'))
+	op = SagaOption(prefLabel=locstr(op_name, lang='en'))
 	tool.hasOption.append(op)
-	for k, v in option.items():
-		if k == "constraints" and v is not None:
-			# constraint = SagaConstraint(0,prefLabel=locstr(option['name'], lang='en'))
-			# indi.hasConstraint.append(constraint)
-			for itemK, itemV in v.items():
-				# functional 属性不能使用append
-				if itemK == 'availableChoices':
-					for choice in itemV:
-						availableChoices = SagaAvailableChoice(0, prefLabel=locstr(op_name + ' available choice', lang='en'))
-						availableChoices.hasChoice.append(choice['choice'])
-						if choice['description'] is not None and (choice['description'] != ' ' or choice['description'] != '-'):
-							availableChoices.description.append(choice['description'].strip())
-						op.hasAvailableChoice.append(availableChoices)
+	if option['description'] != '-':
+		op.description = option['description']
+	op.hasFlag.append(option['identifier'])
+	op.hasParameterName = OWLUtils.name_underline(op_name)
+	constraints = option['constraints']
+
+	if constraints:
+		if 'fields_des' in constraints.keys() and constraints['fields_des']:
+			op.description.append(constraints['fields_des'])
+		else:
+			sc = SagaConstraint(comment=locstr("shacl data constraint", lang='en'))
+			# sc = SagaConstraint(0,comment=locstr("shacl data constraint", lang='en'))
+			if 'parameters_des' in constraints.keys() and constraints['parameters_des']:
+				sc.description.append(constraints['parameters_des'])
+			op.hasConstraint.append(sc)
+			# shacl constraints
+			op.property.append(sc)
+			if 'minimum' in constraints.keys() and constraints['minimum']:
+				sc.minInclusive = constraints['minimum']
+				op.hasMinimum = constraints['minimum']  # not shacl
+			if 'default' in constraints.keys() and constraints['default']:
+				sc.defaultValue = constraints['default']
+				op.hasDefaultValue = constraints['default']  # not shacl
+				if option['type'] == 'Floating point':
+					sc.datatype.append(IRIS['http://www.w3.org/2001/XMLSchema#float'])
+				elif option['type'] == 'Boolean':
+					sc.datatype.append(IRIS['http://www.w3.org/2001/XMLSchema#boolean'])
+				elif option['type'] == 'Integer':
+					sc.datatype.append(IRIS['http://www.w3.org/2001/XMLSchema#integer'])
 				else:
-					p = get_property(itemK, DataProperty)
-					# constraint.__getattr__(p)会返回 str,float,bool等类型？
-					# 不能使用 append
-					try:
-						if option['type'] == 'Floating point':
-							op.__getattr__(p).append(float(itemV))
-						else:
-							op.__getattr__(p).append(itemV)
-					except AttributeError:
-						if option['type'] == 'Floating point':
-							op.__setattr__(p, float(itemV))
-						else:
-							op.__setattr__(p, itemV)
-		elif k == "description" and v == "-":
-			continue
-		elif type(v) is str:
-			v = OWLUtils.name_underline(v)
-			p = get_property(k, DataProperty)
-			op.__getattr__(p).append(v)
+					sc.datatype.append(IRIS['http://www.w3.org/2001/XMLSchema#string'])
+			if 'maximum' in constraints.keys() and constraints['maximum']:
+				sc.maxInclusive = constraints['maximum']
+				sc.xmls_maxinclusive = constraints['maximum']
+				op.hasMaximum = constraints['default']  # not shacl
+			op.hasDataTypeStr.append(option['type'])
+			if 'availableChoices' in constraints.keys() and constraints['availableChoices']:
+				handle_choices(op, op_name, constraints['availableChoices'])
 
-
-def handle_task(tool_name, en_str, keywords, des):
+def handle_task(tool_name, en_str, keywords, desc):
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	tasks = config.options('task')
 	for task_item in tasks:
@@ -170,7 +172,7 @@ def handle_task(tool_name, en_str, keywords, des):
 			if task[tool_name + "_task"] is None:
 				task_ins = task[task_cls](tool_name + "_task", prefLabel=locstr(en_str.replace('Tool', '') + " task", lang='en'))
 				# print(des)
-				task_ins.description.append(locstr(des, lang='en'))
+				task_ins.description.append(locstr(desc, lang='en'))
 			# tool.usedByTask.append(task_ins)
 			# task_ins.hasProcessingTool.append(tool)
 			else:
@@ -181,37 +183,50 @@ def handle_task(tool_name, en_str, keywords, des):
 				task_ins.hasProcessingTool.append(tool)
 
 
+def handle_choices(option_instance, option_name, choices):
+	previous_one = None
+	for choice in choices:
+		availableChoices = SagaAvailableChoices(comment=locstr(option_name + ' available choices', lang='en'))
+		# availableChoices = SagaAvailableChoices(0, comment=locstr(option_name + ' available choices', lang='en'))
+		# todo test
+		if previous_one is not None:
+			previous_one.rdf_rest = availableChoices
+		availableChoices.rdf_first = choice['choice']
+		availableChoices.hasChoice.append(choice['choice'])
+		if choice['description'] is not None and (choice['description'] != ' ' or choice['description'] != '-'):
+			availableChoices.description.append(choice['description'].strip())
+		option_instance.hasAvailableChoice.append(availableChoices)
+		previous_one = availableChoices
+	previous_one.rest = rdf_nil
+
+
 for d in jdata:
 	name = re.sub("^Tool [0-9: ]*", '', d['name']).strip()
 	name = OWLUtils.toolname_underline(name)
 	tool = SagaTool(name, prefLabel=locstr(d['name'], lang='en'))
 	tool.isToolOfSoftware.append(gb.SAGA_GIS)
 	tool.hasIdentifier = name
+	tool.hasManualPageURL.append(d['manual_url'])
 	# task
 	des = ' '.join(d['comment'])
 	handle_task(name, d['name'], d['keywords'], des)
-	for key, value in d.items():
-		if type(value) is str:
-			string_value(key, value)
-		if key == 'command':
-			_exe = value['exec']
-			if _exe is not None:
-				_exe = _exe.replace('saga_cmd ', '')
-			tool.hasExecutable = _exe
-			tool.hasUsage.append(value['cmd_line'])
-		elif key == 'keywords':
-			tool.hasKeywords.append(', '.join(value))
-		elif key == 'comment':
-			tool.comment.append(' '.join(value))
-		elif key == 'parameter' and value is not None:
-			for item, itemValue in value.items():
-				if item == 'inputs':
-					handle_inout(itemValue, 'input')
-				elif item == 'outputs':
-					handle_inout(itemValue, 'output')
-				elif item == 'options':
-					for optionItem in itemValue:
-						handle_options(optionItem)
+	_exe = d['command']['exec']
+	if _exe is not None:
+		_exe = _exe.replace('saga_cmd ', '')
+	tool.hasExecutable = _exe
+	tool.hasUsage.append(d['command']['cmd_line'])
+	tool.hasKeywords.append(', '.join(d['keywords']))
+	tool.comment.append(' '.join(d['comment']))
+	if d['parameter']:
+		for item, itemValue in d['parameter'].items():
+			if item == 'inputs':
+				handle_inout(itemValue, 'input')
+			elif item == 'outputs':
+				handle_inout(itemValue, 'output')
+			elif item == 'options':
+				for optionItem in itemValue:
+					handle_options(optionItem)
+
 
 onto.save(file='saga.owl', format="rdfxml")
 # update task ontology

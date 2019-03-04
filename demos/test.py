@@ -23,8 +23,6 @@ name = re.sub("^Tool [0-9: ]*", '', 'Tool Residual Analysis (Grid)').strip()
 name2 = re.sub("^Tool [0-9: ]*", '', 'Residual Analysis').strip()
 name =OWLUtils.toolname_underline(name)
 print(name)
-a= 'fffff'
-print(' '.join(a))
 
 from owlready2 import *
 onto  = get_ontology("http://aaa")
@@ -33,10 +31,4 @@ with onto:
 		pass
 	class p(DataProperty):
 		pass
-
-a1 = Aaa('test')
-a1.p = ['aaa']
-print(a1.p)
-print(a1.__getattr__('p'))
-print(a1.__getattr__('y'))
-# print(a1['y'])
+print(onto.ontology.base_iri)

@@ -9,4 +9,5 @@ call('python ./taudem/taudem2owl_new.py')
 call('python ./saga/saga2owl.py')
 call('python ./grass/grass2owl.py')
 call('python ./arcgis/arc2owl.py')
+call('python ./otb2owl/otb2owl.py')
 

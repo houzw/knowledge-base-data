@@ -13,6 +13,7 @@ class GrassModulesItem(Item):
 	name = Field()
 	definition = Field()
 	keywords = Field()
+	# syntax
 	synopsis = Field()
 	parameters = Field()
 	description = Field()

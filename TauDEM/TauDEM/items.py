@@ -15,5 +15,6 @@ class TaudemItem(scrapy.Item):
 	summary = Field()
 	usage = Field()
 	syntax = Field()
-	parameter = Field()
+	parameters = Field()
+	options = Field()
 	pass

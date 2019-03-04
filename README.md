@@ -32,14 +32,31 @@ scrapy genspider example example.com
     `scrapy crawl grass -o grass.json`
 - ArcGIS 下
     `scrapy crawl arcgis -o arcgis.json`
-
+- GDAL
+    'scrapy crawl gdal_spider -o gdal.json'
+- OTB
+    'scrapy crawl otb -o otb.json'
 ## 转换为owl本体
 - 去除csv或json中不合法的Unicode字符
+- 检查Json文件和文档内容是否匹配
 - 设计本体模型，包括类的层次结构的组织，属性和关系的设计等
 - JSON2OWL下编写转换方法并执行。如
   - csdms2owl.py
   - taudem2owl.py
 - 检查修正
+
+
+## TODO
+- whitebox-tools: https://github.com/jblindsay/whitebox-tools/
+- geographiclib: https://geographiclib.sourceforge.io/html/utilities.html
+- OSSIM(a powerful suite of geospatial libraries and applications used to process imagery, maps, terrain, and vector data.): https://trac.osgeo.org/ossim/wiki/OSSIMCommandLine
+- Sentinel Toolbox: https://sentinel.esa.int/web/sentinel/toolboxes
+- rsgislib: https://www.rsgislib.org/commandlineutilities.html
+- proj4: https://proj4.org/apps/index.html#apps
+- PDAL(Point Data Abstraction Library): https://pdal.io/
+- ...
+
+
 
 ## 性能设置
 settings.py

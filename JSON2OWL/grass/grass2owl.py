@@ -9,11 +9,12 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/grass'
 onto = get_ontology(model_uri)
+onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
 onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class GrassTool(gb.ProcessingTool):
+	class GrassTool(gb.GeoprocessingTool):
 		pass
 
 
@@ -64,27 +65,25 @@ def handle_parameters(param):
 	if 'isInputFile' in param.keys() and param['isInputFile']:
 		p = GrassInput(0, prefLabel=locstr(param['parameter'], lang='en'))
 		tool.hasInputData.append(p)
-		tool.isInputFile = param['isInputFile']
+		p.isInputFile = param['isInputFile']
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
 		p = GrassOutput(0, prefLabel=locstr(param['parameter'], lang='en'))
 		tool.hasOutputData.append(p)
-		tool.isOutputFile = param['isOutputFile']
+		p.isOutputFile = param['isOutputFile']
 	else:
 		p = GrassOption(0, prefLabel=locstr(param['parameter'], lang='en'))
 		tool.hasOption.append(p)
 	p.hasFlag.append(param['flag'])
-	p.hasParameterName.append(param['parameter'])
+	p.hasParameterName=param['parameter']
 	if 'dataType' in param.keys():
 		p.hasDataTypeStr.append(param['dataType'])
 	p.description.append(param['explanation'])
 	if 'defaultValue' in param.keys():
 		if param['defaultValue'] is not None: p.hasDefaultValue = param['defaultValue']
 	p.isOptional = param['optional']
-	# p.isMandatory = not param['optional']
 	if 'alternatives' in param.keys():
 		if param['alternatives']:
 			p.hasAlternatives.append(', '.join(param['alternatives']))
-
 
 def handle_task(tool_name, en_str, keywords,des):
 	config = OWLUtils.get_config(module_path + '/config.ini')
@@ -97,14 +96,10 @@ def handle_task(tool_name, en_str, keywords,des):
 			short_name = tool_name.split('.', maxsplit=1)[0]
 			task_name = config.get('tools', short_name) + '_' + tool_name.split('.', maxsplit=1)[1]
 			task_name = task_name.replace('.', '_')
-			# print(tool_name)
 			# avoid duplicate
 			if not task[task_name+"_task"]:
 				task_ins = task[task_cls](task_name+"_task", prefLabel=locstr(en_str+" task", lang='en'))
 				task_ins.description.append(locstr(des, lang='en'))
-			# tool.usedByTask.append(task_ins)
-			# # print(task_ins)
-			# task_ins.hasProcessingTool.append(tool)
 			else:
 				task_ins = task[task_name+"_task"]
 			if (task_ins in tool.usedByTask) is False:

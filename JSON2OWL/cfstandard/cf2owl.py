@@ -83,8 +83,8 @@ for alias in root.iter("alias"):
 	alias_name = alias.get('id')
 	label = alias_name.replace('_',' ')
 	alias_indi = cls[0](alias_name, prefLabel=locstr(label, lang='en'))
-	onto[entry_name].seeAlso.append(alias_indi)
-	# onto[entry_name].sameAs.append(alias_indi)
+	# sameAs
+	onto[entry_name].equivalent_to.append(alias_indi)
 
 # save created individuals
 onto.save()

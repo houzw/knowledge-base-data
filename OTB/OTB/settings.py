@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for GDAL project
+# Scrapy settings for OTB project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'GDAL'
+BOT_NAME = 'OTB'
 
-SPIDER_MODULES = ['GDAL.spiders']
-NEWSPIDER_MODULE = 'GDAL.spiders'
+SPIDER_MODULES = ['OTB.spiders']
+NEWSPIDER_MODULE = 'OTB.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'GDAL (+http://www.yourdomain.com)'
+#USER_AGENT = 'OTB (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'GDAL.middlewares.GdalSpiderMiddleware': 543,
+#    'OTB.middlewares.OtbSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'GDAL.middlewares.GdalDownloaderMiddleware': 543,
+#    'OTB.middlewares.OtbDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'GDAL.pipelines.GdalPipeline': 300,
+#    'OTB.pipelines.OtbPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

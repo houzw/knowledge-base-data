@@ -11,11 +11,12 @@ import datetime
 
 model_uri = 'http://www.egc.org/ont/process/arcgis'
 onto = get_ontology(model_uri)
+onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
 onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class ArcGISTool(gb.ProcessingTool):
+	class ArcGISTool(gb.GeoprocessingTool):
 		pass
 
 
@@ -65,17 +66,20 @@ def handle_task(full_name, task_name, des):
 def handle_parameters(param):
 	# 部分parameter不包含isInputFile等属性
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = ArcGISInput(0, prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISInput( prefLabel=locstr(param['name'], lang='en'))
+		# p = ArcGISInput(0, prefLabel=locstr(param['name'], lang='en'))
 		tool.hasInputData.append(p)
-		tool.isInputFile = param['isInputFile']
+		p.isInputFile = param['isInputFile']
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
-		p = ArcGISOutput(0, prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISOutput(prefLabel=locstr(param['name'], lang='en'))
+		# p = ArcGISOutput(0, prefLabel=locstr(param['name'], lang='en'))
 		tool.hasOutputData.append(p)
-		tool.isOutputFile = param['isOutputFile']
+		p.isOutputFile = param['isOutputFile']
 	else:
-		p = ArcGISOption(0, prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISOption( prefLabel=locstr(param['name'], lang='en'))
+		# p = ArcGISOption(0, prefLabel=locstr(param['name'], lang='en'))
 		tool.hasOption.append(p)
-	p.hasParameterName.append(param['name'])
+	p.hasParameterName=param['name']
 	if 'type' in param.keys() and param['type']:
 		p.hasDataTypeStr.append(param['type'])
 	p.description.append(param['desc'])
@@ -115,7 +119,7 @@ for d in jdata:
 	else:
 		continue
 	tool = ArcGISTool(name_str, prefLabel=locstr(name_str, lang='en'))
-	tool.isToolOfSoftware.append(gb.ArcGIS)
+	tool.isToolOfSoftware.append(gb.ArcGIS_Desktop)
 	tool.hasIdentifier = name_str
 	# tool.hasManualPageURL.append(d['manual_url'])
 	# tool.description.append(locstr(d['description'], lang='en'))

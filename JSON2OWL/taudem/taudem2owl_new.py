@@ -8,10 +8,8 @@ from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 
 model_uri = 'http://www.egc.org/ont/process/taudem'
 onto = get_ontology(model_uri)
+onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
 onto,  gb, task, data = OWLUtils.load_common_for_process_tool(onto)
-
-
-# print(onto.imported_ontologies)
 
 def get_property(option, prop_type):
 	"""
@@ -36,13 +34,6 @@ def get_property(option, prop_type):
 	return 'has' + option.capitalize()
 
 
-# if prop is None:
-# 	OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
-# 	return 'has' + option.capitalize()
-# else:
-# 	return prop
-
-
 def get_format(option):
 	config = OWLUtils.get_config(module_path+'/config.ini')
 	_prop = OWLUtils.get_option(config, 'format', option)
@@ -50,7 +41,7 @@ def get_format(option):
 
 
 with onto:
-	class TauDEMAnalysis(gb.ProcessingTool):
+	class TauDEMAnalysis(gb.GeoprocessingTool):
 		pass
 
 
@@ -97,9 +88,8 @@ def handle_params(tool_param, param_item):
 def handle_task(tool_name, en_str,des):
 	if task[tool_name+"_task"] is None:
 		task_ins = task['HydrologicalAnalysis'](tool_name+"_task", prefLabel=locstr(en_str+" task", lang='en'))
+		task_ins.is_a.append(task['TerrainAnalysis'])
 		task_ins.description.append(locstr(des,lang='en'))
-	# tool.usedByTask.append(task_ins)
-	# task_ins.hasProcessingTool.append(tool)
 	else:
 		task_ins = task[tool_name+"_task"]
 	if (task_ins in tool.usedByTask) is False:
@@ -109,7 +99,7 @@ def handle_task(tool_name, en_str,des):
 
 
 for d in jdata:
-	# 实例
+	# instance 实例
 	name = d['title'].strip().replace(' ', '_')
 	tool = onto.TauDEMAnalysis(name, prefLabel=locstr(d['title'], lang='en'))
 	tool.isToolOfSoftware.append(gb.TauDEM)

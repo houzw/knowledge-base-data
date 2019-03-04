@@ -11,6 +11,7 @@ from scrapy import Item,Field
 class GdalItem(Item):
 	# define the fields for your item here like:
 	name = Field()
+	# definition
 	summary = Field()
 	parameters = Field()
 	syntax = Field()
@@ -19,4 +20,5 @@ class GdalItem(Item):
 	options = Field()
 	description = Field()
 	exec = Field()
+	comment = Field()
 	pass
