@@ -10,11 +10,11 @@ from scrapy import Field
 
 
 class TaudemItem(scrapy.Item):
-	# define the fields for your item here like:
-	title = Field()
-	summary = Field()
+	name = Field()
+	description = Field()
 	usage = Field()
 	syntax = Field()
 	parameters = Field()
 	options = Field()
+	# category = Field()
 	pass

@@ -20,34 +20,44 @@ scrapy genspider example example.com
 
 
 ## run  Scrapy
-- 在 SWATArticle 目录下执行命令：
+- in SWATArticle  directory
   `scrapy crawl swat_article -o articles.csv`
-- 在 CSDMS 目录下执行
+- in CSDMS  directory
   `scrapy crawl csdms -o csdms.json`
-- 在 TauDEM 目录下执行
+  if only need hydrological models，modify start url, and execute
+  `scrapy crawl csdms -o hydro.json`
+- in TauDEM  directory
   `scrapy crawl taudem -o taudem.json`
-- 在 SAGA 目录下执行
+- in SAGA  directory
     `scrapy crawl saga -o saga.json`
-- GrassModules 下
+    > note: change "D Shapes Viewer" to "3D Shapes Viewer";
+- in GrassModules directory
     `scrapy crawl grass -o grass.json`
-- ArcGIS 下
+- in ArcGIS directory
     `scrapy crawl arcgis -o arcgis.json`
-- GDAL
-    'scrapy crawl gdal_spider -o gdal.json'
-- OTB
-    'scrapy crawl otb -o otb.json'
-## 转换为owl本体
+- in GDAL directory
+    `scrapy crawl gdal_spider -o gdal.json`
+- in OTB directory
+    `scrapy crawl otb -o otb.json`
+## mapping to owl
 - 去除csv或json中不合法的Unicode字符
 - 检查Json文件和文档内容是否匹配
+- 检查是否存在 name 属性为 null的，去掉这些对象
 - 设计本体模型，包括类的层次结构的组织，属性和关系的设计等
 - JSON2OWL下编写转换方法并执行。如
   - csdms2owl.py
   - taudem2owl.py
 - 检查修正
 
+> http://www.saga-gis.org/saga_tool_doc/7.1.1/ta_hydrology_1.html 中一段comment内容未能抽取：“Flow routing methods provided by this tool:
+    Deterministic 8 (aka D8, O'Callaghan & Mark 1984)
+    Rho 8 (Fairfield & Leymarie 1991)
+    Multiple Flow Direction (Freeman 1991, Quinn et al. 1991)
+    Deterministic Infinity (Tarboton 1997)”
 
 ## TODO
-- whitebox-tools: https://github.com/jblindsay/whitebox-tools/
+- https://github.com/OSGeo/gdal-docs
+- ~~whitebox-tools: https://github.com/jblindsay/whitebox-tools/~~
 - geographiclib: https://geographiclib.sourceforge.io/html/utilities.html
 - OSSIM(a powerful suite of geospatial libraries and applications used to process imagery, maps, terrain, and vector data.): https://trac.osgeo.org/ossim/wiki/OSSIMCommandLine
 - Sentinel Toolbox: https://sentinel.esa.int/web/sentinel/toolboxes
@@ -58,7 +68,7 @@ scrapy genspider example example.com
 
 
 
-## 性能设置
+## settings
 settings.py
 - CONCURRENT_REQUESTS
 - DOWNLOAD_DELAY

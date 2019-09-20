@@ -5,11 +5,18 @@
 from owlready2 import *
 import json
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
+from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
+from rdflib import URIRef
 
-model_uri = 'http://www.egc.org/ont/process/taudem'
-onto = get_ontology(model_uri)
-onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
-onto,  gb, task, data = OWLUtils.load_common_for_process_tool(onto)
+module_uri = 'http://www.egc.org/ont/process/taudem'
+onto = get_ontology(module_uri)
+# onto, skos, dcterms, props = OWLUtils.load_common(onto)
+onto, shacl, skos, dcterms, props, foaf = OWLUtils.load_common(onto)
+onto, geospatial = OWLUtils.load_geo_vocabl(onto)
+onto, gb, task, data, cyber, context = OWLUtils.load_common_for_process_tool(onto)
+
+print('ontologies imported')
+
 
 def get_property(option, prop_type):
 	"""
@@ -22,26 +29,35 @@ def get_property(option, prop_type):
 	Returns: created property name
 
 	"""
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'taudem', option)
 	# 返回配置的属性或是已有的属性（has[Name]）
 	if _prop is not None:
 		return _prop
 	else:
-		_prop = gb.__getattr__('has' + option.capitalize())
+		_prop = gb.__getattr__(option)
 		if _prop is None:
-			OWLUtils.create_onto_class(onto, 'has' + option.capitalize(), prop_type)
-	return 'has' + option.capitalize()
+			OWLUtils.create_onto_class(onto, option, prop_type)
+	return option
 
 
 def get_format(option):
-	config = OWLUtils.get_config(module_path+'/config.ini')
+	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'format', option)
 	return _prop
 
 
+def get_task_class(tool_name):
+	config = OWLUtils.get_config(module_path + '/config.ini')
+	tool_cls = ''  # only one
+	for k, v in config.items('task'):
+		if tool_name in v:
+			tool_cls = k
+	return tool_cls
+
+
 with onto:
-	class TauDEMAnalysis(gb.GeoprocessingTool):
+	class TauDEMAnalysis(gb.GeoprocessingFunctionality):
 		pass
 
 
@@ -55,15 +71,13 @@ with onto:
 
 	class TauDEMOption(gb.Option):
 		pass
-module_path = os.path.dirname(__file__)
-with open(module_path + '/taudem.json', 'r') as f:
-	jdata = json.load(f)  # list
 
 onto.metadata.creator.append('houzhiwei')
 onto.metadata.title.append('TauDEM Tools')
 import datetime
 
 onto.metadata.created.append(datetime.datetime.today())
+onto.metadata.versionInfo.append('5.3')
 
 
 def handle_params(tool_param, param_item):
@@ -73,66 +87,90 @@ def handle_params(tool_param, param_item):
 		if itemK == 'dataType' and get_format(itemV) is not None:
 			tool_param.supportsDataFormat.append(data[get_format(itemV)])
 		_prop = get_property(itemK, DataProperty)
-		try:
-			if type(itemV) == list:
-				tool_param.__getattr__(_prop).append(''.join(itemV))
-			else:
-				tool_param.__getattr__(_prop).append(itemV)
-		except AttributeError:
-			if type(itemV) == list:
-				tool_param.__setattr__(_prop, ''.join(itemV))
-			else:
-				tool_param.__setattr__(_prop, itemV)
+		if type(itemV) == list:
+			itemV = ''.join(itemV)
+		OWLUtils.set_data_property(tool_param, _prop, itemV)
 
 
-def handle_task(tool_name, en_str,des):
-	if task[tool_name+"_task"] is None:
-		task_ins = task['HydrologicalAnalysis'](tool_name+"_task", prefLabel=locstr(en_str+" task", lang='en'))
+def handle_task(tool, tool_name, en_str, des):
+	if task[tool_name + "_task"] is None:
+		# title
+		cls = get_task_class(en_str)
+		task_ins = task[cls](tool_name + "_task", prefLabel=locstr(en_str + " task", lang='en'))
 		task_ins.is_a.append(task['TerrainAnalysis'])
-		task_ins.description.append(locstr(des,lang='en'))
+		task_ins.description.append(locstr(des, lang='en'))
+		task_ins.isAtomicTask = True
 	else:
-		task_ins = task[tool_name+"_task"]
+		task_ins = task[tool_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
 		tool.usedByTask.append(task_ins)
-	if (tool in tool.hasProcessingTool) is False:
-		task_ins.hasProcessingTool.append(tool)
+	if (tool in tool.processingTool) is False:
+		task_ins.processingTool.append(tool)
 
 
-for d in jdata:
-	# instance 实例
-	name = d['title'].strip().replace(' ', '_')
-	tool = onto.TauDEMAnalysis(name, prefLabel=locstr(d['title'], lang='en'))
-	tool.isToolOfSoftware.append(gb.TauDEM)
-	for k, v in d.items():
-		# 外层, 参数
-		if k == 'parameter' and type(v) == list:
-			for i, item in enumerate(v):
-				localname = v[i]['parameter']
-				if localname.lower().startswith('input_', 0, len('input_')):
-					param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-					tool.hasInputData.append(param)
-					handle_params(param, item)
-				elif localname.lower().startswith('output_', 0, len('output_')):
-					param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-					tool.hasOutputData.append(param)
-					handle_params(param, item)
-				else:
-					o = TauDEMOption(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-					tool.hasOption.append(o)
-					handle_params(o, item)
-		else:
-			prop = get_property(k, DataProperty)
-			if not v:
-				continue
-			if type(v) == list:
-				if len(v) > 0:
-					tool.__getattr__(prop).append(''.join(v))
+def map_to_owl(json_data):
+	for d in json_data:
+		"""mapping json data to ontology properties"""
+		# instance 实例
+		name = Preprocessor.name_underline(d['name'])
+		toolClass = tool_class(d['name'])
+		tool = toolClass(name, prefLabel=locstr(d['name'], lang='en'))
+		tool.isToolOfSoftware.append(cyber.TauDEM)
+		summary = OWLUtils.join_list(d['description'])
+
+		keywords = OWLUtils.to_keywords(summary)
+		keywords.extend(name.replace('_', ' ').split(' '))
+		# keywords=name.replace('_', ' ').split(' ')
+		OWLUtils.link_to_domain_concept(tool, keywords)
+
+		for k, v in d.items():
+			# 外层, 参数
+			if k == ('parameters' or 'options') and type(v) == list:
+				for i, item in enumerate(v):
+					localname = v[i]['parameterName']
+					if localname.lower().startswith('input_', 0, len('input_')):
+						# param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						param = TauDEMInput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						# input geo data ? rule: format-> geoformat->geo data
+						tool.inputData.append(param)
+						handle_params(param, item)
+					elif localname.lower().startswith('output_', 0, len('output_')):
+						# param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						param = TauDEMOutput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						tool.outputData.append(param)
+						handle_params(param, item)
+					else:
+						# o = TauDEMOption(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						o = TauDEMOption(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						tool.option.append(o)
+						handle_params(o, item)
 			else:
-				tool.__getattr__(prop).append(v)
-	# task
-	handle_task(name, d['title'], ' '.join(d['summary']))
+				prop = get_property(k, DataProperty)
+				if not v:
+					continue
+				if type(v) == list and len(v) > 0:
+					print(v)
+					v = ''.join(v)
+				OWLUtils.set_data_property(tool, prop, v)
+		# task
+		handle_task(tool, name, d['name'], summary)
+		OWLUtils.application_category(tool, 'Geomorphometry', 'digital terrain analysis', 'hydrology')
 
-onto.save(file='taudem.owl', format="rdfxml")
-# update task ontology
-task.save()
-print('TAUDEM Done!')
+
+def tool_class(tool_name):
+	tool_cls = get_task_class(tool_name)
+	return OWLUtils.create_onto_class(onto, tool_cls, TauDEMAnalysis)
+
+
+if __name__ == "__main__":
+	module_path = os.path.dirname(__file__)
+	with open(module_path + '/taudem.json', 'r') as f:
+		jdata = json.load(f)  # list
+	# otherwise will report stack overflow exception
+	threading.stack_size(200000)
+	thread = threading.Thread(target=map_to_owl(jdata))
+	thread.start()
+	onto.save(file='taudem.owl', format="rdfxml")
+	# update task ontology
+	task.save()
+	print('TAUDEM Done!')

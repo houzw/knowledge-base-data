@@ -10,6 +10,7 @@
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'TauDEM'
+LOG_LEVEL = 'ERROR'
 
 SPIDER_MODULES = ['TauDEM.spiders']
 NEWSPIDER_MODULE = 'TauDEM.spiders'

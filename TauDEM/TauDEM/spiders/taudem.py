@@ -21,31 +21,45 @@ class TaudemSpider(scrapy.Spider):
 
 	def parse_tool(self, resp):
 		item = TaudemItem()
-		item['title'] = resp.xpath("//h1[@class='gpHeading']/text()").extract_first().strip()
+		item['name'] = resp.xpath("//h1[@class='gpHeading']/text()").extract_first().strip()
 		# 不止一个文本节点，因此使用 //text() 并使用 extract()
-		item['summary'] = resp.xpath("//div[@class='gpItemInfo'][1]//p/span//text()").extract().strip()
-		item['usage'] = resp.xpath("//div[@class='gpItemInfo'][2]//p//span//text()").extract().strip()
-		item['syntax'] = resp.xpath("//h2[text()='Syntax'][1]/following-sibling::div/p/text()").extract_first().strip()
-		item['parameters'],item['options'] = self.parse_parameter(resp)
+		item['description'] = resp.xpath("//div[@class='gpItemInfo'][1]//p/span//text()").extract()
+		item['usage'] = self.get_usage(resp)
+		item['syntax'] = resp.xpath("//h2[text()='Syntax'][1]/following-sibling::div/p/text()").extract_first()
+		item['parameters'], item['options'] = self.parse_parameter(resp)
 		return item
+
+	def get_usage(self, resp):
+		usage = resp.xpath("//div[@class='gpItemInfo'][2]//p//span//text()").extract()
+		usage = [item for item in usage if item != "Command Prompt Syntax:"]
+		return ' '.join(usage)
 
 	def parse_parameter(self, resp):
 		"""提取parameter说明"""
 		trs = resp.xpath("//div/table//tr[position()>1]")
 		params = []
 		options = []
-		param = dict()
 		for tr in trs:
-			param["parameter"] = tr.xpath("./td[1]/text()").extract_first().strip()
-			param["explanation"] = tr.xpath("./td[2]/div//span//text()").extract().strip()
+			param = dict()
+			param["parameterName"] = tr.xpath("./td[1]/text()").extract_first().strip()
+			param["description"] = tr.xpath("./td[2]/div//span//text()").extract()
 			param["dataType"] = tr.xpath("./td[3]/text()").extract_first().strip()
+			name = str(param["parameterName"])
 			if tr.xpath("./td[1][contains(text(),'Optional')]"):
-				param["optional"] = True
-				options.append(param)
-			if str(param["parameter"]).startswith("Input"):
+				param["isOptional"] = True
+			else:
+				param["isOptional"] = False
+			if ("Input_" in name) and ('Input_Number_of_Processes' != name):
 				param['isInputFile'] = True
+				param['isOutputFile'] = False
 				params.append(param)
-			elif str(param["parameter"]).startswith("Output"):
+			elif "Output_" in name:
+				param['isInputFile'] = False
 				param['isOutputFile'] = True
 				params.append(param)
-		return params,options
+			else:
+				param['isInputFile'] = False
+				param['isOutputFile'] = False
+				param["isOptional"] = True
+				options.append(param)
+		return params, options
