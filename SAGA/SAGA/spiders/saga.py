@@ -8,49 +8,71 @@ import re
 class SagaSpider(scrapy.Spider):
 	name = 'saga'
 	allowed_domains = ['saga-gis.org']
-	start_urls = ['http://www.saga-gis.org/saga_tool_doc/7.1.1/a2z.html']
-	base_url = 'http://www.saga-gis.org/saga_tool_doc/7.1.1/'
+	start_urls = ['http://www.saga-gis.org/saga_tool_doc/7.3.0/a2z.html']
+	base_url = 'http://www.saga-gis.org/saga_tool_doc/7.3.0/'
 
 	def parse(self, response):
 		alist = response.xpath('//table//tr[position()>1]/td[1]/a')
-		# print(alist)
-		# yield scrapy.Request('http://www.saga-gis.org/saga_tool_doc/7.1.1/pointcloud_tools_10.html', callback=self.parse_content)
-
+		# yield scrapy.Request('http://www.saga-gis.org/saga_tool_doc/7.3.0/pointcloud_tools_10.html', callback=self.parse_content)
 		for a in alist:
 			next_url = a.css("a::attr(href)").extract_first()
+			# skip deprecated and interactive functionalities
 			if re.match("\[deprecated\]", a.css("a::text").extract_first()):
 				continue
-			# print(next_url)
+			if '(interactive)' in a.css("a::text").extract_first():
+				continue
 			yield scrapy.Request(self.base_url + next_url, callback=self.parse_content)
 
 	def parse_content(self, resp):
 		item = SagaItem()
 		item['manual_url'] = resp.url
-		item['name'] = resp.xpath("//main/h1/text()").extract_first()
-		item['comment'] = resp.xpath("//main/p//text()").extract()
+		name = resp.xpath("//main/h1/text()").extract_first()
+		name = re.sub("^Tool([ 0-9:]+)?", '', name)
+		item['name'] = name
+		item['description'] = resp.xpath("//main/p//text()").extract()
+		# Tool Mass Balance Index
+		if ' '.join(item['description']).strip().startswith("References"):
+			item['references'] = item['description']
+			item['description'] = []
+		else:
+			item['references'] = self.parse_references(resp)
+		item['authors'] = self.parse_authors(resp)
 		item['keywords'] = self.parse_keywords(resp)
 		item['command'] = self.parse_cmd(resp)
-		item['parameter'] = self.parse_parameters(resp)
+		item['parameters'] = self.parse_parameters(resp)
 		return item
 
+	def parse_references(self, resp):
+		lis = resp.xpath("//main/ul[preceding::h3[1]/em/text()='References'][1]//li")
+		references = [' '.join(li.xpath(".//text()").extract()) for li in lis]
+		return references
+
+	def parse_authors(self, resp):
+		path = "//main/ul/li[contains(text(),'Author')][1]/text()"
+		words = resp.xpath(path).extract_first()
+		if words is None:
+			return []
+		words = words.replace("Author: ", '')
+		return re.split("\|", words)
+
 	def parse_keywords(self, resp):
-		words = resp.xpath("//main/ul/li[2]/text()").extract_first()
+		path = "//main/ul/li[contains(text(),'Menu')][1]/text()"
+		words = resp.xpath(path).extract_first()
 		if words is None:
 			return []
 		words = words.replace("Menu: ", '')
 		return re.split("\|", words)
 
 	def parse_cmd(self, resp):
-		# print(resp.url)
 		cmd = dict()
+		# executable
 		cmd['exec'] = resp.xpath("normalize-space(//main/pre[@class='usage']/strong/text())").extract_first()
-		cmd['cmd_line'] = resp.xpath("normalize-space(//main/pre[@class='usage'])").extract_first()
+		# usage
+		cmd['cmd_line'] = resp.xpath("normalize-space(//main/pre[@class='usage'])").extract_first().replace('Usage:', '')
 		return cmd
 
 	def parse_parameters(self, resp):
-		# print(resp.url)
 		table = resp.xpath("//main//table[last()]")
-		# print(table)
 		trs = table.xpath(".//tr[position()>1]")
 		parameter = dict()
 		input_trs = []
@@ -72,7 +94,6 @@ class SagaSpider(scrapy.Spider):
 			elif tr.xpath("./td[1][contains(text(),'Options')]"):
 				options_trs.extend(trs[(in_rows + out_rows):])
 		parameter['inputs'] = self.inputs_handler(input_trs)
-		print(parameter['inputs'])
 		parameter['outputs'] = self.outputs_handler(output_trs)
 		parameter['options'] = self.options_handler(options_trs)
 		return parameter
@@ -90,9 +111,11 @@ class SagaSpider(scrapy.Spider):
 			input_param['isInputFile'] = True
 			if str(name).endswith('(*)'):
 				optional = True
-			input_param['optional'] = optional
-			input_param['type'] = self.type_handler(tr, i + 2)
-			input_param['identifier'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			input_param['isOptional'] = optional
+			input_param['dataType'] = self.type_handler(tr, i + 2)
+			input_param['flag'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			if name is None:
+				input_param['name'] = input_param['flag']
 			des = tr.xpath("./td[" + str(i + 4) + "]/text()").extract_first()
 			if des is not None:
 				des = des.replace('"-"', "")
@@ -114,9 +137,11 @@ class SagaSpider(scrapy.Spider):
 			output['isOutputFile'] = True
 			if str(name).endswith('(*)'):
 				optional = True
-			output['optional'] = optional
+			output['isOptional'] = optional
 			output['type'] = self.type_handler(tr, i + 2)
-			output['identifier'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			output['flag'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			if name is None:
+				output['name'] = output['flag']
 			des = tr.xpath("./td[" + str(i + 4) + "]/text()").extract_first()
 			if des is not None:
 				des = des.replace('"-"', "")
@@ -127,19 +152,20 @@ class SagaSpider(scrapy.Spider):
 
 	def options_handler(self, trs):
 		options = []
-		# 有问题
+		# bugs 有问题
 		for tr in trs:
-			# print(tr)
 			option = dict()
 			i = 0
 			if tr.xpath("./td[1][normalize-space(@class)='labelSection']"):
 				i = 1
 			name = tr.xpath("./td[" + str(i + 1) + "]/text()").extract_first()
-			if name=='(*) optional':
+			if name == '(*) optional':
 				continue
 			option['name'] = name
-			option['type'] = self.type_handler(tr, i + 2)
-			option['identifier'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			option['dataType'] = self.type_handler(tr, i + 2)
+			option['flag'] = tr.xpath("./td[" + str(i + 3) + "]/code/text()").extract_first()
+			if name is None:
+				option['name'] = option['flag']
 			description = tr.xpath("./td[" + str(i + 4) + "]/text()").extract_first()
 			if description is not None:
 				description.strip().replace('-', "")
@@ -178,7 +204,7 @@ class SagaSpider(scrapy.Spider):
 		# print(constraints['maximum'])
 		default_val = re.search("Default: [\w\.]+", constraints_str)
 		if default_val is not None:
-			constraints['default'] = default_val.group().replace("Default: ", '')
+			constraints['defaultValue'] = default_val.group().replace("Default: ", '')
 		# print(constraints['default'])
 		available_choices = re.search("Available Choices: [\[\]\w()% -]+[Default:]?", constraints_str)
 		availableChoices = []

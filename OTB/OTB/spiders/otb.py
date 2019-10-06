@@ -63,19 +63,19 @@ class OtbSpider(scrapy.Spider):
 		for tr in trs[1:]:
 			param = dict()
 			param['flag'] = tr.xpath('./td[1]/text()').extract_first()
-			param['parameter_name'] = tr.xpath('./td[2]/text()').extract_first()
-			param['data_type'] = tr.xpath('./td[3]//text()').extract_first()
-			if param['data_type']=='Group':
+			param['parameterName'] = tr.xpath('./td[2]/text()').extract_first()
+			param['dataType'] = tr.xpath('./td[3]//text()').extract_first()
+			if param['dataType']=='Group':
 				continue
-			if param['data_type'] == 'Choices':
+			if param['dataType'] == 'Choices':
 				param['availableChoices'] = []
 			param['explanation'] = [value for key, value in explanation.items() if key.lower() == param['parameter_name'].lower()]
-			# if 'input' in (param['parameter_name'].lower() or param['data_type'].lower()):
-			if 'input' in param['data_type'].lower():
+			# if 'input' in (param['parameter_name'].lower() or param['dataType'].lower()):
+			if 'input' in param['dataType'].lower():
 				param['isInputFile'] = True
 				params.append(param)
-			elif 'output' in param['data_type'].lower():
-			# elif 'output' in (param['parameter_name'].lower() or param['data_type'].lower()):
+			elif 'output' in param['dataType'].lower():
+			# elif 'output' in (param['parameter_name'].lower() or param['dataType'].lower()):
 				param['isOutputFile'] = True
 				params.append(param)
 			else:
@@ -87,10 +87,10 @@ class OtbSpider(scrapy.Spider):
 		to_append_id = -1
 		to_remove_ids = []
 		for i, option in enumerate(_options):
-			if option['data_type'] == 'Choices':
+			if option['dataType'] == 'Choices':
 				to_append_id = i
 			else:
-				if option['data_type'] == 'Choice':
+				if option['dataType'] == 'Choice':
 					to_remove_ids.append(i)
 					choice = dict()
 					choice['choice'] = option['flag'].split()[1]

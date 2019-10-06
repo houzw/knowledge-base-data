@@ -78,7 +78,7 @@ class GrassSpider(Spider):
 			flag_exp = dds.xpath('.//text()').extract()
 			flags.append(
 				{'parameter': str(flag).replace("-", ""), 'flag': flag, 'explanation': ' '.join(flag_exp),
-				 'optional': True, })
+				 'isOptional': True, })
 		return flags
 
 	def parse_params(self, selector):
@@ -116,7 +116,7 @@ class GrassSpider(Spider):
 			require = dt.xpath('./b[2]/text()').extract_first()
 			if require == '[required]':
 				optional = False
-			parameter['optional'] = optional
+			parameter['isOptional'] = optional
 			# 后面的所有非空节点
 			dds_test = dt.xpath('./following-sibling::node()[not(string-length(text())=0)]')
 			dd_list = []
@@ -125,9 +125,7 @@ class GrassSpider(Spider):
 				if len(item.css('dt')) > 0:
 					break
 				dd_list.append(item)
-			# print("dd_list %s" % dd_list)
-			# dds = dt.xpath('./following-sibling::dd[following-sibling::dt[1] or not(following-sibling::dt)]')
-			# print("dds %s" % dds)
+
 			(explanation, alternatives, default) = self.parse_explanation(dd_list)
 			parameter['explanation'] = explanation
 			parameter['defaultValue'] = default
@@ -172,30 +170,35 @@ class GrassSpider(Spider):
 				default = item.xpath('./em[parent::dd[contains(normalize-space(text()),"Default:")]][1]/text()').extract_first()
 				if not default:
 					continue
-			# print("default %s" % default)
 		# 整理格式
 		if alternatives is not None:
 			alternatives = alternatives.split(',')
 			alternatives = [x.strip() for x in alternatives]
-		# if default is not None:
-		# 	default = default.split(',')
-		# 	default = [x.strip() for x in default]
+
 		return explanation, alternatives, default
 
 	def parse_des(self, selector):
-		desc_selector = selector.xpath(".//a[@name='description']/parent::h2")
-		em = desc_selector.xpath("normalize-space(./following-sibling::em/text())").extract_first()
-		# print('em %s' % em)
-		des = desc_selector.xpath(
-			"normalize-space(./following-sibling::em/following-sibling::text())").extract()
-		# print('des %s' % des)
-		return str(em) + ' ' + str(' '.join(des))
+		desc_selectors = selector.xpath(".//text()[preceding::h2/a[@name='description'] and following::h2/a[@name='notes' or @name='note']]")
+
+		description = ' '.join(desc_selectors.extract())
+		if not description:
+			desc_selectors = selector.xpath(".//text()[preceding::h2/a[@name='description'] and following::h2/a[@name='see-also']]")
+			description = ' '.join(desc_selectors.extract())
+			# 避免词和词连在一起
+			description = description.replace('\n','\n ')
+		description = re.sub("(\s){2,}",' ',description)
+		return description
 
 	def parse_notes(self, selector):
 		notes = selector.xpath(
-			"normalize-space(.//text()[preceding-sibling::h2[child::a[@name='notes']] and following-sibling::h2[child::a[@name='see-also']]])").extract()
+			".//text()[preceding::h2/a[@name='notes' or @name='note'] and following::h2/a[@name='see-also']]").extract()
+		if not ' '.join(notes):
+			notes = selector.xpath(
+				".//text()[preceding::h2/a[@name='notes' or @name='note'] and following::h2/a[@name='examples']]").extract()
 		# print('notes %s' % notes)
-		return ' '.join(notes)
+		note_str = ' '.join(notes)
+		note_str = re.sub("(\s){2,}",' ',note_str)
+		return note_str
 
 	def parse_see_also(self, selector):
 		also_selector = selector.xpath(".//a[@name='see-also']/parent::h2")

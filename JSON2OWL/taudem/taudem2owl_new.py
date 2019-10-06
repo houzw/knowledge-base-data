@@ -6,7 +6,6 @@ from owlready2 import *
 import json
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
-from rdflib import URIRef
 
 module_uri = 'http://www.egc.org/ont/process/taudem'
 onto = get_ontology(module_uri)
@@ -116,25 +115,26 @@ def map_to_owl(json_data):
 		toolClass = tool_class(d['name'])
 		tool = toolClass(name, prefLabel=locstr(d['name'], lang='en'))
 		tool.isToolOfSoftware.append(cyber.TauDEM)
-		summary = OWLUtils.join_list(d['description'])
+		description = OWLUtils.join_list(d['description'])
 
-		keywords = OWLUtils.to_keywords(summary)
+		keywords = OWLUtils.to_keywords(description)
 		keywords.extend(name.replace('_', ' ').split(' '))
 		# keywords=name.replace('_', ' ').split(' ')
 		OWLUtils.link_to_domain_concept(tool, keywords)
 
 		for k, v in d.items():
 			# 外层, 参数
-			if k == ('parameters' or 'options') and type(v) == list:
+			if (k in ['parameters', 'options']) and type(v) == list:
 				for i, item in enumerate(v):
-					localname = v[i]['parameterName']
-					if localname.lower().startswith('input_', 0, len('input_')):
+					# localname = v[i]['parameterName']
+					localname = Preprocessor.space_2_underline(item['parameterName'])
+					if item['isInputFile']:
 						# param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 						param = TauDEMInput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 						# input geo data ? rule: format-> geoformat->geo data
 						tool.inputData.append(param)
 						handle_params(param, item)
-					elif localname.lower().startswith('output_', 0, len('output_')):
+					elif item['isOutputFile']:#localname.lower().startswith('output_', 0, len('output_')):
 						# param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 						param = TauDEMOutput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
 						tool.outputData.append(param)
@@ -149,11 +149,10 @@ def map_to_owl(json_data):
 				if not v:
 					continue
 				if type(v) == list and len(v) > 0:
-					print(v)
 					v = ''.join(v)
 				OWLUtils.set_data_property(tool, prop, v)
 		# task
-		handle_task(tool, name, d['name'], summary)
+		handle_task(tool, name, d['name'], description)
 		OWLUtils.application_category(tool, 'Geomorphometry', 'digital terrain analysis', 'hydrology')
 
 

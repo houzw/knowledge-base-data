@@ -1,0 +1,1064 @@
+[
+  {
+    "name": "gdal_retile",
+    "exec": "gdal_retile",
+    "summary": "Retiles a set of tiles and/or build tiled pyramid levels.",
+    "description": "This utility will retile a set of input tile(s). All the input tile(s) must\nbe georeferenced in the same coordinate system and have a matching number of bands.\nOptionally pyramid levels are generated. It  is  possible to generate  shape file(s) for the tiled output. If your number of input tiles exhausts the command line buffer, use the general\n \u2013optfile  option",
+    "syntax": "gdal_retile.py [-v] [-co NAME=VALUE] * [-of out_format] [-ps pixelWidth pixelHeight] [-overlap val_in_pixel] [-ot { Byte / Int16 / UInt16 / UInt32 / Int32 / Float32 / Float64 / CInt16 / CInt32 / CFloat32 / CFloat64 }] ' [-tileIndex tileIndexName [-tileIndexField tileIndexFieldName]] [-csv fileName [-csvDelim delimiter]] [-s_srs srs_def] [-pyramidOnly] [-r { near / bilinear / cubic / cubicspline / lanczos }] -levels numberoflevels [-useDirForEachRow] [-resume] -targetDir TileDirectory input_files",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-targetDir",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "directory",
+        "explanation": "The directory where the tile result is created. Pyramids are stored\nin  sub-directories  numbered  from  1. Created tile names have a numbering\nschema and contain the name of the source tiles(s) \n"
+      },
+      {
+        "flag": "-of",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format",
+        "explanation": "Select the output format. Starting with GDAL 2.3, if not specified, the\nformat is guessed from the extension (previously was GTiff). Use the short\nformat name. \n"
+      },
+      {
+        "flag": "-co",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "co",
+        "explanation": "Many formats have one or more optional creation options that can be\nused to control particulars about the file created. For instance,\nthe GeoTIFF driver supports creation options to control compression,\nand whether the file should be tiled. \n The creation options available vary by format driver, and some\nsimple formats have no creation options at all. A list of options\nsupported for a format can be listed with the\n \u2013formats \ncommand line option but the documentation for the format is the\ndefinitive source of information on driver creation options.\nSee  Raster drivers  format\nspecific documentation for legal creation options for each format. \n"
+      },
+      {
+        "flag": "-ot",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "type",
+        "explanation": "Force the output image bands to have a specific type. Use type names\n(i.e.  Byte ,  Int16 ,\u2026) \n"
+      },
+      {
+        "flag": "-ps",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<pixelsize_x> <pixelsize_y>",
+        "available_values": null,
+        "name": "ps",
+        "explanation": "Pixel size to be used for the\noutput file.  If not specified, 256 x 256 is the default \n"
+      },
+      {
+        "flag": "-overlap<",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "val_in_pixel",
+        "explanation": "Overlap in pixels between consecutive tiles. If not specified, 0 is the default \n ..versionadded:: 2.2 \n"
+      },
+      {
+        "flag": "-levels",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "numberoflevels",
+        "explanation": "Number of pyramids levels to build. \n"
+      },
+      {
+        "flag": "-v",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "v",
+        "explanation": "Generate verbose output of tile operations as they are done. \n"
+      },
+      {
+        "flag": "-pyramidOnly",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "pyramidonly",
+        "explanation": "No retiling, build only the pyramids \n"
+      },
+      {
+        "flag": "-r",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "algorithm",
+        "explanation": "Resampling algorithm, default is near \n"
+      },
+      {
+        "flag": "-s_srs",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "srs_def",
+        "explanation": "Source spatial reference to use. The coordinate systems  that  can  be\npassed  are  anything  supported by the OGRSpatialReference.SetFromUserInput()  call,\nwhich  includes  EPSG, PCS, and GCSes (i.e. EPSG:4296), PROJ.4 declarations (as above),\nor the name of a .prj file containing well known text.\nIf  no  srs_def  is  given,  the srs_def  of the source tiles is used (if there is any).\nThe srs_def will be propagated to created tiles (if possible) and  to  the  optional\nshape file(s) \n"
+      },
+      {
+        "flag": "-tileIndex",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "tileindexname",
+        "explanation": "The name of shape file containing the result tile(s) index \n"
+      },
+      {
+        "flag": "-tileIndexField",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "tileindexfieldname",
+        "explanation": "The name of the attribute containing the tile name \n"
+      },
+      {
+        "flag": "-csv",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "csvfilename",
+        "explanation": "The name of the csv file containing the tile(s) georeferencing information.\nThe file contains 5 columns: tilename,minx,maxx,miny,maxy \n"
+      },
+      {
+        "flag": "-csvDelim",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<column delimiter>",
+        "available_values": null,
+        "name": "csvdelim",
+        "explanation": "The column delimiter used in the CSV file, default value is a semicolon \u201c;\u201d \n"
+      },
+      {
+        "flag": "-useDirForEachRow",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "usedirforeachrow",
+        "explanation": "Normally the tiles of the base image are stored as described in  -targetDir .\nFor large images, some file systems have performance problems if the number of files\nin a directory is to big, causing gdal_retile not to finish in reasonable time.\nUsing this parameter creates a different output structure. The tiles of the base image\nare stored in a sub-directory called 0, the pyramids in sub-directories numbered 1,2,\u2026.\nWithin each of these directories another level of sub-directories is created, numbered from\n0\u2026n, depending of how many tile rows are needed for each level. Finally, a directory contains\nonly the tiles for one row for a specific level. For large images a performance improvement\nof a factor N could be achieved. \n"
+      },
+      {
+        "flag": "-resume",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "resume",
+        "explanation": "Resume mode. Generate only missing files. \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gdal_retile.html",
+    "example": ""
+  },
+  {
+    "name": "gdal_proximity",
+    "exec": "gdal_proximity",
+    "summary": "Produces a raster proximity map.",
+    "description": "The  gdal_proximity.py  script generates a raster proximity map indicating\nthe distance from the center of each pixel to the center of the nearest\npixel identified as a target pixel.  Target pixels are those in the source\nraster for which the raster pixel value is in the set of target pixel values.",
+    "syntax": "gdal_proximity.py srcfile dstfile [-srcband n] [-dstband n] [-of format] [-co name=value] * [-ot Byte / Int16 / Int32 / Float32 / etc] [-values n , n , n] [-distunits PIXEL / GEO] [-maxdist n] [-nodata n] [-use_input_nodata YES / NO] [-fixed -buf -val n]",
+    "parameters": [
+      {
+        "flag": "-distunits",
+        "dataType": "String",
+        "isOptional": false,
+        "input_pattern": "PIXEL|GEO",
+        "available_values": [
+          "PIXEL",
+          "GEO"
+        ],
+        "name": "distunits",
+        "explanation": "Indicate whether distances generated should be in pixel or georeferenced\ncoordinates (default PIXEL). \n"
+      },
+      {
+        "flag": "-use_input_nodata",
+        "dataType": "String",
+        "isOptional": false,
+        "available_values": [
+          "YES",
+          "NO"
+        ],
+        "name": "yes/no",
+        "explanation": "Indicate whether nodata pixels in the input raster should be nodata in the output raster (default NO). \n"
+      }
+    ],
+    "options": [
+      {
+        "flag": "srcfile",
+        "dataType": "String",
+        "isOptional": true,
+        "name": "srcfile",
+        "isInputFile": true,
+        "explanation": "The source raster file used to identify target pixels. \n"
+      },
+      {
+        "flag": "dstfile",
+        "dataType": "String",
+        "isOptional": true,
+        "name": "dstfile",
+        "isOutputFile": true,
+        "explanation": "The destination raster file to which the proximity map will be written.\nIt may be a pre-existing file of the same size as srcfile.\nIf it does not exist it will be created. \n"
+      },
+      {
+        "flag": "-srcband",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "Identifies the band in the source file to use (default is 1). \n"
+      },
+      {
+        "flag": "-dstband",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "Identifies the band in the destination file to use (default is 1). \n"
+      },
+      {
+        "flag": "-of",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format",
+        "explanation": "Select the output format. Starting with GDAL 2.3, if not specified, the\nformat is guessed from the extension (previously was GTiff). Use the short\nformat name. \n"
+      },
+      {
+        "flag": "-co",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "co",
+        "explanation": "Many formats have one or more optional creation options that can be\nused to control particulars about the file created. For instance,\nthe GeoTIFF driver supports creation options to control compression,\nand whether the file should be tiled. \n The creation options available vary by format driver, and some\nsimple formats have no creation options at all. A list of options\nsupported for a format can be listed with the\n \u2013formats \ncommand line option but the documentation for the format is the\ndefinitive source of information on driver creation options.\nSee  Raster drivers  format\nspecific documentation for legal creation options for each format. \n"
+      },
+      {
+        "flag": "-ot",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "type",
+        "explanation": "Force the output image bands to have a specific type. Use type names\n(i.e.  Byte ,  Int16 ,\u2026) \n"
+      },
+      {
+        "flag": "-values",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<n>,<n>,<n>",
+        "available_values": [
+          "n",
+          "n",
+          "n"
+        ],
+        "name": "values",
+        "explanation": "A list of target pixel values in the source image to be considered target\npixels. If not specified, all non-zero pixels will be considered target pixels. \n"
+      },
+      {
+        "flag": "-maxdist",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "The maximum distance to be generated. The nodata value will be used for pixels\nbeyond this distance. If a nodata value is not provided, the output band will be\nqueried for its nodata value. If the output band does not have a nodata value,\nthen the value 65535 will be used. Distance is interpreted in pixels unless\n-distunits GEO is specified. \n"
+      },
+      {
+        "flag": "-nodata",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "Specify a nodata value to use for the destination proximity raster. \n"
+      },
+      {
+        "flag": "-fixed-buf-val",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "Specify a value to be applied to all pixels that are within the -maxdist of target pixels (including the target pixels) instead of a distance value. \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gdal_proximity.html",
+    "example": ""
+  },
+  {
+    "name": "gnmanalyse",
+    "exec": "gnmanalyse",
+    "summary": "Analyses networks",
+    "description": "The  gnmanalyse  program provides analysing capabilities of geographical networks in GDAL. The results of calculations are return in an OGRLayer format or as a console text output if such layer is undefined. All calculations are made considering the blocking state of features.",
+    "syntax": "gnmanalyse [--help][-q][-quiet][--long -usage] [dijkstra start_gfid end_gfid [[-alo NAME=VALUE] ...]]] [kpaths start_gfid end_gfid k [[-alo NAME=VALUE] ...]]] [resource [[-alo NAME=VALUE] ...]]] [-ds ds_name][-f ds_format][-l layer_name] [[-dsco NAME=VALUE] ...][-lco NAME=VALUE] gnm_name",
+    "parameters": [
+      {
+        "flag": "-dsco",
+        "dataType": "String",
+        "isOptional": false,
+        "input_pattern": "NAME=VALUE",
+        "available_values": null,
+        "name": "dsco",
+        "explanation": "Dataset creation option (format specific) \n"
+      },
+      {
+        "flag": "-lco",
+        "dataType": "String",
+        "isOptional": false,
+        "input_pattern": "NAME=VALUE",
+        "available_values": null,
+        "name": "lco",
+        "explanation": "Layer creation option (format specific) \n"
+      },
+      {
+        "flag": "-alo",
+        "dataType": "String",
+        "isOptional": false,
+        "input_pattern": "NAME=VALUE",
+        "available_values": null,
+        "name": "alo",
+        "explanation": "Algorithm option (format specific) \n"
+      }
+    ],
+    "options": [
+      {
+        "flag": "dijkstra",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<start_gfid> <end_gfid>",
+        "available_values": null,
+        "name": "dijkstra",
+        "explanation": "Calculates the best path between two points using Dijkstra algorithm from start_gfid point to end_gfid point. \n"
+      },
+      {
+        "flag": "kpaths",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<start_gfid> <end_gfid>",
+        "available_values": null,
+        "name": "kpaths",
+        "explanation": "Calculates K shortest paths between two points using Yen\u2019s algorithm (which internally uses Dijkstra algorithm for single path calculating) from start_gfid point to end_gfid point. \n"
+      },
+      {
+        "flag": "resource",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "resource",
+        "explanation": "Calculates the \u201cresource distribution\u201d. The connected components search is performed using breadth-first search and starting from that features which are marked by rules as \u2018EMITTERS\u2019. \n"
+      },
+      {
+        "flag": "-d",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "ds_name",
+        "explanation": "The name and path of the dataset to save the layer with resulting paths. Not need to be existed dataset. \n"
+      },
+      {
+        "flag": "-f",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "ds_format",
+        "explanation": "Define this to set the format of newly created dataset. \n"
+      },
+      {
+        "flag": "-l",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "layer_name",
+        "explanation": "The name of the resulting layer. If the layer exist already - it will be rewritten. \n"
+      },
+      {
+        "flag": "gnm_name",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "gnm_name",
+        "explanation": "The network to work with (path and name). \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gnmanalyse.html",
+    "example": ""
+  },
+  {
+    "name": "rgb2pct",
+    "exec": "rgb2pct",
+    "summary": "Convert a 24bit RGB image to 8bit paletted.",
+    "description": "This utility will compute an optimal pseudo-color table for a given RGB image\nusing a median cut algorithm on a downsampled RGB histogram.   Then it\nconverts the image into a pseudo-colored image using the color table.\nThis conversion utilizes Floyd-Steinberg dithering (error diffusion) to\nmaximize output image visual quality.",
+    "syntax": "rgb2pct.py [-n colors | -pct palette_file] [-of format] source_file dest_file",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-n",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "color",
+        "explanation": "Select the number of colors in the generated\ncolor table.  Defaults to 256.  Must be between 2 and 256. \n"
+      },
+      {
+        "flag": "-pct",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "palette_file",
+        "explanation": "Extract the color table from\n<palette_file> instead of computing it. Can be used to have a consistent\ncolor table for multiple files.  The<palette_file> must be a raster file\nin a GDAL supported format with a palette. \n"
+      },
+      {
+        "flag": "-of",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format",
+        "explanation": "Select the output format. Starting with\nGDAL 2.3, if not specified, the format is guessed from the extension (previously\nwas GTiff). Use the short format name. Only output formats\nsupporting pseudo-color tables should be used. \n"
+      },
+      {
+        "flag": "source_file",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "source_file",
+        "explanation": "The input RGB file. \n"
+      },
+      {
+        "flag": "dest_file",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "dest_file",
+        "explanation": "The output pseudo-colored file that will be created. \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/rgb2pct.html",
+    "example": "rgb2pct.py -pct palette.vrt rgb.tif pseudo -colored.tif % more < palette.vrt < VRTDataset rasterXSize=\"226\" rasterYSize=\"271\" > < VRTRasterBand dataType=\"Byte\" band=\"1\" > < ColorInterp > Palette </ ColorInterp > < ColorTable > < Entry c1=\"238\" c2=\"238\" c3=\"238\" c4=\"255\" /> < Entry c1=\"237\" c2=\"237\" c3=\"237\" c4=\"255\" /> < Entry c1=\"236\" c2=\"236\" c3=\"236\" c4=\"255\" /> < Entry c1=\"229\" c2=\"229\" c3=\"229\" c4=\"255\" /> </ ColorTable > </ VRTRasterBand > </ VRTDataset >"
+  },
+  {
+    "name": "gdal2tiles",
+    "exec": "gdal2tiles",
+    "summary": "Generates directory with TMS tiles, KMLs and simple web viewers.",
+    "description": "This utility generates a directory with small tiles and metadata, following\nthe OSGeo Tile Map Service Specification. Simple web pages with viewers based on\nGoogle Maps, OpenLayers and Leaflet are generated as well - so anybody can comfortably\nexplore your maps on-line and you do not need to install or configure any\nspecial software (like MapServer) and the map displays very fast in the\nweb browser. You only need to upload the generated directory onto a web server. GDAL2Tiles also creates the necessary metadata for Google Earth (KML\nSuperOverlay), in case the supplied map uses EPSG:4326 projection. World files and embedded georeferencing is used during tile generation, but you\ncan publish a picture without proper georeferencing too.",
+    "syntax": "gdal2tiles.py [-p profile] [-r resampling] [-s srs] [-z zoom] [-e] [-a nodata] [-v] [-q] [-h] [-k] [-n] [-u url] [-w webviewer] [-t title] [-c copyright] [--processes=NB_PROCESSES] [-g googlekey] [-b bingkey] input_file [output_dir]",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-p",
+        "long_flag": "--profile",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<PROFILE>",
+        "available_values": null,
+        "name": "profile",
+        "explanation": "Tile cutting profile (mercator,geodetic,raster) - default \u2018mercator\u2019 (Google Maps compatible). \n"
+      },
+      {
+        "flag": "-r",
+        "long_flag": "--resampling",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<RESAMPLING>",
+        "available_values": null,
+        "name": "resampling",
+        "explanation": "Resampling method (average,near,bilinear,cubic,cubicspline,lanczos,antialias) - default \u2018average\u2019. \n"
+      },
+      {
+        "flag": "-s",
+        "long_flag": "--s_srs",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<SRS>",
+        "available_values": null,
+        "name": "s_srs",
+        "explanation": "The spatial reference system used for the source input data. \n"
+      },
+      {
+        "flag": "-z",
+        "long_flag": "--zoom",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<ZOOM>",
+        "available_values": null,
+        "name": "zoom",
+        "explanation": "Zoom levels to render (format:\u20182-5\u2019 or \u201810\u2019). \n"
+      },
+      {
+        "flag": "-e",
+        "long_flag": "--resume",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "resume",
+        "explanation": "Resume mode. Generate only missing files. \n"
+      },
+      {
+        "flag": "-a",
+        "long_flag": "--srcnodata",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NODATA>",
+        "available_values": null,
+        "name": "srcnodata",
+        "isInputFile": true,
+        "explanation": "NODATA transparency value to assign to the input data. \n"
+      },
+      {
+        "flag": "-v",
+        "long_flag": "--verbose",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "verbose",
+        "explanation": "Generate verbose output of tile generation. \n"
+      },
+      {
+        "flag": "-q",
+        "long_flag": "--quiet",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "quiet",
+        "explanation": "Disable messages and status to stdout \n \n New in version 2.1. \n \n"
+      },
+      {
+        "flag": "--processes",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NB_PROCESSES>",
+        "available_values": null,
+        "name": "processes",
+        "explanation": "Number of processes to use for tiling. \n \n New in version 2.3. \n \n"
+      },
+      {
+        "flag": "-h",
+        "long_flag": "--help",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "help",
+        "explanation": "Show help message and exit. \n"
+      },
+      {
+        "flag": "--version",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "version",
+        "explanation": "Show program\u2019s version number and exit. \n"
+      },
+      {
+        "flag": "-k",
+        "long_flag": "--force-kml",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "forcekml",
+        "explanation": "Generate KML for Google Earth - default for \u2018geodetic\u2019 profile and \u2018raster\u2019 in EPSG:4326. For a dataset with different projection use with caution! \n"
+      },
+      {
+        "flag": "-n",
+        "long_flag": "--no-kml",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "nokml",
+        "explanation": "Avoid automatic generation of KML files for EPSG:4326. \n"
+      },
+      {
+        "flag": "-u",
+        "long_flag": "--url",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<URL>",
+        "available_values": null,
+        "name": "url",
+        "explanation": "URL address where the generated tiles are going to be published. \n"
+      },
+      {
+        "flag": "-w",
+        "long_flag": "--webviewer",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<WEBVIEWER>",
+        "available_values": null,
+        "name": "webviewer",
+        "explanation": "Web viewer to generate (all,google,openlayers,leaflet,none) - default \u2018all\u2019. \n"
+      },
+      {
+        "flag": "-t",
+        "long_flag": "--title",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<TITLE>",
+        "available_values": null,
+        "name": "title",
+        "explanation": "Title of the map. \n"
+      },
+      {
+        "flag": "-c",
+        "long_flag": "--copyright",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<COPYRIGHT>",
+        "available_values": null,
+        "name": "copyright",
+        "explanation": "Copyright for the map. \n"
+      },
+      {
+        "flag": "-g",
+        "long_flag": "--googlekey",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<GOOGLEKEY>",
+        "available_values": null,
+        "name": "googlekey",
+        "explanation": "Google Maps API key from  http://code.google.com/apis/maps/signup.html . \n"
+      },
+      {
+        "flag": "-b",
+        "long_flag": "--bingkey",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<BINGKEY>",
+        "available_values": null,
+        "name": "bingkey",
+        "explanation": "Bing Maps API key from  https://www.bingmapsportal.com/ \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gdal2tiles.html",
+    "example": ""
+  },
+  {
+    "name": "gdalmdiminfo",
+    "exec": "gdalmdiminfo",
+    "summary": "The following command line parameters can appear in any order",
+    "description": "gdalinfo  program lists various information about a GDAL supported\nmultidimensional raster dataset as JSON output. It follows the\nfollowing  JSON schema The following command line parameters can appear in any order",
+    "syntax": "gdalmdiminfo [--help -general] [-oo NAME=VALUE] * [-detailed] [-nopretty] [-array { array_name }] [-limit { number }] datasetname",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-detailed",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "detailed",
+        "explanation": "Most verbose output. Report attribute data types and array values. \n"
+      },
+      {
+        "flag": "-nopretty",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "nopretty",
+        "explanation": "Outputs on a single line without any indentation. \n"
+      },
+      {
+        "flag": "-array",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "{array_name}",
+        "explanation": "Name of the array used to restrict the output to the specified array. \n"
+      },
+      {
+        "flag": "-limit",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "{number}",
+        "explanation": "Number of values in each dimension that is used to limit the display of\narray values. By default, unlimited. Only taken into account if used with\n-detailed. \n"
+      },
+      {
+        "flag": "-oo",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "oo",
+        "explanation": "Dataset open option (format specific). \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gdalmdiminfo.html",
+    "example": ""
+  },
+  {
+    "name": "gdalmdimtranslate",
+    "exec": "gdalmdimtranslate",
+    "summary": "The following command line parameters can appear in any order.",
+    "description": "gdalmdimtranslate  program converts multidimensional raster between\ndifferent formats, and/or can perform selective conversion of specific arrays\nand groups, and/or subsetting operations. The following command line parameters can appear in any order.",
+    "syntax": "gdalmdimtranslate [--help -general] [-co \"NAME=VALUE\"] * [-of format] [-array array_spec] * [-group group_spec] * [-subset subset_spec] * [-scaleaxes scaleaxes_spec] * src_filename dst_filename",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-of",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format",
+        "explanation": "Select the output format. This can be a format that supports multidimensional\noutput (such as  NetCDF: Network Common Data Form ,  Multidimensional VRT ), or a \u201cclassic\u201d 2D formats, if only one single 2D array\nresults of the other specified conversion operations. When this option is\nnot specified, the format is guessed when possible from the extension of the\ndestination filename. \n"
+      },
+      {
+        "flag": "-co",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "co",
+        "explanation": "Many formats have one or more optional creation options that can be\nused to control particulars about the file created. For instance,\nthe GeoTIFF driver supports creation options to control compression,\nand whether the file should be tiled. \n The creation options available vary by format driver, and some\nsimple formats have no creation options at all. A list of options\nsupported for a format can be listed with the\n \u2013formats \ncommand line option but the documentation for the format is the\ndefinitive source of information on driver creation options.\nSee  Raster drivers  format\nspecific documentation for legal creation options for each format. \n"
+      },
+      {
+        "flag": "-array",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "array_spec",
+        "explanation": "Instead of converting the whole dataset, select one array, and possibly\nperform operations on it. This option can be specified several times to\noperate on different arrays. \n <array_spec> may be just an array name, potentially using a fully qualified\nsyntax (/group/subgroup/array_name). Or it can be a combination of options\nwith the syntax:\nname={src_array_name}[,dstname={dst_array_name}][,transpose=[{axis1},{axis2},\u2026][,view={view_expr}] \n [{axis1},{axis2},\u2026] is the argumet of   GDALMDArray::Transpose() .\nFor example, transpose=[1,0] switches the axis order of a 2D array. \n {view_expr} is the value of the  viewExpr  argument of  GDALMDArray::GetView() \n When specifying a view_expr that performs a slicing or subsetting on a dimension, the\nequivalent operation will be applied to the corresponding indexing variable. \n"
+      },
+      {
+        "flag": "-group",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "group_spec",
+        "explanation": "Instead of converting the whole dataset, select one group, and possibly\nperform operations on it. This option can be specified several times to\noperate on different groups. If only one group is specified, its contet will be\ncopied directly to the target root group. If several ones are specified,\nthey are copied under the target root group \n <group_spec> may be just a group name, potentially using a fully qualified\nsyntax (/group/subgroup/subsubgroup_name). Or it can be a combination of options\nwith the syntax:\nname={src_group_name}[,dstname={dst_group_name}][,recursive=no] \n"
+      },
+      {
+        "flag": "-subset",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "subset_spec",
+        "explanation": "Performs a subsetting (trimming or slicing) operation along a dimension,\nprovided that it is indexed by a 1D variable of numeric or string data type,\nand whose values are monotically sorted.\n<subset_spec> follows exactly the  OGC WCS 2.0 KVP encoding \nfor subsetting. \n That is dim_name(min_val,max_val) or dim_name(sliced_val)\nThe first syntax will subset the dimension dim_name to values in the\n[min_val,max_val] range. The second syntax will slice the dimension dim_name\nto value sliced_val (and this dimension will be removed from the arrays\nthat reference to it) \n Using -subset is incompatible of specifying a  view  option in -array. \n"
+      },
+      {
+        "flag": "-scaleaxes",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "scaleaxes_spec",
+        "explanation": "Applies a integral scale factor to one or several dimensions, that is\nextract 1 value every N values (without resampling). \n <scaleaxes_spec> follows exactly the syntax of the KVP encoding of the\nSCALEAXES parameter of\n OGC WCS 2.0 Scaling Extension ,\nbut limited to integer scale factors. \n That is dim1_name(scale_factor)[,dim2_name(scale_factor)]* \n Using -scaleaxes is incompatible of specifying a  view  option in -array. \n"
+      },
+      {
+        "flag": "src_dataset",
+        "dataType": "String",
+        "isOptional": true,
+        "name": "src_dataset",
+        "isInputFile": true,
+        "explanation": "The source dataset name. \n"
+      },
+      {
+        "flag": "dst_dataset",
+        "dataType": "String",
+        "isOptional": true,
+        "name": "dst_dataset",
+        "isOutputFile": true,
+        "explanation": "The destination file name. \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/gdalmdimtranslate.html",
+    "example": ""
+  },
+  {
+    "name": "ogrlineref",
+    "exec": "ogrlineref",
+    "summary": "Create linear reference and provide some calculations using it.",
+    "description": "The  ogrlineref  program can be used for: The  ogrlineref  creates a linear reference - a file containing\na segments of special length (e.g. 1 km in reference units) and get coordinates,\nlinear referenced distances or sublines (subpaths) from this file.\nThe utility not required the  M  or  Z  values in geometry.\nThe results can be stored in any OGR supported format.\nAlso some information is written to the stdout.create linear reference file from input data\nreturn the \u201clinear referenced\u201d distance for the projection of the\ninput coordinates (point) on the path\nreturn the coordinates (point) on the path according to the \u201clinear\nreferenced\u201d distance\nreturn the portion of the path according to the \u201clinear referenced\u201d\nbegin and end distances",
+    "syntax": "ogrlineref [--help -general] [-progress] [-quiet] [-f format_name] [[-dsco NAME=VALUE] ...] [[-lco NAME=VALUE] ...] [-create] [-l src_line_datasource_name] [-ln layer_name] [-lf field_name] [-p src_repers_datasource_name] [-pn layer_name] [-pm pos_field_name] [-pf field_name] [-r src_parts_datasource_name] [-rn layer_name] [-o dst_datasource_name] [-on layer_name] [-of field_name] [-s step] [-get_pos] [-x long] [-y lat] [-get_coord] [-m position] [-get_subline] [-mb position] [-me position]",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "--help-general",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "helpgeneral",
+        "explanation": "Show the usage. \n"
+      },
+      {
+        "flag": "-progress",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "progress",
+        "explanation": "Show progress. \n"
+      },
+      {
+        "flag": "-quiet",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "quiet",
+        "explanation": "Suppress all messages except errors and results. \n"
+      },
+      {
+        "flag": "-f",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format_name",
+        "explanation": "Select an output format name. The default is to create a shapefile. \n"
+      },
+      {
+        "flag": "-dsco",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "dsco",
+        "explanation": "Dataset creation option (format specific) \n"
+      },
+      {
+        "flag": "-lco",
+        "dataType": "String",
+        "isOptional": true,
+        "input_pattern": "<NAME=VALUE>",
+        "available_values": null,
+        "name": "lco",
+        "explanation": "Layer creation option (format specific). \n"
+      },
+      {
+        "flag": "-create",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "create",
+        "explanation": "Create the linear reference file (linestring of parts). \n"
+      },
+      {
+        "flag": "-l",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "src_line_datasource_name",
+        "isInputFile": true,
+        "explanation": "The path to input linestring datasource (e.g. the road) \n"
+      },
+      {
+        "flag": "-ln",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "layer_name",
+        "explanation": "The layer name in datasource \n"
+      },
+      {
+        "flag": "-lf",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "field_name",
+        "explanation": "The field name of unique values to separate the input lines (e.g.\nthe set of roads). \n"
+      },
+      {
+        "flag": "-p",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "src_repers_datasource_name",
+        "isInputFile": true,
+        "explanation": "The path to linear references points (e.g. the road mile-stones) \n"
+      },
+      {
+        "flag": "-pn",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "layer_name",
+        "explanation": "The layer name in datasource \n"
+      },
+      {
+        "flag": "-pm",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "pos_field_name",
+        "explanation": "The field name of distances along path (e.g. mile-stones values) \n"
+      },
+      {
+        "flag": "-pf",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "field_name",
+        "explanation": "The field name of unique values to map input reference points to lines. \n"
+      },
+      {
+        "flag": "-r",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "src_parts_datasource_name",
+        "isInputFile": true,
+        "explanation": "The path to linear reference file. \n"
+      },
+      {
+        "flag": "-rn",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "layer_name",
+        "explanation": "The layer name in datasource \n"
+      },
+      {
+        "flag": "-o",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "dst_datasource_name",
+        "isOutputFile": true,
+        "explanation": "The path to output linear reference file (linestring datasource) \n"
+      },
+      {
+        "flag": "-on",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "layer_name",
+        "explanation": "The layer name in datasource \n"
+      },
+      {
+        "flag": "-of",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "field_name",
+        "explanation": "The field name for storing the unique values of input lines \n"
+      },
+      {
+        "flag": "-s",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "step",
+        "explanation": "The part size in linear units \n"
+      },
+      {
+        "flag": "-get_pos",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "get_pos",
+        "explanation": "Return linear referenced position for input X, Y \n"
+      },
+      {
+        "flag": "-x",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "long",
+        "explanation": "Input X coordinate \n"
+      },
+      {
+        "flag": "-y",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "lat",
+        "explanation": "Input Y coordinate \n"
+      },
+      {
+        "flag": "-get_coord",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "get_coord",
+        "explanation": "Return point on path for input linear distance \n"
+      },
+      {
+        "flag": "-m",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "position",
+        "explanation": "The input linear distance \n"
+      },
+      {
+        "flag": "-get_subline",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "get_subline",
+        "explanation": "Return the portion of the input path from and to input linear positions. \n"
+      },
+      {
+        "flag": "-mb",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "position",
+        "explanation": "The input begin linear distance \n"
+      },
+      {
+        "flag": "-me",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "position",
+        "explanation": "The input end linear distance \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/ogrlineref.html",
+    "example": "ogrlineref -create -l roads.shp -p references.shp -pm dist -o parts.shp -s 1000 -progress"
+  },
+  {
+    "name": "ogrtindex",
+    "exec": "ogrtindex",
+    "summary": "Creates a tileindex.",
+    "description": "ogrtindex  program can be used to create a tileindex - a file\ncontaining a list of the identities of a bunch of other files along with\nthere spatial extents. This is primarily intended to be used with\n MapServer  for tiled access to layers using\nthe OGR connection type.",
+    "syntax": "ogrtindex [-lnum n] ... [-lname name] ... [-f output_format] [-write_absolute_path] [-skip_different_projection] [-t_srs target_srs] [-src_srs_name field_name] [-src_srs_format [AUTO | WKT | EPSG | PROJ] [-accept_different_schemas] output_dataset src_dataset...",
+    "parameters": [],
+    "options": [
+      {
+        "flag": "-lnum",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "n",
+        "explanation": "Add layer number  n  from each source file in the tile index. \n"
+      },
+      {
+        "flag": "-lname",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "name",
+        "explanation": "Add the layer named  name  from each source file in the tile index. \n"
+      },
+      {
+        "flag": "-f",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "output_format",
+        "explanation": "Select an output format name. The default is to create a shapefile. \n"
+      },
+      {
+        "flag": "-tileindex",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "field_name",
+        "explanation": "The name to use for the dataset name. Defaults to LOCATION. \n"
+      },
+      {
+        "flag": "-write_absolute_path",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "write_absolute_path",
+        "explanation": "Filenames are written with absolute paths \n"
+      },
+      {
+        "flag": "-skip_different_projection",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "skip_different_projection",
+        "explanation": "Only layers with same projection ref as layers already inserted in\nthe tileindex will be inserted. \n"
+      },
+      {
+        "flag": "-t_srs",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "target_srs",
+        "explanation": "Extent of input files will be transformed to the desired target\ncoordinate reference system. Using this option generates files that\nare not compatible with MapServer < 7.2. Default creates simple\nrectangular polygons in the same coordinate reference system as the\ninput vector layers. \n \n New in version 2.2.0. \n \n"
+      },
+      {
+        "flag": "-src_srs_name",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "field_name",
+        "explanation": "The name of the field to store the SRS of each tile. This field name\ncan be used as the value of the TILESRS keyword in MapServer >= 7.2. \n \n New in version 2.2.0. \n \n"
+      },
+      {
+        "flag": "-src_srs_format",
+        "dataType": "String",
+        "isOptional": true,
+        "available_values": null,
+        "name": "format",
+        "explanation": "The format in which the SRS of each tile must be written.\nAvailable formats are:  AUTO ,  WKT ,  EPSG ,  PROJ . \n \n New in version 2.2.0. \n \n"
+      },
+      {
+        "flag": "-accept_different_schemas",
+        "dataType": "Boolean",
+        "isOptional": true,
+        "name": "accept_different_schemas",
+        "explanation": "By default ogrtindex checks that all layers inserted into the index\nhave the same attribute schemas. If you specify this option, this\ntest will be disabled. Be aware that resulting index may be\nincompatible with MapServer! \n"
+      }
+    ],
+    "manual_url": "https://gdal.org/programs/ogrtindex.html",
+    "example": "ogrtindex tindex.shp wrk /*. NTF 1069148.900 , 419873.100 1069147.500 , 419870.200 1069146.400 , 419862.100 1069143.000 , 419860 1069142 , 419854.900 1069138.600 , 419850 1069135 , 419848.800 1069134.100 , 419843 1069130 , 419836.200 1069127.600 , 419824.600 1069123.800 , 419820.200 1069126.900 , 419815.500 1069126.900 , 419808.200 1069116.500 , 419798.700 1069117.600 , 419794.100 1069115.100 , 419796.300 1069109.100 , 419801.800 1069106.800 , 419805.000 1069107.300 )"
+  }
+]

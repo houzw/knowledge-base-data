@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.w3.org/ns/shacl#"
      xml:base="http://www.w3.org/ns/shacl"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:sh="http://www.w3.org/ns/shacl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
@@ -880,7 +880,14 @@
 
     <owl:DatatypeProperty rdf:about="http://www.w3.org/ns/shacl#namespace">
         <rdfs:domain rdf:resource="http://www.w3.org/ns/shacl#PrefixDeclaration"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#anyURI"/>
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#string"/>
+                </owl:unionOf>
+            </rdfs:Datatype>
+        </rdfs:range>
         <rdfs:comment xml:lang="en">The namespace associated with a prefix in a prefix declaration.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
         <rdfs:label xml:lang="en">namespace</rdfs:label>
@@ -1523,7 +1530,7 @@
     <owl:NamedIndividual rdf:about="http://www.w3.org/ns/shacl#">
         <declare>
             <rdf:Description>
-                <namespace  rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://www.w3.org/ns/shacl#</namespace>
+                <namespace rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.w3.org/ns/shacl#</namespace>
                 <prefix>sh</prefix>
             </rdf:Description>
         </declare>
@@ -2719,8 +2726,8 @@
         <rdfs:label xml:lang="en">class</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#closed">
-        <rdfs:label xml:lang="en">closed</rdfs:label>
         <rdfs:comment xml:lang="en">If set to true then the shape is closed.</rdfs:comment>
+        <rdfs:label xml:lang="en">closed</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#datatype">
@@ -2730,8 +2737,8 @@
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#disjoint">
         <rdfs:label xml:lang="en">disjoint</rdfs:label>
-        <rdfs:comment xml:lang="en">Specifies a property where the set of values must be disjoint with the value nodes.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
+        <rdfs:comment xml:lang="en">Specifies a property where the set of values must be disjoint with the value nodes.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#equals">
         <rdfs:comment xml:lang="en">Specifies a property that must have the same values as the value nodes.</rdfs:comment>
@@ -2759,8 +2766,8 @@
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#js">
-        <rdfs:label xml:lang="en">JavaScript constraint</rdfs:label>
         <rdfs:comment>Constraints expressed in JavaScript.</rdfs:comment>
+        <rdfs:label xml:lang="en">JavaScript constraint</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#languageIn">
@@ -2829,8 +2836,8 @@
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#order">
-        <rdfs:label xml:lang="en">order</rdfs:label>
         <rdfs:comment xml:lang="en">Specifies the relative order of this compared to its siblings. For example use 0 for the first, 1 for the second.</rdfs:comment>
+        <rdfs:label xml:lang="en">order</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#pattern">
@@ -2849,8 +2856,8 @@
         <rdfs:comment xml:lang="en">The maximum number of value nodes that can conform to the shape.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#qualifiedMinCount">
-        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
         <rdfs:label xml:lang="en">qualified min count</rdfs:label>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/shacl#"/>
         <rdfs:comment xml:lang="en">The minimum number of value nodes that must conform to the shape.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.w3.org/ns/shacl#qualifiedValueShape">
@@ -2887,5 +2894,5 @@
 
 
 
-<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
 

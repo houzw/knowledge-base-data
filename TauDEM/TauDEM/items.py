@@ -16,5 +16,6 @@ class TaudemItem(scrapy.Item):
 	syntax = Field()
 	parameters = Field()
 	options = Field()
+	manual_url = Field()
 	# category = Field()
 	pass

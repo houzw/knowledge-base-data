@@ -47,6 +47,7 @@ for entry in root.iter("entry"):
 	indi = None
 	name = entry.get('id')
 	label = name.replace('_',' ')
+	name = name.replace(' ','_')
 	if re.search(atmosphere_dynamics, name):
 		indi = onto.AtmosphereDynamics(name, prefLabel=locstr(label, lang='en'))
 	elif re.search(atmospheric_chemistry, name):
@@ -81,6 +82,7 @@ for alias in root.iter("alias"):
 	entry_name = alias.findtext('entry_id')
 	cls = onto[entry_name].is_a
 	alias_name = alias.get('id')
+	alias_name = alias_name.replace(' ','_')
 	label = alias_name.replace('_',' ')
 	alias_indi = cls[0](alias_name, prefLabel=locstr(label, lang='en'))
 	# sameAs

@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.egc.org/ont/vocab/cf#"
+     xml:base="http://www.egc.org/ont/vocab/cf"
+     xmlns:core="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:term="http://purl.org/dc/terms/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:x_1.1="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://www.egc.org/ont/vocab/cf">
+        <owl:imports rdf:resource="http://purl.org/NET/dc_owl2dl/terms"/>
+        <owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core"/>
+        <owl:versionInfo xml:lang="en">v62</owl:versionInfo>
+        <x_1.1:source rdf:resource="http://cfconventions.org/standard-names.html"/>
+        <x_1.1:title xml:lang="en">CF (Climate and Forecast) Standard Names</x_1.1:title>
+        <term:issued xml:lang="en">2018-12-18</term:issued>
+        <x_1.1:description xml:lang="en">This is a ontology version of CF Standard Names. 
+The conventions for CF (Climate and Forecast) metadata are designed to promote the processing and sharing of files created with the NetCDF API. The CF conventions are increasingly gaining acceptance and have been adopted by a number of projects and groups as a primary standard. The conventions define metadata that provide a definitive description of what the data in each variable represents, and the spatial and temporal properties of the data. This enables users of data from different sources to decide which quantities are comparable, and facilitates building applications with powerful extraction, regridding, and display capabilities.</x_1.1:description>
+        <term:creator xml:lang="en">houzw@leris.ac.cn</term:creator>
+        <term:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">houzhiwei</term:creator>
+        <x_1.1:creator xml:lang="en">Zhiwei Hou @ IGSNRR, CAS</x_1.1:creator>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#hasAMIP -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/vocab/cf#hasAMIP">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/vocab/cf#hasCFProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#hasCFProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/vocab/cf#hasCFProperty"/>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#hasCanonicalUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/vocab/cf#hasCanonicalUnit">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/vocab/cf#hasCFProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#hasGRIB -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/vocab/cf#hasGRIB">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/vocab/cf#hasCFProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#AtmosphereDynamics -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#AtmosphereDynamics">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain air_pressure, atmosphere_vorticity, atmosphere_streamfunction, wind, momentum_in,_air, gravity_wave, ertel, geopotential, omega, atmosphere_dissipation, atmosphere_energy, atmosphere_drag, atmosphere_stress or surface_stress</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#AtmosphericChemistry -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#AtmosphericChemistry">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contains aerosol, dry_deposition, wet_deposition, production, emission or mole</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#CFStandardName -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#CFStandardName">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#CanonicalUnit -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#CanonicalUnit">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#CarbonCycle -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#CarbonCycle">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain carbon, leaf or vegetation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#Cloud -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#Cloud">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain cloud</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#Hydrology -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#Hydrology">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain atmosphere_water canopy_water precipitation rain snow moisture freshwater runoff root humidity transpiration evaporation water_vapour river</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#OceanDynamics -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#OceanDynamics">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain ocean_streamfunction sea_water_velocity ocean_vorticity</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#Radiation -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#Radiation">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain radiative, longwave, shortwave, brightness, radiance or albedo</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#SeaIce -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#SeaIce">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain sea_ice</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/vocab/cf#Surface -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/vocab/cf#Surface">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/vocab/cf#CFStandardName"/>
+        <rdfs:comment xml:lang="en">standard names which contain surface</rdfs:comment>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+

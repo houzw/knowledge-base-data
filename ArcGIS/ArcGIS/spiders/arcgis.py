@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from ..items import ArcgisItem
-import glob2
-
+import glob
+import re
 
 # arcinfo chm
 class ArcgisSpider(scrapy.Spider):
 	name = 'arcgis'
 	# allowed_domains = ['esri.com']
 	# start_urls = ['http://www.esri.com/']
-	htmls = glob2.glob('H:/OntoBase/egc-materials/arcgis_help/arcinfo_all/*.htm')
+	htmls = glob.glob('H:/OntoBase/egc-materials/arcgis_help/arcinfo_all/*.htm')
 	local = "file://127.0.0.1/"
 	start = (local + htmls[0]).replace('\\', '/')
 	start_urls = [start]
@@ -28,10 +28,10 @@ class ArcgisSpider(scrapy.Spider):
 		item['syntax'] = syntax
 		name = response.css('#content>div.header>h1::text').extract_first().strip()
 		item['name'] = name
-		item['summary'] = response.css('#content>div.section2[purpose="summary"]>p::text').extract_first().strip()
+		item['description'] = ' '.join(response.css('#content>div.section2[purpose="summary"]>p *::text').extract())
 		# item['manual_url'] = response.url
 		item['example'] = self.parse_example(response)
-		item['usage'] = response.css('#content>div.section2[purpose="gptoolusages"] p::text').extract()
+		item['usage'] = response.css('#content>div.section2[purpose="gptoolusages"] p *::text').extract()
 		item['parameters'] = self.parse_params(response)
 		return item
 
@@ -52,8 +52,8 @@ class ArcgisSpider(scrapy.Spider):
 				param['isOptional'] = True
 			else:
 				param['isOptional'] = False
-			param['desc'] = self.parse_desc(tr)
-			param['type'] = tr.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
+			param['description'] = self.parse_desc(tr)
+			param['dataType'] = tr.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
 			params.append(param)
 		tbl2 = resp.css('#content>div.section2[purpose="gptoolsyntax"]>.section3[purpose="gptoolretval"]>table.gptoolretvaltbl')
 		trs2 = tbl2.xpath("./tr")
@@ -68,8 +68,8 @@ class ArcgisSpider(scrapy.Spider):
 				param['isOptional'] = True
 			else:
 				param['isOptional'] = False
-			param['desc'] = self.parse_desc(tr2)
-			param['type'] = tr2.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
+			param['description'] = self.parse_desc(tr2)
+			param['dataType'] = tr2.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
 			params.append(param)
 		return params
 
@@ -81,7 +81,9 @@ class ArcgisSpider(scrapy.Spider):
 		uls = ''
 		if p: ps = ' '.join(p)
 		if ul: uls = ' '.join(ul)
-		return ps + uls
+		desc = ps +' '+ uls
+		desc = re.sub("(\s){2,}",' ',desc)
+		return desc
 
 	def parse_example(self, resp):
 		example = dict()
@@ -90,7 +92,15 @@ class ArcgisSpider(scrapy.Spider):
 		# print(div)
 		example['title'] = div.css('span[purpose="codeblock_title"]::text').extract_first()
 		# print(example['title'])
-		example['desc'] = div.css('div[purpose="codeblockdesc"]>p::text').extract_first()
+		example['description'] = div.css('div[purpose="codeblockdesc"]>p::text').extract_first()
 		code = div.css('div.highlight span::text').extract()
-		example['code'] = ' '.join(code)
+		code_str = ' '.join(code)
+		example['code'] = code_str.replace(' . ','.')
 		return example
+
+	def parse_dtype(self,tr):
+		dtype = tr.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
+		if '|' in dtype:
+			dtype.split('|')
+		elif ';' in dtype:
+			dtype.split(';')

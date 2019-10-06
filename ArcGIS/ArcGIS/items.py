@@ -11,8 +11,8 @@ from scrapy import Item,Field
 class ArcgisItem(Item):
     # define the fields for your item here like:
     name = Field()
-    # definition
-    summary = Field()
+    # summary
+    description = Field()
     parameters = Field()
     manual_url = Field()
     example = Field()

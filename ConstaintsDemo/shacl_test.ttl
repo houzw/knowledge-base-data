@@ -1,0 +1,17 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix saga:  <http://www.egc.org/ont/process/saga#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix props:   <http://www.geodata.cn/onto/base/uni/props#> .
+
+saga:ToolShape
+  a sh:NodeShape ;
+  sh:targetNode saga:sagaoption2191 ;    # Applies to all IE
+  sh:property [
+    sh:path props:hasTextValue;
+    sh:in (1,2,3);
+    sh:message "must be in";
+  ] ;
+

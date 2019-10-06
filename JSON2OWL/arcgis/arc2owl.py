@@ -7,16 +7,21 @@ from owlready2 import *
 import json
 import re
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
+from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
 import datetime
 
-model_uri = 'http://www.egc.org/ont/process/arcgis'
-onto = get_ontology(model_uri)
-onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
-onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
+# import math
+
+module_uri = 'http://www.egc.org/ont/process/arcgis'
+onto = get_ontology(module_uri)
+# onto, skos, dcterms, props = OWLUtils.load_common(onto)
+onto, shacl, skos, dcterms, props, foaf = OWLUtils.load_common(onto)
+onto, geospatial = OWLUtils.load_geo_vocabl(onto)
+onto, gb, task, data, cyber, context = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class ArcGISTool(gb.GeoprocessingTool):
+	class ArcGISTool(gb.GeoprocessingFunctionality):
 		pass
 
 
@@ -30,110 +35,136 @@ with onto:
 
 	class ArcGISOption(gb.Option):
 		pass
-module_path = os.path.dirname(__file__)
-with open(module_path + '/arcgis.json', 'r') as f:
-	jdata = json.load(f)  # list
 
 onto.metadata.creator.append('houzhiwei')
 onto.metadata.title.append('ArcGIS Tools')
 
 onto.metadata.created.append(datetime.datetime.today())
+module_path = os.path.dirname(__file__)
+onto.metadata.versionInfo.append('10.1')
 
 
-def handle_task(full_name, task_name, des):
-	config = OWLUtils.get_config(module_path + '/config.ini')
-	task_types = re.findall("\([a-zA-Z0-9*\-' ]+\)", full_name)
-	# print(full_name)
+def get_task_type(full_name):
+	task_type_partten = "\([a-zA-Z0-9*\-' ]+\)"
+	task_types = re.findall(task_type_partten, full_name)
+
 	if len(task_types) > 1:
-		tool.hasKeywords.append(task_types[0].replace('(', '').replace(')', ''))
-		task_type = re.findall("\([0-9a-zA-Z*\-' ]+\)", full_name)[-1].replace('(', '').replace(')', '')
+		# tool.hasKeywords.append(OWLUtils.remove_parenthesis(task_types[0]))
+		task_type = Preprocessor.remove_parenthesis(re.findall(task_type_partten, full_name)[-1])
 	else:
-		task_type = re.findall("\([0-9a-zA-Z*\-' ]+\)", full_name)[0].replace('(', '').replace(')', '')
+		task_type = Preprocessor.remove_parenthesis(re.findall(task_type_partten, full_name)[0])
+	return task_type
+
+
+def handle_task(tool, full_name, task_name, des):
+	config = OWLUtils.get_config(module_path + '/config.ini')
+	task_type = get_task_type(full_name)
 	task_cls = config.get('task', task_type)
-	tool.hasKeywords.append(task_type)
+	# tool.keywords.append(task_type)
+	tool.subject.append(task_type)
 	# avoid duplicate
 	if not task[task_name + "_task"]:
 		task_ins = task[task_cls](task_name + "_task", prefLabel=locstr(task_name.replace('_', ' ') + " task", lang='en'))
+		task_ins.isAtomicTask = True
 	else:
 		task_ins = task[task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
 		tool.usedByTask.append(task_ins)
-	if (tool in tool.hasProcessingTool) is False:
-		task_ins.hasProcessingTool.append(tool)
+	if (tool in tool.processingTool) is False:
+		task_ins.processingTool.append(tool)
 	task_ins.description.append(locstr(des, lang='en'))
 
 
-def handle_parameters(param):
+def handle_parameters(tool, param):
 	# 部分parameter不包含isInputFile等属性
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = ArcGISInput( prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISInput(prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasInputData.append(p)
+		tool.inputData.append(p)
 		p.isInputFile = param['isInputFile']
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
 		p = ArcGISOutput(prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISOutput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasOutputData.append(p)
+		tool.outputData.append(p)
 		p.isOutputFile = param['isOutputFile']
 	else:
-		p = ArcGISOption( prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISOption(prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISOption(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasOption.append(p)
-	p.hasParameterName=param['name']
-	if 'type' in param.keys() and param['type']:
-		p.hasDataTypeStr.append(param['type'])
-	p.description.append(param['desc'])
+		tool.option.append(p)
+	p.parameterName = param['name']
+	p.flag = param['name']
+	if 'dataType' in param.keys() and param['dataType']:
+		p.datatypeInString.append(param['dataType'])
+	p.description.append(param['description'])
 	p.isOptional = param['isOptional']
-	# p.isMandatory = not param['isOptional']
-	datatype = param['type']
-	if datatype:
-		datatypes = []
-		if ";" in datatype: datatypes = str(datatype).split(";")
-		elif "|" in datatype: datatypes = str(datatype).split("|")
-		elif "," in datatype: datatypes = str(datatype).split(",")
-		if len(datatypes) > 0:
-			for dt in datatypes:
-				dt = dt.strip().lower().replace(' ', '_')
-				if not data[dt]:
-					data.ArcGISDataType(dt, prefLabel=locstr(datatype, lang='en'))
-				p.hasDataType.append(data[dt])
-		else:
-			dt = datatype.strip().lower().replace(' ', '_')
-			if not data[dt]:
-				data.ArcGISDataType(dt, prefLabel=locstr(datatype, lang='en'))
-			p.hasDataType.append(data[dt])
+	# datatype
+	datatype = param['dataType']
+	if datatype is None: datatype = "string"
+	dt = datatype.strip().lower().replace(' ', '_')
+	# print(dt)
+	dtype = data[dt]
+	if dtype is None: dtype = OWLUtils.get_datatype_iris(dt)
+	p.datatype.append(dtype)
 
 
 def handle_example(example):
 	ex = 'Title: ' + example['title'] if example['title'] else ''
-	ex = ex + '\n' + 'Description: ' + example['desc'] if example['desc'] else ex
+	ex = ex + '\n' + 'Description: ' + example['description'] if example['description'] else ex
 	ex += '\n' + 'Code: \n' + example['code']
 	return ex
 
 
-for d in jdata:
-	name_str = ''
-	name = re.match("[0-9a-zA-Z\-/* ]+ (?=\([\w' ]+\))", d['name'])
-	if name:
-		name_str = name.group().strip().lower().replace(' ', '_').replace('/', '_')
-	else:
-		continue
-	tool = ArcGISTool(name_str, prefLabel=locstr(name_str, lang='en'))
-	tool.isToolOfSoftware.append(gb.ArcGIS_Desktop)
-	tool.hasIdentifier = name_str
-	# tool.hasManualPageURL.append(d['manual_url'])
-	# tool.description.append(locstr(d['description'], lang='en'))
-	tool.abstract.append(locstr(d['summary'], lang='en'))
-	# tool.definition.append(d['definition'])
-	tool.hasUsage.append(' '.join(d['usage']))
-	tool.hasSyntax.append(d['syntax'])
-	tool.example.append(handle_example(d['example']))
-	handle_task(d['name'], name_str, d['summary'])
-	for parameter in d['parameters']:
-		handle_parameters(parameter)
+def map_to_owl(json_data):
+	for d in json_data:
+		"""mapping json data to ontology properties"""
+		name = re.match("[0-9a-zA-Z\-/* ]+ (?=\([\w' ]+\))", d['name'])  # 存在同名冲突
+		if name:
+			name_str = name.group().strip().lower().replace(' ', '_').replace('/', '_')
+		else:
+			continue
+		category = get_task_type(d['name'])
+		toolCls = tool_class(category)
+		# if already exists a instance has the same name
+		if onto[name_str]:
+			# if is the same
+			if onto[name_str].syntax == d['syntax']:
+				onto[name_str].is_a.append(toolCls)
+				continue
+			else:
+				name_str = name_str + '_' + category.lower().replace(' ', '_')
+		tool = toolCls(name_str, prefLabel=locstr(name_str.replace('_', ' '), lang='en'))
 
-onto.save(file='arcgis.owl', format="rdfxml")
-# update task ontology
-task.save()
-# data.save()
-print('ArcGIS Done!')
+		keywords = [name_str.replace('_', ' ')]
+		OWLUtils.link_to_domain_concept(tool, keywords)
+
+		tool.isToolOfSoftware.append(cyber.ArcGIS_Desktop)
+		tool.identifier = name_str.replace('_', ' ')
+		# tool.hasManualPageURL.append(d['manual_url'])
+		tool.description.append(locstr(d['description'], lang='en'))
+		tool.usage.append(OWLUtils.join_list(d['usage']))
+		tool.syntax.append(d['syntax'])
+		tool.example.append(handle_example(d['example']))
+		handle_task(tool, d['name'], name_str, d['description'])
+		for parameter in d['parameters']:
+			handle_parameters(tool, parameter)
+
+
+def tool_class(category):
+	if category == '3D Analyst': category = 'ThreeDimensionalAnalyst'
+	tool_cls = category.replace(' ', '') + 'Tool'
+	return OWLUtils.create_onto_class(onto, tool_cls, ArcGISTool)
+
+
+if __name__ == "__main__":
+	with open(module_path + '/arcgis.json', 'r') as f:
+		jdata = json.load(f)  # list
+	# length = len(jdata)
+	# otherwise will report stack overflow exception
+	size = 1024 * 1024 * 1024  # 该值与具体的系统相关
+	threading.stack_size(size)
+	thread = threading.Thread(target=map_to_owl(jdata))
+	thread.start()
+	onto.save(file='arcgis.owl', format="rdfxml")
+	# update task ontology
+	task.save()
+	print('ArcGIS Done!')

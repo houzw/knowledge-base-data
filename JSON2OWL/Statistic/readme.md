@@ -1,0 +1,1 @@
+copy geoprocessing owls and geospatial_models.owl to this directory

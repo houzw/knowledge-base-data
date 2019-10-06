@@ -2,12 +2,13 @@
 from scrapy import Spider, Item, Request
 from CSDMS.items import CsdmsItem
 
+
 class CsdmsSpider(Spider):
 	name = 'csdms'
 	allowed_domains = ['csdms.colorado.edu']
 	base_url = 'https://csdms.colorado.edu/'
-	# start_urls = ['https://csdms.colorado.edu/wiki/Models_all']  # all models and tools
-	start_urls = ['https://csdms.colorado.edu/wiki/Hydrological_Models']  # Hydrological Models and tools
+	start_urls = ['https://csdms.colorado.edu/wiki/Models_all']  # all models and tools
+	# start_urls = ['https://csdms.colorado.edu/wiki/Hydrological_Models']  # Hydrological Models and tools
 
 	def parse(self, response):
 		a_list = response.css('#mw-content-text>.mw-parser-output table>tbody>tr>td:nth-child(1) a')
@@ -42,19 +43,26 @@ class CsdmsSpider(Spider):
 		if table_len == 4:
 			item['incorporated'] = selector.xpath("./table[2]//tr[1]/td[2]/text()").extract_first()
 			item['dimensions'] = selector.xpath("./table[3]//tr[1]/td[2]/text()").extract_first()
-			item['extent'] = selector.xpath("./table[3]//tr[2]/td[2]/text()").extract_first()
-			item['domain'] = selector.xpath("./table[3]//tr[3]/td[2]/text()").extract_first()
+			item['extent'] = self.split_content(selector, "./table[3]//tr[2]/td[2]/text()")
+			item['domain'] = self.split_content(selector, "./table[3]//tr[3]/td[2]/text()")
 			item['description'] = selector.xpath("./table[3]//tr[4]/td[2]/text()").extract_first()
 			item['extended_description'] = selector.xpath("./table[3]//tr[5]/td[2]/text()").extract_first()
 			item['keywords'] = ''.join(selector.xpath("./table[4]//tr[1]/td[2]//text()").extract())
 		elif table_len == 3:
 			item['dimensions'] = selector.xpath("./table[2]//tr[1]/td[2]/text()").extract_first()
-			item['extent'] = selector.xpath("./table[2]//tr[2]/td[2]/text()").extract_first()
-			item['domain'] = selector.xpath("./table[2]//tr[3]/td[2]/text()").extract_first()
+			item['extent'] = self.split_content(selector, "./table[2]//tr[2]/td[2]/text()")
+			item['domain'] = self.split_content(selector, "./table[2]//tr[3]/td[2]/text()")
 			item['description'] = selector.xpath("./table[2]//tr[4]/td[2]/text()").extract_first()
 			item['extended_description'] = selector.xpath("./table[2]//tr[5]/td[2]/text()").extract_first()
 			item['keywords'] = ''.join(selector.xpath("./table[3]//tr[1]/td[2]//text()").extract())
 		return item
+
+	def split_content(self, selector, xpath):
+		content = selector.xpath(xpath).extract_first()
+		if content:
+			content = content.replace('\n', '').split(',')
+		content = [item.strip() for item in content]
+		return content
 
 	def parse_contact(self, response, item):
 		# 取第一个
@@ -72,17 +80,17 @@ class CsdmsSpider(Spider):
 			'email': selector.xpath(".//tr[11]/td[2]/text()").extract_first(),
 			'phone': selector.xpath(".//tr[12]/td[2]/text()").extract_first(),
 			'fax': selector.xpath(".//tr[13]/td[2]/text()").extract_first(),
-		}
+			}
 		return item
 
 	def parse_tech(self, response, item):
 		selector = response.xpath("//div[@id='Technical_specs']/div/table")
 		item['technical'] = {
-			'platform': selector.xpath(".//tr[1]/td[2]/text()").extract_first(),
+			'platform': self.split_content(selector, ".//tr[1]/td[2]/text()"),
 			'platform_other': selector.xpath(".//tr[2]/td[2]/text()").extract_first(),
-			'program_lang': selector.xpath(".//tr[3]/td[2]/text()").extract_first(),
+			'program_lang': self.split_content(selector, ".//tr[3]/td[2]/text()"),
 			'program_lang_other': selector.xpath(".//tr[4]/td[2]/text()").extract_first(),
-			'code': selector.xpath(".//tr[5]/td[2]/text()").extract_first(),
+			'code': self.split_content(selector, ".//tr[5]/td[2]/text()"),
 			'multi_processors': selector.xpath(".//tr[6]/td[2]/text()").extract_first(),
 			'dist_processors': selector.xpath(".//tr[7]/td[2]/text()").extract_first(),
 			'shared_processors': selector.xpath(".//tr[8]/td[2]/text()").extract_first(),
@@ -97,21 +105,21 @@ class CsdmsSpider(Spider):
 			'license_other': selector.xpath(".//tr[17]/td[2]/text()").extract_first(),
 			'memory': selector.xpath(".//tr[18]/td[2]/text()").extract_first(),
 			'run_time': selector.xpath(".//tr[19]/td[2]/text()").extract_first(),
-		}
+			}
 		return item
 
 	def parse_io(self, response, item):
 		selector = response.xpath("//div[@id='In_2FOutput']/div/table")
 		item['input'] = {
 			'params': ''.join(selector.xpath(".//tr[1]/td[2]//text()").extract()),
-			'format': selector.xpath(".//tr[2]/td[2]/text()").extract_first(),
+			'format': self.split_content(selector, ".//tr[2]/td[2]/text()"),
 			'format_other': selector.xpath(".//tr[3]/td[2]/text()").extract_first()
-		}
+			}
 		item['output'] = {
 			'params': ''.join(selector.xpath(".//tr[4]/td[2]//text()").extract()),
-			'format': selector.xpath(".//tr[5]/td[2]/text()").extract_first(),
+			'format': self.split_content(selector, ".//tr[5]/td[2]/text()"),
 			'format_other': selector.xpath(".//tr[6]/td[2]/text()").extract_first()
-		}
+			}
 		item['IO'] = {
 			'pre_soft_need': selector.xpath(".//tr[7]/td[2]/text()").extract_first(),
 			'pre_soft_description': selector.xpath(".//tr[8]/td[2]/text()").extract_first(),
@@ -120,19 +128,18 @@ class CsdmsSpider(Spider):
 			'visual_soft_need': selector.xpath(".//tr[11]/td[2]/text()").extract_first(),
 			'visual_soft': selector.xpath(".//tr[12]/td[2]/text()").extract_first(),
 			'visual_soft_other': selector.xpath(".//tr[13]/td[2]/text()").extract_first()
-		}
+			}
 		return item
 
 	def parse_process(self, response, item):
 		selector = response.xpath("//div[@id='Process']/div/table")
 		item['process'] = {
-			'processes': ''.join(selector.xpath(".//tr[1]/td[2]//text()").extract()),
-			'params_equations': ''.join(selector.xpath(".//tr[2]/td[2]//text()").extract()),
+			'processes': ' '.join(selector.xpath(".//tr[1]/td[2]//text()").extract()),
+			'params_equations': ' '.join(selector.xpath(".//tr[2]/td[2]//text()").extract()),
 			'length_scale_resolution': selector.xpath(".//tr[3]/td[2]/text()").extract_first(),
 			'time_scale_resolution': selector.xpath(".//tr[4]/td[2]/text()").extract_first(),
 			'limits': selector.xpath(".//tr[5]/td[2]/text()").extract_first()
-		}
-
+			}
 		return item
 
 	def parse_testing(self, response, item):
@@ -143,7 +150,7 @@ class CsdmsSpider(Spider):
 			'data_description': selector.xpath(".//tr[3]/td[2]/text()").extract_first(),
 			'test_data': selector.xpath(".//tr[4]/td[2]/text()").extract_first(),
 			'ideal_test_data': selector.xpath(".//tr[5]/td[2]/text()").extract_first(),
-		}
+			}
 		return item
 
 	def parse_other(self, response, item):
@@ -155,7 +162,7 @@ class CsdmsSpider(Spider):
 			'model_web': ''.join(selector.xpath("./table[2]//tr[3]/td[2]//text()").extract()),
 			'forum': selector.xpath("./table[2]//tr[4]/td[2]/text()").extract_first(),
 			'comments': selector.xpath("./table[3]//tr[1]/td[2]/text()").extract_first(),
-		}
+			}
 		return item
 
 	def parse_component(self, response, item):
@@ -169,7 +176,7 @@ class CsdmsSpider(Spider):
 			'year_version': selector.xpath("./table[2]//tr[3]/td[2]/text()").extract_first(),
 			'file_link': selector.xpath("./table[2]//tr[4]/td[2]/text()").extract_first(),
 			'couple_with': selector.xpath("./table[3]//tr[1]/td[2]/text()").extract_first(),
-		}
+			}
 		return item
 
 	def parse_pub(self, response, item):
@@ -180,7 +187,7 @@ class CsdmsSpider(Spider):
 			if not title:
 				continue
 			year = tr.xpath("./td[2]/text()").extract_first()
-			model = ''.join(tr.xpath("./td[3]//text()").extract())
+			model = ' '.join(tr.xpath("./td[3]//text()").extract())
 			ref_type = tr.xpath("./td[4]/text()").extract_first()
 			pubs.append({'title': title, 'year': year, 'model': model, 'ref_type': ref_type})
 		item['publications'] = pubs

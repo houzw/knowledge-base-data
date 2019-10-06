@@ -1,13 +1,14 @@
-- 导入的本体中（skos、software等），应该避免存在间接导入的本体（已经导入的除外，例如skos），否则 owlready 会自动尝试连接网络下载，从而报错
-    若有，则可以注释掉
-    如 task.owl 中需要注释
-    ```xml
-    <!--<owl:imports rdf:resource="http://www.egc.org/ont/gis/geoprocessor"/>
-        <owl:imports rdf:resource="http://www.egc.org/ont/data"/>
-        <owl:imports rdf:resource="http://www.egc.org/ont/domain/geospatial"/>-->
-    ```
-    **但是生成之后需要打开注释**
-- 在生成本体时， task.owl 会被修改，增加 task 实例及 hasProcessTool 属性
-- 若多次生成本体，可能会由于task中存在相应的工具实例，导致具体的本体中不再生成实例。因此，需要使用原来未修改的task（task-original.owl）替换掉已修改的task（将task-original.owl重命名为task.owl），然后重新生成
+1. crawling 数据抓取（HTML）
+2. extractiong 信息抽取（JSON）
+3. cleaning 数据清洗（JSON）
+4. configuration 转换配置（INI）
+5. mapping 知识映射（OWL）
 
-- 执行 run_all.py，一次生成多个软件的本体
+
+---
+- owlready2 在生成实例时，第一个参数若为string，则其为实例名称；若为数字，则生成匿名实例；不给定值时，自动命名
+  如 `p = GrassInput(0, prefLabel=locstr(param['parameter'], lang='en'))` 会生成匿名实例（`_:genid[数字序号]`）,在 protege 中该实例无法显示
+  如 `p = GrassInput("name", prefLabel=locstr(param['parameter'], lang='en'))` 则实例名称为 name
+  如 `p = GrassInput(prefLabel=locstr(param['parameter'], lang='en'))` 则实例名称为 `grassinput[数字序号]` 形式
+- (限 windows) 执行 run_all.py，一次生成多个软件的本体
+- 加入**shacl**会导致无法推理，报 shacl 的namespace值不是 anyURI类型

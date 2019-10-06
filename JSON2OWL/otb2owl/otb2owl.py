@@ -8,16 +8,19 @@ from owlready2 import *
 import json
 import re
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
+from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
 import datetime
 
-model_uri = 'http://www.egc.org/ont/process/otb'
-onto = get_ontology(model_uri)
-onto, shacl, skos, dcterms, props = OWLUtils.load_common(onto)
-onto, gb, task, data = OWLUtils.load_common_for_process_tool(onto)
+module_uri = 'http://www.egc.org/ont/process/otb'
+onto = get_ontology(module_uri)
+# onto, skos, dcterms, props = OWLUtils.load_common(onto)
+onto, shacl, skos, dcterms, props, foaf = OWLUtils.load_common(onto)
+onto, geospatial = OWLUtils.load_geo_vocabl(onto)
+onto, gb, task, data, cyber, context = OWLUtils.load_common_for_process_tool(onto)
 print('ontologies imported')
 
 with onto:
-	class OTBTool(gb.GeoprocessingTool):
+	class OTBTool(gb.GeoprocessingFunctionality):
 		pass
 
 
@@ -33,35 +36,34 @@ with onto:
 		pass
 
 
-	class OTBAvailableChoices(gb.AvailableChoices):
+	class OTBAvailableChoice(gb.AvailableChoice):
 		pass
 
 
 	class OTBOption(gb.Option):
 		pass
-module_path = os.path.dirname(__file__)
-with open(module_path + '/otb.json', 'r') as f:
-	jdata = json.load(f)  # list
 
 onto.metadata.creator.append('houzhiwei')
 onto.metadata.title.append('Orfeo-Toolbox Tools')
 
 onto.metadata.created.append(datetime.datetime.today())
+onto.metadata.versionInfo.append('6.6.1')
 
 
-def handle_task(category, task_name, des):
+def handle_task(tool, category, task_name, des):
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	task_cls = config.get('task', category)
 	# avoid duplicate
 	i_task_name = task_name.replace(' ', '_')
 	if not task[i_task_name + "_task"]:
 		task_ins = task[task_cls](i_task_name + "_task", prefLabel=locstr(task_name + " task", lang='en'))
+		task_ins.isAtomicTask = True
 	else:
 		task_ins = task[i_task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
 		tool.usedByTask.append(task_ins)
-	if (tool in tool.hasProcessingTool) is False:
-		task_ins.hasProcessingTool.append(tool)
+	if (tool in tool.processingTool) is False:
+		task_ins.processingTool.append(tool)
 	task_ins.description.append(locstr(des, lang='en'))
 
 
@@ -74,87 +76,96 @@ def get_datatype(k):
 		return _type
 
 
-def handle_parameters(param):
+def handle_parameters(tool, param):
 	# 部分parameter不包含isInputFile等属性
 	p = None
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = OTBInput(prefLabel=locstr(param['parameter_name'], lang='en'))
+		p = OTBInput(prefLabel=locstr(param['parameterName'], lang='en'))
 		# p = OTBInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.hasInputData.append(p)
+		tool.inputData.append(p)
 		p.isInputFile = param['isInputFile']
 		p.supportsDataFormat.append(data.GeoTIFF)
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
-		p = OTBOutput(0, prefLabel=locstr(param['parameter_name'], lang='en'))
-		tool.hasOutputData.append(p)
+		p = OTBOutput(prefLabel=locstr(param['parameterName'], lang='en'))
+		# p = OTBOutput(0, prefLabel=locstr(param['parameterName'], lang='en'))
+		tool.outputData.append(p)
 		p.isOutputFile = param['isOutputFile']
 		p.supportsDataFormat.append(data.GeoTIFF)
-	p.hasFlag.append(param['flag'])
-	p.hasParameterName = param['parameter_name']
-	if 'data_type' in param.keys() and param['data_type']:
-		p.hasDataTypeStr.append(param['data_type'])
-	p.description.append(' '.join(param['explanation']))
-
+	p.flag = param['flag']
+	p.parameterName = param['parameterName']
+	if 'dataType' in param.keys() and param['dataType']:
+		p.datatypeInString.append(param['dataType'])
+	p.description.append(locstr(' '.join(param['explanation']), lang='en'))
 
 # p.isOptional = param['isOptional'] # no this information in document
 
-def handle_options(param):
-	o = OTBOption(prefLabel=locstr(param['parameter_name'], lang='en'))
-	# p = OTBOption(0, prefLabel=locstr(param['parameter_name'], lang='en'))
-	tool.hasOption.append(o)
-	sc = OTBConstraint(0, comment=locstr("shacl data constraint", lang='en'))
+def handle_options(tool, param, _onto):
+	o = OTBOption(prefLabel=locstr(param['parameterName'], lang='en'))
+	# p = OTBOption(0, prefLabel=locstr(param['parameterName'], lang='en'))
+	tool.option.append(o)
+	sc = OTBConstraint(comment=locstr("shacl data constraint", lang='en'))
+	# sc = OTBConstraint(0, comment=locstr("shacl data constraint", lang='en'))
 	o.property.append(sc)
-	o.hasParameterName = param['parameter_name']
-	if 'data_type' in param.keys() and param['data_type']:
-		if param['data_type'] == "Choices":
-			o.hasDataTypeStr.append('String')
-		o.hasDataTypeStr.append(param['data_type'])
-		sc.datatype.append(IRIS[get_datatype(param['data_type'])])
+	o.parameterName = param['parameterName']
+	if 'dataType' in param.keys() and param['dataType']:
+		if param['dataType'] == "Choices":
+			o.datatypeInString.append('String')
+			o.datatypeInString.append('String')
+		o.datatypeInString.append(param['dataType'])
+		sc.datatype.append(IRIS[get_datatype(param['dataType'])])
 	o.description.append(''.join(param['explanation']))
 	# p.isOptional = param['isOptional']
 	if 'availableChoices' in param.keys() and param['availableChoices']:
-		handle_choices(o, param['parameter_name'], param['availableChoices'])
+		o, onto = OWLUtils.handle_choices(o, param['parameterName'], param['availableChoices'], OTBAvailableChoice, _onto)
 
 
-def handle_choices(option_instance, option_name, choices):
-	previous_one = None
-	for choice in choices:
-		availableChoices = OTBAvailableChoices(comment=locstr(option_name + ' available choices', lang='en'))
-		# availableChoices = SagaAvailableChoices(0, comment=locstr(option_name + ' available choices', lang='en'))
-		if previous_one is not None:
-			previous_one.rdf_rest = availableChoices
-		availableChoices.rdf_first = choice['choice']
-		availableChoices.hasChoice.append(choice['choice'])
-		if choice['description']:
-			des = ' '.join(choice['description'])
-			if des != ' ' or des != '-':
-				availableChoices.description.append(des.strip())
-		option_instance.hasAvailableChoice.append(availableChoices)
-		previous_one = availableChoices
-	previous_one.rest = rdf_nil
+def map_to_owl(json_data):
+	for d in json_data:
+		"""mapping json data to ontology properties"""
+		if d['category'] == 'Deprecated':
+			continue
+		name_str = d['name']
+		toolClass = tool_class(d['category'])
+		tool = toolClass(name_str, prefLabel=locstr(d['label'], lang='en'))
+		OWLUtils.application_category(tool, [], d['category'], [])
+		tool.isToolOfSoftware.append(cyber.OrfeoToolBox)
+		tool.identifier = name_str
+		tool.manualPageURL.append(normstr(d['manual_url']))
+		tool.executable = d['command']
+		tool.description.append(locstr(d['description'], lang='en'))
+		tool.definition.append(d['definition'])
+
+		keywords = OWLUtils.to_keywords(d['description'])
+		keywords.extend(d['label'].split(" "))
+		# keywords=d['label'].split(" ")
+		OWLUtils.link_to_domain_concept(tool, keywords)
+
+		if d['authors']:
+			tool.authors.append(d['authors'])
+		for ex in d['example']:
+			tool.example.append(ex)
+		handle_task(tool, d['category'], d['label'], d['description'])
+		for parameter in d['parameters']:
+			handle_parameters(tool, parameter)
+		for option in d['options']:
+			handle_options(tool, option, onto)
 
 
-for d in jdata:
-	if d['category'] == 'Deprecated':
-		continue
-	name_str = d['name']
-	tool = OTBTool(name_str, prefLabel=locstr(d['label'], lang='en'))
-	tool.isToolOfSoftware.append(gb.OrfeoToolBox)
-	tool.hasIdentifier = name_str
-	tool.hasManualPageURL.append(d['manual_url'])
-	tool.hasExecutable = d['command']
-	tool.description.append(locstr(d['description'], lang='en'))
-	tool.definition.append(d['definition'])
-	if d['authors']:
-		tool.hasAuthors.append(d['authors'])
-	for ex in d['example']:
-		tool.example.append(ex)
-	handle_task(d['category'], d['label'], d['description'])
-	for parameter in d['parameters']:
-		handle_parameters(parameter)
-	for option in d['options']:
-		handle_options(option)
+def tool_class(category):
+	tool_cls = category.replace(' ', '') + 'Tool'
+	return OWLUtils.create_onto_class(onto, tool_cls, OTBTool)
 
-onto.save(file='otb.owl', format="rdfxml")
-# update task ontology
-task.save()
-print('OTB Done!')
+
+if __name__ == "__main__":
+	module_path = os.path.dirname(__file__)
+	with open(module_path + '/otb.json', 'r') as f:
+		jdata = json.load(f)  # list
+	# print(len(jdata))
+	# otherwise will report stack overflow exception
+	threading.stack_size(2000000)
+	thread = threading.Thread(target=map_to_owl(jdata))
+	thread.start()
+	onto.save(file='otb.owl', format="rdfxml")
+	# update task ontology
+	task.save()
+	print('OTB Done!')

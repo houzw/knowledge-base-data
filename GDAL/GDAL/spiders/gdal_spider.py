@@ -13,131 +13,141 @@ import re
 # gdaldem 有多种模式，相当于多个命令，如 gdaldem hillshade，gdaldem slope 等，每种模式参数略有差异
 
 # https://www.gdal.org/index.html
+# https://github.com/OSGeo/gdal-docs
+# file:///H:/gisdemo/gdal-docs/programs/gdalinfo.html
+
 class GdalSpiderSpider(scrapy.Spider):
 	name = 'gdal_spider'
-	allowed_domains = ['gdal.org']
-	start_urls = ['https://www.gdal.org/gdal_utilities.html', 'https://www.gdal.org/ogr_utilities.html', 'https://www.gdal.org/gnm_utilities.html']
-	base_url = 'https://www.gdal.org/'
+	# start_urls = ['file://127.0.0.1/H:/gisdemo/gdal-docs/programs/index.html']
+	start_urls = ['https://gdal.org/programs/index.html']
+	base_url = 'https://gdal.org/programs/'
 
 	def parse(self, response):
-		a_list = response.css('div.contents ul>li>a')
+		a_list = response.css('div#programs ul>li a.reference.internal')
 		for a in a_list:
 			next_url = a.css('a::attr(href)').extract_first()
+			if next_url.endswith('common-options'):
+				continue
 			yield Request(self.base_url + next_url, callback=self.parse_content)
 
 	def parse_content(self, resp):
 		item = GdalItem()
-		item['name'] = resp.css('div.headertitle>div.title::text').extract_first().strip()
-		item['exec'] = item['name']
-		item['summary'] = resp.css('div.contents>.textblock>p:nth-child(1)::text').extract_first()
-		# todo can not get content
-		item['description'] = resp.xpath('//div[@class="contents"]/div[@class="textblock"]/p[preceding-sibling::h1][1]//text()').extract()
+		content = resp.css('div[itemprop="articleBody"]>div.section')
+		item['name'] = content.css('h1:nth-child(2)::text').extract_first().strip()
+		item['exec'] = item['name']  # description > p:nth-child(2)#description > p:nth-child(3)
+		item['summary'] = content.css('p:nth-child(3)::text').extract_first()
+		# first two p
+		description = ' '.join(resp.xpath('.//div[@id="description"]/p[preceding-sibling::h2[contains(text(),"Description")] and following-sibling::dl]//text()').extract())
+		desc_append = '\n'.join(content.css('#description>ul.simple>li>p::text').extract())
+		# print(description)
+		if not description:
+			print(description)
+		if not desc_append:
+			item['description'] = description
+		else:
+			item['description'] = description + desc_append
 		# print(item['description'])
 		#  SYNOPSIS
-		item['syntax'] = resp.xpath('normalize-space(//div[@class="contents"]/div[@class="textblock"]/pre[@class="fragment"][1]/text())').extract_first()
-		#  DESCRIPTION
-		item['parameters'], item['options'] = self.parse_params(resp, item['syntax'])
+		item['syntax'] = self.parse_synopsis(content)
+		item['parameters'], item['options'] = self.parse_params(resp)
 		item['manual_url'] = resp.url
-		#todo remove syntax
-		example = ' '.join(resp.css('div.contents>.textblock>pre.fragment:nth-child(n+2)::text').extract()[1:])
-		item['example'] = re.sub('[ ]+', ' ', example)
-		# item['usage'] = resp.xpath().extract_first()
-		item['comment'] = self.parse_comment(resp)
+		item['example'] = self.parse_example(content)
 		return item
 
-	def parse_comment(self, resp):
-		comment = resp.xpath("//div[@class='contents']/div[@class='textblock']//p[preceding-sibling::dl and following-sibling::h1]//text()").extract()
-		return ' '.join(comment)
+	def parse_synopsis(self, content):
+		synopsis = ' '.join(content.css('#synopsis .highlight-default.notranslate pre>span::text').extract())
+		synopsis = synopsis.replace('Usage :', '')
+		synopsis = synopsis.replace('[ ', '[').replace(' ]', ']') \
+			.replace('< ', '').replace(' >', '') \
+			.replace('- ', '-').replace(' = ', '=') \
+			.replace(' . ', '.').strip()
+		return synopsis
 
-	def parse_params(self, resp, syntax):
-		dl = resp.xpath('//dl')
-		dts = dl.xpath('.//dt')
-		dds = dl.xpath('.//dd')
-		# 同时遍历两个列表
+	def parse_example(self, content):
+		example = ' '.join(content.css('#example>.highlight-default.notranslate>.highlight>pre>span::text').extract()[1:])
+		example = example.replace('- ', '-').replace(' = ', '=').replace(' . ', '.').strip()
+		return example
+
+	def parse_params(self, resp):
+		dls = resp.css('#description dl.option')
 		params = []
 		options = []
-		for dt, dd in zip(dts, dds):
+		for dl in dls:
 			param = dict()
-			flag = dt.xpath('./b/text()').extract_first()
-			param['flag'] = None
-			if flag:
-				param['flag'] = flag.split(',')[0]
-				param['name'] = param['flag'].replace('-', '')
-			value = dt.xpath('./em/text()').extract_first()
-			# contains "=", " ", "|" etc.
-			if value:
-				param['dataType'] = 'String'
-				if value.strip() == 'value': param['dataType'] = 'Float'
-				new_name = value.split("|")[0] if '|' in value else value.split('[')[0]
-				if re.fullmatch("[a-zA-Z_0-9]+", new_name):
-					param['name'] = new_name
-				if ("=" or " " or "|" or '[') in value:
-					param['value_format'] = value
+			flag_value = None
+			param_name = None
+			if len(dl.css("dt>code.descname")) > 1:
+				param['flag'] = dl.css("dt>code.descname:nth-child(1)::text").extract_first()
+				param['long_flag'] = dl.css("dt>code.descname:nth-child(4)::text").extract_first()
+				flag_value = dl.css("dt>code.descclassname:nth-child(5)::text").extract_first()
 			else:
+				# e.g. -b <band>
+				param['flag'] = dl.css("dt>code.descname::text").extract_first()
+				flag_value = dl.css("dt>code.descclassname::text").extract_first()
+			param['dataType'] = 'String'
+			if flag_value is None:
+				param_name = param['flag']
 				param['dataType'] = 'Boolean'
-			if not param['flag'] and not value:
-				# print(syntax)
-				continue
+				param['isOptional'] = True
+			else:
+				# default is not optional, reset to true if required
+				param['isOptional'] = False
+				if param_name is None:
+					param_name = flag_value.replace('=', '')
+					if flag_value == '<n>':
+						param_name = param['flag']
+				spliters = [' ', '|', ',', '=']
+				if any([spliter in flag_value.strip() for spliter in spliters]):
+					param_name = param['flag']
+					if flag_value.startswith('='):
+						flag_value = flag_value.replace('=', '')
+					param['input_pattern'] = flag_value.strip()
+				elif flag_value.strip() == 'value':
+					param['dataType'] = 'Float'
+				param = self.handle_avaliables(param, flag_value)
 
-			# d = self.parse_syntax(syntax)
-			param['isOptional'] = self.is_optional(syntax, param['name'], param['flag'])
-			# param['defaultValue'] = False
-			param['explanation'] = ' '.join(dd.xpath('.//text()').extract())
-			if len(self.required_params(syntax, param['name'])) == 1:
+			if 'long_flag' in param.keys() and param['long_flag']:
+				param_name = param['long_flag']
+
+			if flag_value:
+				if flag_value.strip().startswith('<') or flag_value.strip().startswith('[') or flag_value.strip().startswith('{'):
+					param['isOptional'] = True
+
+			if param['flag'] in ['-h', '-v', '-q', '--version', '-c']:
+				param['isOptional'] = True
+			if param['flag'].startswith('<'):
+				param['flag'] = re.sub('[<>]', '', param['flag'].strip())
+				param['isOptional'] = True
+			param['name'] = re.sub('[<>:\-=\[\]]+', '', param_name.strip()).replace(' ', '_').lower()
+			if ('src' or 'source' or 'filename' or 'input' or 'datasetname') in param['name']:
 				param['isInputFile'] = True
 				param['dataType'] = 'String'
-			else:
-				if ('src' or 'source' or 'filename' or 'input' or 'datasetname') in param['name']:
-					param['isInputFile'] = True
-					param['dataType'] = 'String'
-				if ('dst' or 'dest' or 'output') in param['name']:
-					param['isOutputFile'] = True
-					param['dataType'] = 'String'
+			if ('dst' or 'dest' or 'output') in param['name']:
+				param['isOutputFile'] = True
+				param['dataType'] = 'String'
+			param['explanation'] = ' '.join(dl.css("dd *::text").extract())
 			if param['isOptional']:
-				# choices = self.available_choices(syntax, param['flag'])
-				choices = self.available_choices(self.optional_params(syntax, param['name']), param['flag'])
-				if len(choices) > 0:
-					param['available_choices'] = choices
 				options.append(param)
 			else:
 				params.append(param)
+
 		return params, options
 
-	def is_optional(self, syntax, param_name, flag):
-		if not flag: flag = param_name  # e.g. [gdal_file]*, src_dataset
-		if '[' + flag in syntax:
-			return True
+	def handle_avaliables(self, param, flag_value):
+		# -expand gray|rgb|rgba
+		# -outsize <xsize>[%]|0 <ysize>[%]|0
+		# -tr <xres> <yres>
+		available_values = None
+		flag_value = flag_value.strip()
+		if '|' in flag_value:
+			available_values = flag_value.split("|")
+		elif ',' in flag_value:
+			flag_value = flag_value.replace('{', '').replace('}', '')
+			available_values = flag_value.split(",")
+		elif '/' in flag_value:
+			available_values = flag_value.split("/")
+		if available_values:
+			param['available_values'] = [re.sub("[<>\[{}]+", '', available_value.strip()) for available_value in available_values]
 		else:
-			return False
-
-	def available_choices(self, optional_params, flag):
-		choices_list = []
-		if flag:  # e.g. [gdal_file]*, src_dataset
-			p = "\[" + flag + " {[a-z0-9A-Z/_|, ]+}"
-			choices_match = re.search(p, optional_params)
-			if choices_match:
-				choices = choices_match.group()
-				choices = re.search('{[a-z0-9A-Z/_|, ]+}', choices).group().replace('{', '').replace('}', '').strip()
-				if "," in choices:
-					choices_list = choices.split(",")
-				elif "/" in choices:
-					choices_list = choices.split("/")
-				elif "|" in choices:
-					choices_list = choices.split("|")
-		return choices_list
-
-	# options
-	def optional_params(self, syntax, tool_name):
-		synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
-		synopsis = re.sub('[\n ]+', ' ', synopsis)
-		optional_params = re.search('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|\n]+\]', synopsis)
-		optional_params = optional_params.group().replace('*', '').strip() if optional_params else ''
-		return optional_params
-
-	# io
-	def required_params(self, syntax, tool_name):
-		synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
-		synopsis = re.sub('[\n ]+', ' ', synopsis)
-		required_params = re.sub('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|\n]+\]', '', synopsis)
-		required_params = required_params.replace('*', '').strip() if required_params else ''
-		return required_params
+			param['available_values'] = available_values
+		return param

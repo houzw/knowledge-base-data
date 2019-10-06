@@ -44,7 +44,7 @@ if executable:
 
 synopsis = "i.eb.evapfr [-m] netradiation=name soilheatflux=name sensibleheatflux=name evaporativefraction=name  [soilmoisture=name]   [--overwrite]  [--help]  [--verbose]  [--quiet]  [--ui]"
 r = re.match('[a-z.]+ ', synopsis)
-print('rr')
+print('r')
 
 s2 = "i.eb.evapfr"
 
@@ -55,6 +55,7 @@ print(datetime.datetime.today())
 ss = "Raster To Video (Conversion)"
 ss2 = "Table "
 rr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?", ss2)
+print('rr')
 print(rr)
 print(re.search("\([a-zA-Z]+\)", ss2))
 print(str('RasterToVideo_conversion').split('_')[0])
@@ -68,3 +69,4 @@ print(str(ex))
 print(str(ex).replace('{',''))
 tt = 'Geographically Weighted Regression (Spatial Statistics)'
 print(re.findall("\([a-zA-Z* ]+\)", tt))
+

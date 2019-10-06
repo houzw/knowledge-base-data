@@ -9,11 +9,14 @@ from scrapy import Item, Field
 
 
 class SagaItem(Item):
-	# define the fields for your item here like:
 	name = Field()
-	comment = Field()
-	parameter = Field()
+	# comment
+	description = Field()
+	parameters = Field()
+	# exec and cmd line (syntax)
 	command = Field()
 	manual_url = Field()
 	keywords = Field()
+	authors = Field()
+	references = Field()
 	pass

@@ -1,0 +1,2468 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.egc.org/ont/model/geospatial#"
+     xml:base="http://www.egc.org/ont/model/geospatial"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:ns="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+     xmlns:dta="http://www.egc.org/ont/domain/dta#"
+     xmlns:kms="http://gcmd.gsfc.nasa.gov/kms#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:wot="http://xmlns.com/wot/0.1/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:data="http://www.egc.org/ont/data#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:gcmd="https://gcmdservices.gsfc.nasa.gov/kms/concept#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:cyber="http://www.egc.org/ont/gis/cyber#"
+     xmlns:props="http://www.egc.org/ont/base/props#"
+     xmlns:shacl="http://www.w3.org/ns/shacl#"
+     xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:context="http://www.egc.org/ont/context#"
+     xmlns:process="http://www.egc.org/ont/gis/process#">
+    <owl:Ontology rdf:about="http://www.egc.org/ont/model/geospatial">
+        <owl:imports rdf:resource="http://www.egc.org/ont/data"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/datasource"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/base/props"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/domain/dta"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/gis/cyber"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/gis/process"/>
+        <owl:imports rdf:resource="http://www.egc.org/ont/process/grass"/>
+        <owl:imports rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept"/>
+        <dc:creator xml:lang="en">zhiwei hou</dc:creator>
+        <dc:source rdf:resource="http://www.cryosphere.csdb.cn/html/modelList.jsp"/>
+        <dc:source>Morsy, M. M. et al. Design of a metadata framework for environmental models with an example hydrologic application in HydroShare. Environ. Model. Softw. 93, 13-C28 (2017).</dc:source>
+        <dc:source>http://csdms.colorado.edu/wiki/Main_Page</dc:source>
+        <dc:source>http://cwam.ucdavis.edu/models.htm</dc:source>
+        <dc:source>https://hydrologicmodels.tamu.edu/models.htm</dc:source>
+        <dc:source xml:lang="zh-cn">徐宗学等，水文模型，科学出版社，2009</dc:source>
+        <dc:title xml:lang="en">GeoSpatial Models Ontology</dc:title>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#supportsPlatform -->
+
+    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/gis/cyber#supportsPlatform"/>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/process#dependency -->
+
+    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/gis/process#dependency"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#broadMatch -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#broadMatch"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#narrowMatch -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#narrowMatch"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#calibrationSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#calibrationSoftware">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:domain rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#contact -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#contact">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/gis/cyber#creatorContact"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#executedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#executedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.egc.org/ont/gis/cyber#Software"/>
+                    <rdf:Description rdf:about="http://www.egc.org/ont/gis/process#GeoprocessingFunctionality"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#flowRoutingMethod -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#flowRoutingMethod">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelMethod"/>
+        <skos:definition xml:lang="en">The flow routing method used</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasPETEstimationMethod -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasPETEstimationMethod">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelMethod"/>
+        <skos:definition xml:lang="en">The Potential EvapoTranspiration (PET) estimation method used</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#inputFormat -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#inputFormat">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameter"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#inputInfo -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#inputInfo">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelInputInfo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#inputParameter -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#inputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameter"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isModuleOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#isModuleOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <owl:inverseOf rdf:resource="http://www.egc.org/ont/model/geospatial#module"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isPostprocessingSoftwareOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#isPostprocessingSoftwareOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <owl:inverseOf rdf:resource="http://www.egc.org/ont/model/geospatial#postprocessingSoftware"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isPreprocessingSoftwareOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#isPreprocessingSoftwareOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <owl:inverseOf rdf:resource="http://www.egc.org/ont/model/geospatial#preprocessingSoftware"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelDescribed -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelDescribed">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelMethod -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelMethod">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/domain/hydrology#HydrologicalMethod"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelParameter -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelParameter"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelProcess">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelRelation -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelRelation">
+        <rdfs:domain rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelType -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelType">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#module -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#module">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#natrualProcess -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#natrualProcess">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProcess"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#optionalInputParameter -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#optionalInputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#inputParameter"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#outputFormat -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#outputFormat">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameter"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#outputInfo -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#outputInfo">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelOutputInfo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#outputParameter -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#outputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameter"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#postprocessingSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#postprocessingSoftware">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#preprocessingSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#preprocessingSoftware">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+                    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment xml:lang="en">software to prepare model input data</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#publication -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#publication">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:domain rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelPublication"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#requiredInputParameter -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#requiredInputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#inputParameter"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#runoffCalculationMethod -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#runoffCalculationMethod">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelMethod"/>
+        <skos:definition xml:lang="en">The runoff calculation method used</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#spatialDimension -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#spatialDimension">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDimension"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#spatialExtent -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#spatialExtent">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#supportedModelStandard -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#supportedModelStandard">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#technical -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#technical">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelTechnicalSpecs"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#testing -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#testing">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/model/geospatial#ModelTesting"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#visualizationSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/model/geospatial#visualizationSoftware">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelRelation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#calibrationData -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#calibrationData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTesting"/>
+        <dc:description xml:lang="en">Describe available calibration data sets</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#canCoupleWith -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#canCoupleWith">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#codeOptimized -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#codeOptimized">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+        <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/gis/cyber#codeOptimizedType"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#componentInfo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#componentInfo">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#describePostprocessingSoft -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#describePostprocessingSoft">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+        <dc:description xml:lang="en">Describe post-processing software</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#describePreprocessingSoft -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#describePreprocessingSoft">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+        <dc:description xml:lang="en">Describe pre-processing software</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#describeVisualizationSoft -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#describeVisualizationSoft">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#domain -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#domain"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#executedBy -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#executedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#fileLink -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#fileLink">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasBMICompliant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasBMICompliant">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasBMPsInfo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasBMPsInfo">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#simulationProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasBMPsMethod -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasBMPsMethod">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#simulationProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasBMPsUnits -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasBMPsUnits">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#simulationProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasOpenMICompliant -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasOpenMICompliant">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#hasWMTComponent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#hasWMTComponent">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#idealTestingData -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#idealTestingData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTesting"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#incorporatedModels -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#incorporatedModels">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#inputDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#inputDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameterDescription"/>
+        <dc:description xml:lang="en">general description of input parameters</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isGeogrpahicInNature -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#isGeogrpahicInNature">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isInDevelopment -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#isInDevelopment">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <skos:definition xml:lang="en">Does model development still take place</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isMPIParallelized -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#isMPIParallelized">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#isParallelized"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isOpenMPParallelized -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#isOpenMPParallelized">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#isParallelized"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isParallelized -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#isParallelized">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#keyPhysicalParameters -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#keyPhysicalParameters">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#processDescription"/>
+        <dc:description xml:lang="en">Describe key physical parameters and equations</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#keywords -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#keywords">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#largerFramework -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#largerFramework">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#lengthScaleAndResolutionConstraints -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#lengthScaleAndResolutionConstraints">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#processDescription"/>
+        <dc:description xml:lang="en">Describe length scale and resolution constraints</dc:description>
+        <skos:prefLabel xml:lang="en">Length Scale and Resolution Constraints</skos:prefLabel>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#lisence -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#lisence">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#majorCategory -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#majorCategory">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelApplication"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#manual -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#manual">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#minorCategory -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#minorCategory">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelApplication"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelApplication -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelApplication">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelDOI -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelDOI">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelFeatures -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelFeatures">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelForum -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelForum">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#anyURI"/>
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#string"/>
+                </owl:unionOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelIODescribe -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelIODescribe">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+        <rdfs:comment xml:lang="en">general descriptions of input and output of a model</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelObjective -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelObjective">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelParameterDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelParameterDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelProperty">
+        <rdfs:domain rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelReference -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelReference">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelSummary -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelSummary">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelTechnical -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelTechnical">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelTesting -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelTesting">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelUses -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelUses">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelVersion -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelVersion">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <terms:isReplacedBy rdf:resource="http://www.w3.org/2002/07/owl#versionInfo"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelWebsite -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#modelWebsite">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#model_described -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#model_described">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelReference"/>
+        <rdfs:seeAlso rdf:resource="http://www.egc.org/ont/model/geospatial#modelDescribed"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#numericalLimitations -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#numericalLimitations">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#processDescription"/>
+        <dc:description xml:lang="en">Describe any numerical limitations and issues</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#optionalInputContent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#optionalInputContent">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameterDescription"/>
+        <dc:description xml:lang="en">optional input data content</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#outputContent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#outputContent">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameterDescription"/>
+        <dc:description xml:lang="en">output data content</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#outputDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#outputDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameterDescription"/>
+        <dc:description xml:lang="en">general description of output parameters</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#paperTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#paperTitle">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelReference"/>
+        <terms:isReferencedBy rdf:resource="http://purl.org/dc/elements/1.1/title"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#paperYear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#paperYear">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelReference"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#processDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#processDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#referenceType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#referenceType">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelReference"/>
+        <terms:isReplacedBy rdf:resource="http://purl.org/dc/elements/1.1/type"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#representedProcesses -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#representedProcesses">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#processDescription"/>
+        <dc:description xml:lang="en">Describe processes represented by the model</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#requiredInputContent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#requiredInputContent">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelParameterDescription"/>
+        <dc:description xml:lang="en">required input data content</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#simulationProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#simulationProperty"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#simulationType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#simulationType">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#simulationProperty"/>
+        <skos:definition xml:lang="en">The type of the simulation used (i.e., normal simulation, sensitivity analysis, and auto-calibration)</skos:definition>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#sourceCsdmsWebAddress -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#sourceCsdmsWebAddress">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#subjectKnowledgeLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#subjectKnowledgeLevel">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#supportedModelStandardVersion -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#supportedModelStandardVersion">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#supportsFormat -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#supportsFormat">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelIODescribe"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#supportsMultipleProcessors -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#supportsMultipleProcessors">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTechnical"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#technicalDifficultyLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#technicalDifficultyLevel">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#testDataSets -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#testDataSets">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#modelTesting"/>
+        <dc:description xml:lang="en">Describe available test data sets</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#timeScaleAndResolutionConstraints -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#timeScaleAndResolutionConstraints">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#processDescription"/>
+        <dc:description xml:lang="en">Describe time scale and resolution constraints</dc:description>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#versionSubmittedYear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/model/geospatial#versionSubmittedYear">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/model/geospatial#componentInfo"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#CarbonatesAndBiogenicsModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#CarbonatesAndBiogenicsModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#CarbonatesAndBiogenicsTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#CarbonatesAndBiogenicsTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ClimateModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ClimateModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Climate models, weather models</terms:description>
+        <skos:altLabel xml:lang="zh-cn">气候模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ClimateTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ClimateTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#CoastalModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#CoastalModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Coastline evolution models, delta sedimentation models, tidal flat models, storm surge models, plume models, tubidity current models, stratigraphic models, wave refraction models, etc.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#CoastalTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#CoastalTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ConceptualModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ConceptualModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ProcessDescriptionModel"/>
+        <skos:altLabel xml:lang="en">Parametric Model</skos:altLabel>
+        <skos:altLabel xml:lang="zh-cn">概念模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#DeterministicModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#DeterministicModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalModel"/>
+        <skos:altLabel xml:lang="zh-cn">ȷ����ģ��</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#DistributedModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#DistributedModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDiscretizationModel"/>
+        <skos:altLabel xml:lang="zh-cn">分布式模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#EcosystemsModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#EcosystemsModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#EcosystemsTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#EcosystemsTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#EmpiricalModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#EmpiricalModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ProcessDescriptionModel"/>
+        <skos:altLabel xml:lang="en">Metric model</skos:altLabel>
+        <skos:altLabel xml:lang="zh-cn">经验性模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#GeoSpatialModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#GeoSpatialTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#GeodynamicModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#GeodynamicModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Fault, lithospheric flexure, lithosphere deflection, Mantle Evolution Model, etc.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#GeodynamicTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#GeodynamicTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#GeospatialSoftware"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRUDefinition -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#HRUDefinition">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SWATOption"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HydrologicalModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#HydrologicalModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Hydrologic models, stream avulsion models, flow routing models, groundwater models, fluvial sediment transport models, etc.</terms:description>
+        <skos:altLabel xml:lang="zh-cn">水文模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HydrologicalTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#HydrologicalTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#LandlabModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#LandlabModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Earth surface processes models</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#LumpedModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#LumpedModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDiscretizationModel"/>
+        <skos:altLabel xml:lang="zh-cn">集总式模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#MarineModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#MarineModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Basin circulation models, gravity flow models, wave models, stratigraphy models, etc.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#MarineTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#MarineTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelComponent -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelComponent">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelContact -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelContact">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelInputInfo -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelInputInfo">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelMetadata -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelOption -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelOption">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelOutputInfo -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelOutputInfo">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelParameter -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelParameter">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelProcess -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelProcess">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelPublication -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelPublication">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelStandard -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelStandard">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelTechnicalSpecs -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelTechnicalSpecs">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelTesting -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelTesting">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModelType -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModelType">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelMetadata"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ModellingProcess -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#NaturalProcess -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#NaturalProcess">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelProcess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#PhysicallyBasedModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#PhysicallyBasedModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ProcessDescriptionModel"/>
+        <skos:altLabel xml:lang="zh-cn">����������Ƶ�ģ��</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ProcessDescriptionModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#ProcessDescriptionModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalModel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATChoices -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATChoices">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/process#AvailableChoices"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATInput -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATInput">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/process#InputData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATLookupInput -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATLookupInput">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SWATInput"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATOption -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATOption">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/process#Option"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATProjectOption -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATProjectOption">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SWATOption"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATRasterInput -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATRasterInput">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SWATInput"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATWetherStationInput -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SWATInput"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SemiDistributedModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SemiDistributedModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDiscretizationModel"/>
+        <skos:altLabel xml:lang="zh-cn">半分布式模型</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SpatialDimension -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SpatialDimension">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SpatialDiscretizationModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#SpatialDiscretizationModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#DeterministicModel"/>
+        <skos:altLabel xml:lang="zh-cn">�ռ���ɢʽģ��</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#TerrestrialModel -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#TerrestrialModel">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialModel"/>
+        <terms:description xml:lang="en">Landscape evolution models, avulsion models, sediment transport models, advection diffusion models, ice sheet evolution models, lithospheric flexure models, groundwater models, surface water-quality models, water balance models, etc.</terms:description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#TerrestrialTool -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#TerrestrialTool">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#GeoSpatialTool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Timestep -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#Timestep">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#WatershedProcess -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/model/geospatial#WatershedProcess">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/model/geospatial#ModelProcess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#DataTypeProperty -->
+
+    <owl:Class rdf:about="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#Concept -->
+
+    <owl:Class rdf:about="http://www.w3.org/2004/02/skos/core#Concept"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.egc.org/ont/data#soil -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/data#soil"/>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ArcSWAT -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#ArcSWAT">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:interoperableSoftware rdf:resource="http://www.egc.org/ont/gis/cyber#ArcGIS_Desktop"/>
+        <cyber:isPluginOf rdf:resource="http://www.egc.org/ont/gis/cyber#ArcGIS_Desktop"/>
+        <cyber:similarSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT"/>
+        <cyber:similarSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#QSWATPlus"/>
+        <cyber:similarSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT2000"/>
+        <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/software/arcswat/</cyber:website>
+        <cyber:supportsPlatform rdf:resource="http://www.egc.org/ont/gis/cyber#Windows"/>
+        <process:dependency rdf:resource="http://www.egc.org/ont/gis/cyber#ArcGIS_Desktop"/>
+        <process:dependency rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_Editor"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#BMI -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#BMI">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelStandard"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Conceptual -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Conceptual">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <skos:prefLabel xml:lang="en">Conceptual</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Daily -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Daily">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Timestep"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ET_method_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#ET_method_1">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</props:hasValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ET_method_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#ET_method_2">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</props:hasValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#ET_method_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#ET_method_3">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</props:hasValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Empirical -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Empirical">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <skos:prefLabel xml:lang="en">Empirical</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HRUDefinition"/>
+        <props:defaultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</props:defaultValue>
+    </owl:NamedIndividual>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.egc.org/ont/model/geospatial#HRU_creation_method"/>
+        <owl:annotatedProperty rdf:resource="http://www.egc.org/ont/base/props#defaultValue"/>
+        <owl:annotatedTarget rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</owl:annotatedTarget>
+        <rdfs:comment>Filter by landuse, soil, slope</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method_1">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dominant landuse, soil, slope</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method_2">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dominant HRU</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method_3">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Filter by Area</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method_4">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Target Number of HRUs</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_creation_method_5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_creation_method_5">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Filter by landuse, soil, slope</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_thresholds_type -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_thresholds_type">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HRUDefinition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_thresholds_type_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_thresholds_type_1">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Total Area</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#HRU_thresholds_type_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#HRU_thresholds_type_2">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Percent</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Hourly -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Hourly">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Timestep"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Modular -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Modular">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <skos:prefLabel xml:lang="en">Modular</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Monthly -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Monthly">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Timestep"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#OpenMI -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#OpenMI">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelStandard"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#PhysicalModel -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#PhysicalModel">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <owl:sameAs rdf:resource="http://www.egc.org/ont/model/geospatial#PhysicallyBased"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#PhysicallyBased -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#PhysicallyBased">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <skos:prefLabel xml:lang="en">PhysicallyBased</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#QSWAT -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#QSWAT">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:isPluginOf rdf:resource="http://www.egc.org/ont/gis/cyber#QGIS"/>
+        <cyber:primaryVersionSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT_1.8"/>
+        <terms:bibliographicCitation xml:lang="en">Dile, Y. T., Daggupati, P., George, C., Srinivasan, R. &amp; Arnold, J. Introducing a new open source GIS user interface(QSWAT) for the SWAT model. Environ. Model. Softw. 85, 129-C138 (2016).</terms:bibliographicCitation>
+        <terms:hasVersion rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT_1.8"/>
+        <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/model/geospatial#QSWATPlus"/>
+        <cyber:supportsPlatform rdf:resource="http://www.egc.org/ont/gis/cyber#Windows"/>
+        <process:dependency rdf:resource="http://www.egc.org/ont/gis/cyber#TauDEM"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#QSWATPlus -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#QSWATPlus">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <owl:sameAs rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT+"/>
+        <owl:priorVersion rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#QSWAT_1.8 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#QSWAT_1.8">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:dependency rdf:resource="http://www.egc.org/ont/gis/cyber#Microsoft_Access"/>
+        <cyber:dependency rdf:resource="http://www.egc.org/ont/gis/cyber#QGIS_2.6.1"/>
+        <cyber:dependency rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_Editor"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#SWATLanduseInput"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#SWATLanduseLookupInput"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#SWATSoilInput"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#SWATSoilLookupInput"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#SWATtmp"/>
+        <cyber:inputData rdf:resource="http://www.egc.org/ont/model/geospatial#TopographyInput"/>
+        <cyber:isPluginOf rdf:resource="http://www.egc.org/ont/gis/cyber#QGIS_2.6.1"/>
+        <cyber:programmingLanguage rdf:resource="http://www.egc.org/ont/gis/cyber#Python"/>
+        <cyber:similarSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#ArcSWAT"/>
+        <cyber:similarSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT+"/>
+        <cyber:codeRepository rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://bitbucket.org/ChrisWGeorge/qswat/src/master/</cyber:codeRepository>
+        <cyber:installationInstructions rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Install QGIS by running QGIS-OSGeo4W-2.6.1-1-Setup-x86.exe. Use the default folder C:\Program Files\QGIS Brighton as the installation folder, or C:\Program Files (x86)\MQGIS Brighton on a 64-bit machine. Currently you must use the 32-bit version on 64-bit machines. It is also currently necessary to use version 2.6 rather than 2.8.  From now on we will use Program Files as a folder name, even though it will be Program Files (x86) on a 64-bit machine.
+    Install SWAT Editor 2012 in its standard place C:\SWAT\SWATEditor. 
+        Refer to Appendix I of the QSWAT Manual for help updating a database.
+        Refer to the SWATEditor_Documentation.pdf in C:\SWAT\SWATEditor\SWATEditorHelp for help getting started.
+    Install QSWAT. This adds some files to the SWATEditor: a project database and a reference database in Databases, SWATGraph in the SWATGraph folder, and also stores the TauDEM executables in a new directory C:\SWAT\SWATEditor\TauDEM5Bin. The QGIS plugin QSWAT is put into the user&apos;s home directory in .qgis2\python\plugins\QSwat, which we will refer to as the QSWAT directory.</cyber:installationInstructions>
+        <cyber:isFreeSoftware rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isFreeSoftware>
+        <cyber:isOpenSource rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isOpenSource>
+        <cyber:onlineDocument rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/media/116301/qswat-manual_v18.pdf</cyber:onlineDocument>
+        <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/software/qswat/</cyber:website>
+        <dc:description xml:lang="en">QSWAT is a QGIS interface for SWAT.
+Supports conversion of ArcSWAT projects to QSWAT. In particular this allows QSWAT&apos;s visualisation tools to be applied to existing ArcSWAT projects.</dc:description>
+        <cyber:supportsPlatform rdf:resource="http://www.egc.org/ont/gis/cyber#Windows"/>
+        <rdfs:comment xml:lang="en">If you use version 1.7 or 1.8 of QSWAT on a project developed with an older version of QSWAT, then the reference database stored in the project directory will need updating.  There are two ways to do this:
+
+    After installing QSWAT 1.8 you can copy the new reference database  C:\SWAT\SWATEditor\Databases\QSWATRef2012.mdb to your project folder, overwriting the file of the same name there.
+    If you have made any changes to your project&apos;s reference database, such as your own usersoil table, it may be easier to update your database.  You can do this when you start the SWAT Editor, before you start writing tables.  Having started the editor and connected to databases, Select Write Input Tables, then Database Update.  Select the bsn table, make sure Update SWAT Range Tables is selected, and click Update Database.  Do the same thing for the rte table.</rdfs:comment>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.8</owl:versionInfo>
+        <skos:broadMatch rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Routing_method_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Routing_method_1">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Muskingum</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Routing_method_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Routing_method_2">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATChoices"/>
+        <props:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</props:hasValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable Storage</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SEIMS -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SEIMS">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#PhysicallyBasedModel"/>
+        <cyber:codeRepository rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://github.com/lreis2415/SEIMS</cyber:codeRepository>
+        <cyber:isOpenSource rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isOpenSource>
+        <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://github.com/lreis2415/SEIMS</cyber:website>
+        <terms:abstract xml:lang="en">SEIMS (Spatially Explicit Integrated Modeling System) is an integrated, modular, parallelized, fully-distributed watershed modeling system, which is also designed for scenario analysis, especially for evaluating and optimizing BMPs scenarios.
+SEIMS can be used to build a specific watershed model of a single watershed for long-term or storm event simulation. Multiple watershed process could be considered, e.g., hydrological processes, soil erosion, nutrient cycling, and plant growth.</terms:abstract>
+        <terms:bibliographicCitation xml:lang="en">Liu, J., Zhu, A-X., Liu, Y., Zhu, T., Qin, C.-Z., 2014. A layered approach to parallel computing for spatially distributed hydrological modeling. Environmental Modelling &amp; Software 51, 221�C227. doi: 10.1016/j.envsoft.2013.10.005</terms:bibliographicCitation>
+        <skos:prefLabel xml:lang="en">Spatially Explicit Integrated Modeling System</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#PhysicallyBasedModel"/>
+        <calibrationSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT-CUP"/>
+        <executedBy rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_rev670"/>
+        <optionalInputParameter rdf:resource="http://www.egc.org/ont/domain/dta#outlet"/>
+        <optionalInputParameter rdf:resource="http://www.egc.org/ont/domain/dta#stream_networks"/>
+        <optionalInputParameter rdf:resource="http://www.egc.org/ont/domain/dta#watershed_boundary"/>
+        <optionalInputParameter rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/vegetation"/>
+        <preprocessingSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#ArcSWAT"/>
+        <preprocessingSoftware rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT_1.8"/>
+        <requiredInputParameter rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/digital_elevation"/>
+        <requiredInputParameter rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/land_management"/>
+        <requiredInputParameter rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/soil"/>
+        <inputDescription xml:lang="en">SWAT requires specific information about weather, soil properties, topography, vegetation, and land management practices occurring in the watershed. The minimum data required to make a run are commonly available from government agencies.
+In addition to the five database input files, two other databases are provided to users: the soils database and the weather generator database. These databases are collections of soils and weather generator parameters for soils and weather stations in the United States.</inputDescription>
+        <modelWebsite rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/</modelWebsite>
+        <outputContent xml:lang="en">A number of output files are generated by SWAT. These files can be grouped by the type of data stored in the file. There are four output files generated in every SWAT simulation. These files are: the standard output file (.std), the Hydrologic Response Units (HRU) output file (.sbs), the sub-basin output file (.bsb), and the main channel or reach output file (.rch). Other files that may be generated include pesticide summary file (.pso), Stream Water Quality Summary File (.wqo), Reservoir Summary File (.rsv), Lake Water Quality Summary File (.lqo) Other than the standard output (.std) file, the files produced during a model run are formatted as spreadsheets to 
+facilitate importation of the data into spreadsheet software.</outputContent>
+        <outputDescription xml:lang="en">The detail of the data printed out in each file is controlled by the print codes in the input control code (.cod) file. Average daily values are always printed in the HRU, sub-basin and reach files, but the time period they are summarized over will vary. Depending on the print code selected, the output files may include all daily values, daily amounts averaged over the month, daily amounts averaged over the year, or daily amounts averaged over the entire simulation period.</outputDescription>
+        <requiredInputContent xml:lang="en">Five of the input files required for a SWAT simulation are provided with the model--the plant growth database, tillage database, fertilizer database, pesticide database, and urban database. They are included in the interface downloads or may be downloaded individually from the web site--they are not included in the executable/source code downloads</requiredInputContent>
+        <dc:description xml:lang="en">The Soil &amp; Water Assessment Tool is a small watershed to river basin-scale model used to simulate the quality and quantity of surface and ground water and predict the environmental impact of land use, land management practices, and climate change. SWAT is widely used in assessing soil erosion prevention and control, non-point source pollution control and regional management in watersheds.</dc:description>
+        <skos:prefLabel xml:lang="en">SWAT</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT-CUP -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT-CUP">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:onlineDocument rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/media/114860/usermanual_swatcup.pdf</cyber:onlineDocument>
+        <cyber:supportsLanguage rdf:datatype="http://www.w3.org/2001/XMLSchema#string">English</cyber:supportsLanguage>
+        <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.2w2e.com/home/SwatCup</cyber:website>
+        <dc:description xml:lang="en">SWAT-CUP is a calibration/uncertainty or sensitivity program interface for SWAT.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT2000 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT2000">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATLanduseInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATLanduseInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATRasterInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/data#landuse"/>
+        <props:domainConcept rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/land_management"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#GTiff"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Landuse</props:domainKeywords>
+        <cyber:isMandatory rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isMandatory>
+        <cyber:isOptional rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</cyber:isOptional>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Land_Use</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATLanduseLookupInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATLanduseLookupInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATLookupInput"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#CSV"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">landuse, lookup</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">landuse_lookup</dc:identifier>
+        <skos:prefLabel xml:lang="en">landuse lookup</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATSoilInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATSoilInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATRasterInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/data#soil"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#GTiff"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Soil</props:domainKeywords>
+        <cyber:isMandatory rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isMandatory>
+        <cyber:isOptional rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</cyber:isOptional>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Soils</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATSoilLookupInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATSoilLookupInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATLookupInput"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#CSV"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Soil, lookup</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">soil_lookup</dc:identifier>
+        <skos:prefLabel xml:lang="en">soil lookup</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATUserSoilInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATUserSoilInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATInput"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#CSV"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">usersoil,soil</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">usersoil</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATWetherGeneratorInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATWetherGeneratorInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/domain/hydrology#weather"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#CSV"/>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WGEN_user</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT_Editor -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT_Editor">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:executableLocation rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/media/116082/swateditor_install_201219_521.zip</cyber:executableLocation>
+        <cyber:usage rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Key procedures
+    Load or select the ArcSWAT extension
+    Delineate the watershed and define the HRUs (including landuse, soil, and slope as a unique HRU)
+    (Optional) Edit SWAT databases
+    Define the weather data
+    Apply the default input files writer
+    (Optional) Edit the default input files
+    Set up (requires specification of simulation period, PET calculation method, etc.) and run SWAT
+    (Optional) Apply a calibration tool
+    (Optional) Analyze, plot and graph SWAT output (VizSWAT)</cyber:usage>
+        <cyber:versionReleaseDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2018-11-01T00:00:00</cyber:versionReleaseDate>
+        <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/software/swat-editor/</cyber:website>
+        <dc:description xml:lang="en">SWAT Editor reads the project database generated by ArcSWAT or QSWAT, allowing the user to edit swat input files, execute SWAT run, perform sensitivity, auto-calibration and uncertainty analysis. This is a standalone program and does not require GIS, thus helping users of ArcSWAT and QSWAT to share their project with others that do not have GIS or much experience with GIS in general.</dc:description>
+        <terms:hasVersion>2012.10.21</terms:hasVersion>
+        <cyber:supportsPlatform rdf:resource="http://www.egc.org/ont/gis/cyber#Windows"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT_Editor_Plus -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT_Editor_Plus">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <owl:priorVersion rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_Editor"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT_Executable -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT_Executable">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <terms:hasVersion rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_rev670"/>
+        <skos:narrowMatch rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_rev670"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAT_rev670 -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAT_rev670">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <cyber:programmingLanguage rdf:resource="http://www.egc.org/ont/gis/cyber#Fortran77"/>
+        <props:onlineResourceURL rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://swat.tamu.edu/media/116085/rev670_execs.zip</props:onlineResourceURL>
+        <cyber:supportsPlatform rdf:resource="http://www.egc.org/ont/gis/cyber#Microsoft_Windows"/>
+        <owl:versionInfo xml:lang="en">2012 rev. 670</owl:versionInfo>
+        <skos:broadMatch rdf:resource="http://www.egc.org/ont/model/geospatial#SWAT_Executable"/>
+        <skos:prefLabel xml:lang="en">SWAT2012 rev. 670</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWAThmd -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWAThmd">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/vocab/cf#relative_humidity"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#TXT"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">relative Humidity</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hmd</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATpcp -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATpcp">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput"/>
+        <props:domainConcept rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/precipitation"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#TXT"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Precipitation</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pcp</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATslr -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATslr">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput"/>
+        <props:domainConcept rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/solar_radiation"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#TXT"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Solar Radiation</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">slr</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATtmp -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATtmp">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput"/>
+        <props:domainConcept rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/temperature"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#TXT"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Temperature</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tmp</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#SWATwind -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#SWATwind">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATWetherStationInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/domain/hydrology#wind"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#TXT"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wind</props:domainKeywords>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wind</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Single -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Single">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModelType"/>
+        <skos:prefLabel xml:lang="en">Single</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Slope_classes -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Slope_classes">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HRUDefinition"/>
+        <props:defaultValue>0,10,20,9999</props:defaultValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Slope_classes</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Sub_Hourly -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Sub_Hourly">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Timestep"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#TOPMODEL -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#TOPMODEL">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#PhysicallyBasedModel"/>
+        <executedBy rdf:resource="http://www.egc.org/ont/process/grass#r.topmodel"/>
+        <executedBy rdf:resource="http://www.egc.org/ont/process/saga#topmodel"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#TopographyInput -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#TopographyInput">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATRasterInput"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/domain/dta#DEM"/>
+        <props:domainConcept rdf:resource="http://www.egc.org/ont/vocab/gis#Digital_Elevation_Model"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#ESRI_Binary"/>
+        <cyber:supportsDataFormat rdf:resource="http://www.egc.org/ont/data#GTiff"/>
+        <props:domainKeywords rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DEM, Topography</props:domainKeywords>
+        <cyber:isMandatory rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</cyber:isMandatory>
+        <cyber:isOptional rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</cyber:isOptional>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Topography</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#VIC-ASSIST -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#VIC-ASSIST">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <terms:bibliographicCitation xml:lang="en">Wi, S., Ray, P., Demaria, E. M. C., Steinschneider, S. &amp; Brown, C. A user-friendly software package for VIC hydrologic model development. Environ. Model. Softw. 98, 35-C53 (2017).</terms:bibliographicCitation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#Yearly -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#Yearly">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#Timestep"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#_1D -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#_1D">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDimension"/>
+        <skos:prefLabel xml:lang="en">1D</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#_2D -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#_2D">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDimension"/>
+        <skos:prefLabel xml:lang="en">2D</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#_3D -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#_3D">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SpatialDimension"/>
+        <skos:prefLabel xml:lang="en">3D</skos:prefLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#conceptual_model -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#conceptual_model">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+        <rdfs:comment>hypotheses and assumptions</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#incorporatedModels -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#incorporatedModels">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#isGeogrpahicInNature -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#isGeogrpahicInNature">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#keywords -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#keywords">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#largerFramework -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#largerFramework">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#lisence -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#lisence">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#manual -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#manual">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelDOI -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelDOI">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelFeatures -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelFeatures">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelForum -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelForum">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelObjective -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelObjective">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelParameterDescription -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelParameterDescription">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelUses -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelUses">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#modelWebsite -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#modelWebsite">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#model_calibration -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#model_calibration">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#model_validation -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#model_validation">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#perceptual_model -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#perceptual_model">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+        <rdfs:comment>A perceptual model is necessarily personal.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#procedural_model -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#procedural_model">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#ModellingProcess"/>
+        <rdfs:comment>model in the form of code that will run on the computer</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#soil_evaporation -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#soil_evaporation">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#NaturalProcess"/>
+        <skos:altLabel xml:lang="zh-cn">土壤蒸发</skos:altLabel>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#subjectKnowledgeLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#subjectKnowledgeLevel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#technicalDifficultyLevel -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#technicalDifficultyLevel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DataTypeProperty"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#watershed_threshold -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#watershed_threshold">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#SWATProjectOption"/>
+        <props:defaultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int">792</props:defaultValue>
+        <dc:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WS_threshold</dc:identifier>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/model/geospatial#QSWAT+ -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/model/geospatial#QSWAT+">
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#GeographicModelingSoftware"/>
+        <rdf:type rdf:resource="http://www.egc.org/ont/model/geospatial#HydrologicalTool"/>
+        <owl:priorVersion rdf:resource="http://www.egc.org/ont/model/geospatial#QSWAT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.egc.org/ont/process/saga#topmodel -->
+
+    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/process/saga#topmodel"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept#land_management -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept#land_management"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept/digital_elevation -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept/digital_elevation"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept/land_management -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept/land_management"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept/precipitation -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept/precipitation"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept/solar_radiation -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept/solar_radiation"/>
+    
+
+
+    <!-- https://gcmdservices.gsfc.nasa.gov/kms/concept/temperature -->
+
+    <owl:NamedIndividual rdf:about="https://gcmdservices.gsfc.nasa.gov/kms/concept/temperature"/>
+    <rdf:Description>
+        <rdfs:comment>bv</rdfs:comment>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#executedBy">
+        <rdfs:comment xml:lang="en">The archive containing model software (executable, installer, utilities, etc.)</rdfs:comment>
+        <skos:definition xml:lang="en">A class that describes the model program that executes the model instance</skos:definition>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#incorporatedModels">
+        <skos:definition xml:lang="en">Incorporated models or components</skos:definition>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#keywords">
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+        <rdfs:seeAlso rdf:resource="http://www.egc.org/ont/base/props#keywords"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#largerFramework">
+        <dc:description xml:lang="en">Model part of larger framework</dc:description>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#lisence">
+        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#modelObjective">
+        <skos:definition>The objective of the model (hydrology, water quality, BMPs, climate/landuse change, etc.)</skos:definition>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#modelParameterDescription">
+        <rdfs:comment xml:lang="en">model parameter concepts</rdfs:comment>
+        <rdfs:comment xml:lang="en">The parameters used in the model (crop rotation, title drainage, point source, fertilizer, tilage operation, inlet ofdraining watershed, irrigation operation, etc.)</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.egc.org/ont/model/geospatial#modelWebsite">
+        <rdfs:comment xml:lang="en">A URL to the website maintained by the model developers</rdfs:comment>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

@@ -14,28 +14,30 @@ s2 = 'gdalinfo [--help-general] [-json] [-mm] [-stats] [-hist] [-nogcp] [-nomd]'
 s3 = 'gdal2tiles.py [-p profile] [-r resampling] [-s srs] [-z zoom] [-e] [-a nodata] [-v] [-q] [-h] [-k] [-n] [-u url] [-w webviewer] [-t title] [-c copyright] [--processes=NB_PROCESSES] [-g googlekey] [-b bingkey] input_file [output_dir]'
 s1 = s.replace("Usage: ", '').replace('gdal_contour', '')
 
+
 def clean(string, tool):
-    return string.replace("Usage: ", '').replace(tool, '')
+	return string.replace("Usage: ", '').replace(tool, '')
+
 
 # options
-def optional_params( syntax, tool_name):
-    synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
-    optional_params = re.search('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|]+\]', synopsis)
-    optional_params = optional_params.group().replace('*', '').strip() if optional_params else ''
-    print(optional_params)
-    return optional_params
+def optional_params(syntax, tool_name):
+	synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
+	optional_params = re.search('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|]+\]', synopsis)
+	optional_params = optional_params.group().replace('*', '').strip() if optional_params else ''
+	print(optional_params)
+	return optional_params
 
 
-def required_params( syntax, tool_name):
-    synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
-    required_params = re.sub('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|]+\]', '', synopsis)
-    required_params = required_params.replace('*', '').strip() if required_params else ''
-    return required_params
+def required_params(syntax, tool_name):
+	synopsis = syntax.replace('Usage: ', '').replace(tool_name, '').strip()
+	required_params = re.sub('\[[\[\]a-zA-Z0-9\- {/}<,:>=._`"*|]+\]', '', synopsis)
+	required_params = required_params.replace('*', '').strip() if required_params else ''
+	return required_params
 
 
-choices_match = re.search("\[-ot {[a-z0-9A-Z/_|, ]+}", optional_params(s,'gdal_grid'))
-print(choices_match.group())
-print(required_params(s,'gdal_grid'))
+# choices_match = re.search("\[-ot {[a-z0-9A-Z/_|, ]+}", optional_params(s, 'gdal_grid'))
+# print(choices_match.group())
+# print(required_params(s, 'gdal_grid'))
 # alts = re.search("\[-r {[a-z0-9A-Z/_|, ]+}",clean(s,'gdal_grid'))
 # print(alts.group())
 # choices = re.search('{[a-z0-9A-Z/_|, ]+}',alts.group()).group()
@@ -45,14 +47,27 @@ print(required_params(s,'gdal_grid'))
 # choices_match = re.search("\[-ot {[a-z0-9A-Z/_|, ]+}\]", s)
 # print(choices_match.group())
 
-if '[-v' in s3:
-    print('optional')
 
-print('-v, -versose'.split(','))
-print('-v'.split(','))
+# syntax = "gdaladdo [-r {nearest,average,gauss,cubic,cubicspline,lanczos,average_mp,average_magphase,mode}] [-b band]* [-minsize val] [-ro] [-clean] [-oo NAME=VALUE]* [--help-general] filename [levels]"
+# n = "{nearest,average,gauss,cubic,cubicspline,lanczos,average_mp,average_magphase,mode}"
+# n2 = "nearest|aa"
+# print(re.fullmatch("[a-zA-Z]+", n2))
+# print(n2.split("|"))
+#
+# print(re.match("[a-zA-Z]+(input|output|option)", "sagainput"))
+#
+# print("out: " + re.sub('^ [0-9.]+ $', ' ', " 0000.16 "))
 
-syntax= "gdaladdo [-r {nearest,average,gauss,cubic,cubicspline,lanczos,average_mp,average_magphase,mode}] [-b band]* [-minsize val] [-ro] [-clean] [-oo NAME=VALUE]* [--help-general] filename [levels]"
-n = "{nearest,average,gauss,cubic,cubicspline,lanczos,average_mp,average_magphase,mode}"
-n2 = "nearest|aa"
-print(re.fullmatch("[a-zA-Z]+",n2))
-print(n2.split("|"))
+
+def avaliable_choices(option_des):
+	if "one of" in option_des:
+		values = re.findall("\\u2018[a-zA-Z]+\\u2019", option_des)
+		if values:
+			print(values)
+
+	defaultVal = re.findall("\\u2018[a-zA-Z]+\\u2019 \(default\)", option_des)
+	print(defaultVal)
+
+
+o_des = "Output type; one of \u2018area\u2019 (default) and \u2018volume\u2019"
+avaliable_choices(o_des)

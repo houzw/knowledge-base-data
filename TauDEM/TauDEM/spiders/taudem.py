@@ -21,6 +21,7 @@ class TaudemSpider(scrapy.Spider):
 
 	def parse_tool(self, resp):
 		item = TaudemItem()
+		item['manual_url'] = resp.url
 		item['name'] = resp.xpath("//h1[@class='gpHeading']/text()").extract_first().strip()
 		# 不止一个文本节点，因此使用 //text() 并使用 extract()
 		item['description'] = resp.xpath("//div[@class='gpItemInfo'][1]//p/span//text()").extract()
