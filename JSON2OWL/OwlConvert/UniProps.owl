@@ -341,38 +341,6 @@
     
 
 
-    <!-- http://www.egc.org/ont/base/props#hasDateValue -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#hasDateValue">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-        <terms:isReplacedBy rdf:resource="http://purl.org/dc/elements/1.1/date"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.egc.org/ont/base/props#hasDefinition -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#hasDefinition">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <terms:isReplacedBy rdf:resource="http://www.w3.org/2004/02/skos/core#definition"/>
-        <rdfs:label>定义</rdfs:label>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.egc.org/ont/base/props#hasName -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#hasName">
-        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <terms:isReplacedBy rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.egc.org/ont/base/props#hasUOMDes -->
 
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#hasUOMDes">
@@ -409,16 +377,6 @@
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#keywords">
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:seeAlso rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.egc.org/ont/base/props#linkedWebPage -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/base/props#linkedWebPage">
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
-        <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/base/props#hasURI"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
     </owl:DatatypeProperty>
     
 
@@ -549,8 +507,8 @@
         <rdfs:isDefinedBy rdf:resource="http://www.getty.edu/research/tools/vocabulary/tgn/index.html"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://purl.org/dc/terms/UDC">
-        <rdfs:label xml:lang="en-us">UDC</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://www.udcc.org/"/>
+        <rdfs:label xml:lang="en-us">UDC</rdfs:label>
     </rdf:Description>
 </rdf:RDF>
 

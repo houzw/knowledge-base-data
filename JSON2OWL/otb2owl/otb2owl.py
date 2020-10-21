@@ -24,23 +24,23 @@ with onto:
 		pass
 
 
-	class OTBInput(gb.InputData):
+	class OTBInput(cyber.Input):
 		pass
 
 
-	class OTBOutput(gb.OutputData):
+	class OTBOutput(cyber.Output):
 		pass
 
 
-	class OTBConstraint(gb.Constraint):
+	class OTBConstraint(cyber.Constraint):
 		pass
 
 
-	class OTBAvailableChoice(gb.AvailableChoice):
+	class OTBAvailableChoice(cyber.AvailableChoice):
 		pass
 
 
-	class OTBOption(gb.Option):
+	class OTBOption(cyber.Option):
 		pass
 
 onto.metadata.creator.append('houzhiwei')
@@ -58,6 +58,7 @@ def handle_task(tool, category, task_name, des):
 	if not task[i_task_name + "_task"]:
 		task_ins = task[task_cls](i_task_name + "_task", prefLabel=locstr(task_name + " task", lang='en'))
 		task_ins.isAtomicTask = True
+		task_ins.identifier = i_task_name
 	else:
 		task_ins = task[i_task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
@@ -79,44 +80,47 @@ def get_datatype(k):
 def handle_parameters(tool, param):
 	# 部分parameter不包含isInputFile等属性
 	p = None
+	parameterName = param['parameterName']
+	_name = Preprocessor.io_name(parameterName,onto)
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = OTBInput(prefLabel=locstr(param['parameterName'], lang='en'))
+		p = OTBInput(_name,prefLabel=locstr(parameterName, lang='en'))
 		# p = OTBInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.inputData.append(p)
-		p.isInputFile = param['isInputFile']
+		tool.input.append(p)
+		p.isInput = param['isInputFile']
 		p.supportsDataFormat.append(data.GeoTIFF)
+		OWLUtils.link_to_domain_concept(p, parameterName.replace('_', ' '))
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
-		p = OTBOutput(prefLabel=locstr(param['parameterName'], lang='en'))
-		# p = OTBOutput(0, prefLabel=locstr(param['parameterName'], lang='en'))
-		tool.outputData.append(p)
-		p.isOutputFile = param['isOutputFile']
+		p = OTBOutput(_name,prefLabel=locstr(parameterName, lang='en'))
+		# p = OTBOutput(0, prefLabel=locstr(parameterName, lang='en'))
+		tool.output.append(p)
+		p.isOutput = param['isOutputFile']
 		p.supportsDataFormat.append(data.GeoTIFF)
+		OWLUtils.link_to_domain_concept(p, parameterName.replace('_', ' '))
 	p.flag = param['flag']
-	p.parameterName = param['parameterName']
+	p.identifier = parameterName
 	if 'dataType' in param.keys() and param['dataType']:
 		p.datatypeInString.append(param['dataType'])
+		p.datatype.append(OWLUtils.get_datatype_iris(param['dataType']))
 	p.description.append(locstr(' '.join(param['explanation']), lang='en'))
 
 # p.isOptional = param['isOptional'] # no this information in document
 
 def handle_options(tool, param, _onto):
-	o = OTBOption(prefLabel=locstr(param['parameterName'], lang='en'))
-	# p = OTBOption(0, prefLabel=locstr(param['parameterName'], lang='en'))
+	parameterName = param['parameterName']
+	_name = Preprocessor.io_name(parameterName,_onto)
+	o = OTBOption(_name,prefLabel=locstr(parameterName, lang='en'))
+	# p = OTBOption(0, prefLabel=locstr(parameterName, lang='en'))
 	tool.option.append(o)
-	sc = OTBConstraint(comment=locstr("shacl data constraint", lang='en'))
-	# sc = OTBConstraint(0, comment=locstr("shacl data constraint", lang='en'))
-	o.property.append(sc)
-	o.parameterName = param['parameterName']
+	o.identifier = parameterName
 	if 'dataType' in param.keys() and param['dataType']:
 		if param['dataType'] == "Choices":
 			o.datatypeInString.append('String')
-			o.datatypeInString.append('String')
 		o.datatypeInString.append(param['dataType'])
-		sc.datatype.append(IRIS[get_datatype(param['dataType'])])
+		# sc.datatype.append(IRIS[get_datatype(param['dataType'])])
 	o.description.append(''.join(param['explanation']))
 	# p.isOptional = param['isOptional']
 	if 'availableChoices' in param.keys() and param['availableChoices']:
-		o, onto = OWLUtils.handle_choices(o, param['parameterName'], param['availableChoices'], OTBAvailableChoice, _onto)
+		o, onto = OWLUtils.handle_choices(o, parameterName, param['availableChoices'], OTBAvailableChoice, _onto)
 
 
 def map_to_owl(json_data):
@@ -143,7 +147,7 @@ def map_to_owl(json_data):
 		if d['authors']:
 			tool.authors.append(d['authors'])
 		for ex in d['example']:
-			tool.example.append(ex)
+			tool.example.append(ex.replace(' . ','.'))
 		handle_task(tool, d['category'], d['label'], d['description'])
 		for parameter in d['parameters']:
 			handle_parameters(tool, parameter)

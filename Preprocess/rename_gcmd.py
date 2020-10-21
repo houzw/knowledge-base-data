@@ -6,6 +6,7 @@ from owlready2 import *
 from os import path
 from pprint import pprint
 import re
+from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
 
 onto_path.append(path.normpath(path.dirname(__file__)) + '/')
 gcmd = get_ontology('/gcmd.owl').load(only_local=True)
@@ -27,17 +28,16 @@ def clean(_preflabel):
 		oldlabel = oldlabel.replace('<', 'less_than')
 	if '/' in oldlabel:
 		allLabels = oldlabel.split('/')
-		newlabel = allLabels[0]
+		newlabel = allLabels[-1:][0]
 		# too many items
 		exclude = ['nasa','doi','doc','usda','ca','epa','jp','epa','doe','uwa','r','eu','de','dhhs','dmsp']
-
 		if newlabel in exclude:
 			newlabel = oldlabel.replace('/', '_')
-		altLabels = allLabels[1:]
+		altLabels = allLabels[0:-1]
 	else:
 		newlabel = oldlabel
-	newlabel = newlabel.replace(' - ', '_').replace(' ', '_')
-	newlabel = newlabel.replace('__', '_').strip()
+	newlabel = Preprocessor.replace_2_underline('[ -_]+',newlabel).strip()#newlabel.replace(' - ', '_').replace(' ', '_')
+	print(newlabel)
 	return newlabel, altLabels
 
 
@@ -90,5 +90,7 @@ if __name__ == '__main__':
 		# default belong to skos.Concept
 		# otherwise, it will rename twice
 		if c.name == 'Concept':
-			rename(c.instances(), gcmd)
-	gcmd.save('gcmd_keywords.owl')
+			threading.stack_size(400000)
+			thread = threading.Thread(target=rename(c.instances(), gcmd))
+			thread.start()
+	gcmd.save('gcmd_keywords2.owl')

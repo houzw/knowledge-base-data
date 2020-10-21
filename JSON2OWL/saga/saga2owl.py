@@ -8,6 +8,8 @@ import json
 import re
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
 from JSON2OWL.OwlConvert.Preprocessor import Preprocessor
+from rdflib import BNode, RDF, Graph, URIRef, Namespace, Literal
+from rdflib.collection import Collection
 
 module_uri = 'http://www.egc.org/ont/process/saga'
 onto = get_ontology(module_uri)
@@ -15,6 +17,9 @@ onto = get_ontology(module_uri)
 onto, sh, skos, dcterms, props, foaf = OWLUtils.load_common(onto)
 onto, geospatial = OWLUtils.load_geo_vocabl(onto)
 onto, gb, task, data, cyber, context = OWLUtils.load_common_for_process_tool(onto)
+# rdf namespaces
+Data, Cyber, Skos, Sh, Geo, Sf, Process = OWLUtils.rdfnamespaces()
+
 print('ontologies imported')
 
 # sh:declare
@@ -24,28 +29,26 @@ print('ontologies imported')
 with onto:
 	# print(gb.GeoprocessingFunctionality)
 
-
 	class SagaTool(gb.GeoprocessingFunctionality):
 		pass
 
 
-	class SagaInput(gb.InputData):
+	class SagaInput(cyber.Input):
 		pass
 
 
-	class SagaOutput(gb.OutputData):
+	class SagaOutput(cyber.Output):
 		pass
 
 
-	class SagaOption(gb.Option):
+	class SagaOption(cyber.Option):
 		pass
 
 
-	class SagaConstraint(gb.Constraint):
-		pass
+	# class SagaConstraint(gb.Constraint):
+	# 	pass
 
-
-	class SagaAvailableChoice(gb.AvailableChoice):
+	class SagaAvailableChoice(cyber.AvailableChoice):
 		pass
 
 onto.metadata.creator.append('houzhiwei')
@@ -55,6 +58,7 @@ import datetime
 
 onto.metadata.created.append(datetime.datetime.today())
 
+g = default_world.as_rdflib_graph()
 
 def get_property(option, prop_type):
 	"""
@@ -78,77 +82,123 @@ def get_property(option, prop_type):
 
 
 def get_format(option):
-	"""对应的数据格式"""
+	"""
+	get mapping format
+	对应的数据格式
+	"""
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	_prop = OWLUtils.get_option(config, 'format', option)
 	return _prop
 
 
 def handle_inout(tool, item_value, in_or_out):
+	"""
+	handle input & output
+	Args:
+		tool:
+		item_value:
+		in_or_out:
+
+	Returns:
+
+	"""
 	for ioD in item_value:
 		# print(ioD)
 		io_name = ioD['name']
 		if io_name is None:
 			io_name = in_or_out
+		_name = Preprocessor.io_name(io_name, onto)
+		param_rdf = None
 		if in_or_out == 'input':
-			param = SagaInput(prefLabel=locstr(io_name, lang='en'))
+			param = SagaInput(_name, prefLabel=locstr(io_name, lang='en'))
 			# param = SagaInput(0,prefLabel=locstr(io_name, lang='en')) # blank node prefix with _:
-			tool.inputData.append(param)
-			param.isInputFile = True
+			tool.input.append(param)
+			param.isInput = True
+			# rdflib
+			param_rdf = URIRef(param.iri)
+			with onto:
+				g.add((param_rdf, RDF.type, Sh.NodeShape))
+				g.add((param_rdf, RDF.type, URIRef(SagaInput.iri)))
 		else:
-			param = SagaOutput(prefLabel=locstr(io_name, lang='en'))
+			param = SagaOutput(_name, prefLabel=locstr(io_name, lang='en'))
 			# param =SagaOutput(0, prefLabel=locstr(io_name, lang='en'))
-			tool.outputData.append(param)
-			param.isOutputFile = True
+			tool.output.append(param)
+			param.isOutput = True
+			# rdflib
+			param_rdf = URIRef(param.iri)
+			with onto:
+				g.add((param_rdf, RDF.type, Sh.NodeShape))
+				g.add((param_rdf, RDF.type, URIRef(SagaOutput.iri)))
 		if ioD['dataType']:
 			vr = re.match("[a-zA-Z ]+ (?=\([a-zA-Z ]+\))?", ioD['dataType'])
 			dformat = vr.group().strip()
 			if not get_format(dformat):
 				continue
 			param.supportsDataFormat.append(data[get_format(dformat)])
-		param.parameterName = ioD['name']
+			# rdflib
+			formatshape = g.BNode()
+			with onto:
+				g.add((formatshape, RDF.type, Sh.PropertyShape))
+				g.add((formatshape, Sh.path, Cyber.supportsDataFormat))
+				g.add((param_rdf, Sh.property, formatshape))
+			formats = g.BNode()
+			with onto:
+				g.add((formats, RDF.first, [data[get_format(dformat)]]))
+				g.add((formats, RDF.rest, RDF.nil))
+				c = Collection(g, formats)
+				g.add((formatshape, Sh['in'], c))
+
+		param.identifier = ioD['name']
 		param.description.append(ioD['description'])
 		param.flag = ioD['flag']
 		param.isOptional = ioD['isOptional']
+		OWLUtils.link_to_domain_concept(param, io_name.replace('_', ' '))
+		# shacl
+		pshape = Sh.PropertyShape(0)
+		pshape.path = onto.dataContent
+		if not ioD['isOptional']:
+			pshape.minCount = 1
+			pshape.message.append(ioD['name'] + " is required!")
 
 
-def handle_options(tool, option,_onto):
-	op_name = option['name']
-	if op_name is None:
-		op_name = 'option'
-	op = SagaOption(prefLabel=locstr(op_name, lang='en'))
+def handle_options(tool, option, _onto):
+	name = option['name']
+	if name is None:
+		name = 'option'
+	_name = Preprocessor.io_name(Preprocessor.name_underline(name), _onto)
+	op = SagaOption(_name, prefLabel=locstr(name, lang='en'))
 	tool.option.append(op)
 	if option['description'] != '-':
 		op.description = option['description']
 	op.flag = option['flag']
-	op.parameterName = Preprocessor.name_underline(op_name)
+	op.identifier = name
 	constraints = option['constraints']
-
+	# shacl
+	pshape = Sh.PropertyShape(0)
+	pshape.path.append(_onto.dataContent)
 	if constraints:
 		if 'fields_des' in constraints.keys() and constraints['fields_des']:
 			op.description.append(constraints['fields_des'])
 		else:
-			# sc = SagaConstraint(comment=locstr("shacl data constraint", lang='en'))
-			sc = SagaConstraint(0, comment=locstr("shacl data constraint", lang='en'))
-			if 'parameters_des' in constraints.keys() and constraints['parameters_des']:
-				sc.description.append(constraints['parameters_des'])
-			op.constraint.append(sc)
-			# shacl constraints
-			op.property.append(sc)
 			if 'minimum' in constraints.keys() and constraints['minimum']:
-				sc.minInclusive = constraints['minimum']
-				op.minimum = constraints['minimum']  # not shacl
+				op.minimum = constraints['minimum']
+				pshape.minExclusive = constraints['minimum']
 			if 'defaultValue' in constraints.keys() and constraints['defaultValue']:
-				sc.defaultValue = constraints['defaultValue']
-				op.defaultValue = constraints['defaultValue']  # not shacl
-				sc.datatype.append(OWLUtils.get_datatype_iris(option['dataType']))
+				op.defaultValue = constraints['defaultValue']
+				pshape.defaultValue = constraints['defaultValue']
 			if 'maximum' in constraints.keys() and constraints['maximum']:
-				sc.maxInclusive = constraints['maximum']
-				sc.xmls_maxinclusive = constraints['maximum']
-				op.maximum = constraints['defaultValue']  # not shacl
+				op.maximum = constraints['maximum']
+				pshape.maxInclusive = constraints['maximum']
 			op.datatypeInString.append(option['dataType'])
+			pshape.datatype = [OWLUtils.get_datatype_iris(option['dataType'])]
+			op.datatype.append(OWLUtils.get_datatype_iris(option['dataType']))
 			if 'availableChoices' in constraints.keys() and constraints['availableChoices']:
-				op, onto = OWLUtils.handle_choices(op, op_name, constraints['availableChoices'], SagaAvailableChoice, _onto)
+				c = []
+				for achoice in constraints['availableChoices']:
+					c.append(achoice['choice'])
+				with _onto:
+					g.add((pshape, Sh['in'], c))
+				OWLUtils.handle_choices(op, name, constraints['availableChoices'], SagaAvailableChoice, _onto)
 
 
 def handle_task(tool, tool_name, en_str, _keywords, desc):
@@ -164,6 +214,7 @@ def handle_task(tool, tool_name, en_str, _keywords, desc):
 				# task_ins = task[task_cls](tool_name + "_task", prefLabel=locstr(en_str.replace('Tool', '') + " task", lang='en'))
 				task_ins.description.append(locstr(desc, lang='en'))
 				task_ins.isAtomicTask = True
+				task_ins.identifier = task_name
 			else:
 				task_ins = task[task_name]
 			if (task_ins in tool.usedByTask) is False:
@@ -174,7 +225,7 @@ def handle_task(tool, tool_name, en_str, _keywords, desc):
 
 # TODO TEST
 def handle_similar_tools(tool, tool_label):
-	"""link tools which have the same names"""
+	"""link tools that have the same names"""
 	clean_tool_label = Preprocessor.remove_bracket_content(tool_label)
 	similars = onto.search(prefLabel=clean_tool_label + '*')
 	if len(similars) > 0:
@@ -188,7 +239,7 @@ def map_to_owl(json_data):
 	for d in json_data:
 		"""mapping json data to ontology properties"""
 		name = Preprocessor.toolname_underline(d['name'])
-		name = re.sub("[()-*,/]", " ", name).strip()
+		# name = re.sub("[()-*,/]", " ", name).strip()
 		executable = Preprocessor.normalize("saga_cmd ", d['command']['exec'])
 		keywords = d['keywords']
 		toolClass = tool_class(keywords)
@@ -199,7 +250,8 @@ def map_to_owl(json_data):
 				continue
 			else:
 				name = name + '_' + keywords[0].replace(' ', '_')
-		tool = toolClass(Preprocessor.space_2_underline(name), prefLabel=locstr(re.sub('^(Tool)[0-9: ]+', '', d['name']), lang='en'))
+		tool = toolClass(name, prefLabel=locstr(re.sub('^(Tool)[0-9: ]+', '', d['name']), lang='en'))
+		# tool = toolClass(Preprocessor.space_2_underline(name), prefLabel=locstr(re.sub('^(Tool)[0-9: ]+', '', d['name']), lang='en'))
 		tool.isToolOfSoftware.append(cyber.SAGA_GIS)
 		tool.identifier = name
 		tool.manualPageURL.append(d['manual_url'])
@@ -212,8 +264,6 @@ def map_to_owl(json_data):
 			tool.references.append(reference)
 		# keywords
 		keywords.append(name.replace('_', ' '))
-		# for keyword in keywords:
-		# 	tool.subject.append(keyword)
 		OWLUtils.link_to_domain_concept(tool, keywords)
 
 		# applicaiton category
@@ -228,7 +278,7 @@ def map_to_owl(json_data):
 					handle_inout(tool, itemValue, 'output')
 				elif item == 'options':
 					for optionItem in itemValue:
-						handle_options(tool, optionItem,onto)
+						handle_options(tool, optionItem, onto)
 
 
 def tool_class(keywords):
@@ -242,11 +292,12 @@ if __name__ == "__main__":
 		jdata = json.load(f)  # list
 	# print(len(jdata))
 	# otherwise will report stack overflow exception
-	size = 1024 * 1024 * 1024 * 15  # related to system
+	size = 1024 * 1024 * 1024 * 20  # related to system
 	threading.stack_size(size)
 	thread = threading.Thread(target=map_to_owl(jdata))
 	thread.start()
-	onto.save(file='saga.owl', format="rdfxml")
+	g.serialize('saga.ttl',format='turtle')
+	# onto.save(file='saga.owl', format="rdfxml")
 	# update task ontology
 	task.save()
 	print('SAGA Done!')

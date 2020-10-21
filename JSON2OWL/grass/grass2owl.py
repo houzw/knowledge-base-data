@@ -33,15 +33,15 @@ with onto:
 		pass
 
 
-	class GrassInput(gb.InputData):
+	class GrassInput(cyber.Input):
 		pass
 
 
-	class GrassOutput(gb.OutputData):
+	class GrassOutput(cyber.Output):
 		pass
 
 
-	class GrassOption(gb.Option):
+	class GrassOption(cyber.Option):
 		pass
 
 onto.metadata.creator.append('houzhiwei')
@@ -73,34 +73,54 @@ def get_property(option, prop_type):
 		return _prop
 
 
-def handle_parameters(tool, param):
+def handle_parameters(tool, param, _onto):
 	# 部分parameter不包含isInputFile等属性
+	name = param['parameter']
+	_name = Preprocessor.io_name(param['parameter'], _onto, ['overwrite'])
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = GrassInput(prefLabel=locstr(param['parameter'], lang='en'))
-		# p = GrassInput(0, prefLabel=locstr(param['parameter'], lang='en'))
-		tool.inputData.append(p)
-		p.isInputFile = param['isInputFile']
+		p = GrassInput(_name, prefLabel=locstr(name, lang='en'))
+		# p = GrassInput(0, prefLabel=locstr(name, lang='en'))
+		tool.input.append(p)
+		p.isInput = param['isInputFile']
+		OWLUtils.link_to_domain_concept(p, name.replace('_', ' '))
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
-		p = GrassOutput(prefLabel=locstr(param['parameter'], lang='en'))
-		# p = GrassOutput(0, prefLabel=locstr(param['parameter'], lang='en'))
-		tool.outputData.append(p)
-		p.isOutputFile = param['isOutputFile']
+		p = GrassOutput(_name, prefLabel=locstr(name, lang='en'))
+		# p = GrassOutput(0, prefLabel=locstr(name, lang='en'))
+		tool.output.append(p)
+		p.isOutput = param['isOutputFile']
+		OWLUtils.link_to_domain_concept(p, name.replace('_', ' '))
 	else:
-		p = GrassOption(prefLabel=locstr(param['parameter'], lang='en'))
-		# p = GrassOption(0, prefLabel=locstr(param['parameter'], lang='en'))
+		p = GrassOption(_name, prefLabel=locstr(name, lang='en'))
+		# p = GrassOption(0, prefLabel=locstr(name, lang='en'))
 		tool.option.append(p)
 	p.flag = param['flag']
-	p.parameterName = param['parameter']
+	p.identifier = name
 	if 'dataType' in param.keys():
 		p.datatypeInString.append(param['dataType'])
+		p.datatype.append(OWLUtils.get_datatype_iris(param['dataType']))
 	p.description.append(param['explanation'])
 	if 'defaultValue' in param.keys():
 		if param['defaultValue'] is not None: p.defaultValue = param['defaultValue']
 	p.isOptional = param['isOptional']
 	if 'alternatives' in param.keys():
-		if param['alternatives']:
-			for value in param['alternatives']:
-				p.availableValue.append(value)
+		alternatives = param['alternatives']
+		if alternatives:
+			literal = True
+			if param['explanation'] == "Name of Modules":
+				literal = False
+			if len(alternatives) > 1:
+				_onto, l = OWLUtils.resources_2_rdf_list(_onto, alternatives, literal)
+				p.availableList.append(l)
+				for value in alternatives:
+					p.availableValue.append(value)
+			else:
+				if re.match('[-0-9]+-[0-9]+', alternatives[0]):
+					p.minimum = alternatives[0].rsplit('-', 1)[0]
+					p.maximum = alternatives[0].rsplit('-', 1)[1]
+				elif re.match('[-0-9]+-[a-zA-Z<> ]+', alternatives[0]):
+					p.minimum = alternatives[0].split('-')[0]
+				p.comment.append('Options: ' + ' '.join(alternatives))
+
 
 def handle_also(also_items):
 	for also in also_items:
@@ -129,6 +149,7 @@ def handle_task(tool, tool_name, en_str, _keywords, des):
 			if not task[task_name + "_task"]:
 				task_ins = task[task_cls](task_name + "_task", prefLabel=locstr(en_str + " task", lang='en'))
 				task_ins.description.append(locstr(des, lang='en'))
+				task_ins.identifier = task_name
 				task_ins.isAtomicTask = True
 			else:
 				task_ins = task[task_name + "_task"]
@@ -196,7 +217,7 @@ def map_to_owl(json_data):
 		# tool.subject.append(OWLUtils.join_keywords(item['keywords']))
 		# keywords and name
 		# keywords.extend(name.split('.')[1:])
-		OWLUtils.link_to_domain_concept( tool, keywords)
+		OWLUtils.link_to_domain_concept(tool, keywords)
 
 		tool.commandLine.append(item['synopsis'])
 		r = re.match('[a-z.]+ ', item['synopsis'])
@@ -208,7 +229,7 @@ def map_to_owl(json_data):
 			see_also_items[tool] = [also]
 			tool_alsoes.append(see_also_items)
 		for parameter in item['parameters']:
-			handle_parameters(tool, parameter)
+			handle_parameters(tool, parameter, onto)
 		handle_task(tool, name, name, item['keywords'], item['description'])
 	handle_also(tool_alsoes)
 	handle_applcation()
@@ -219,7 +240,6 @@ if __name__ == '__main__':
 	module_path = os.path.dirname(__file__)
 	with open(module_path + '/grass_edited.json', 'r') as f:
 		jdata = json.load(f)  # list
-	# print(len(jdata))
 	# otherwise will report stack overflow exception
 	size = 1024 * 1024 * 1024 * 10
 	threading.stack_size(size)

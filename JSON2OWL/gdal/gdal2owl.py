@@ -26,34 +26,38 @@ with onto:
 		pass
 
 
-	class GDALInput(gb.InputData):
+	class GDALInput(cyber.Input):
 		pass
 
 
-	class GDALOutput(gb.OutputData):
+	class GDALOutput(cyber.Output):
 		pass
 
 
-	class GDALOption(gb.Option):
+	class GDALOption(cyber.Option):
 		pass
 
 
-	class GDALAvailableChoice(gb.AvailableChoice):
+	class GDALAvailableChoice(cyber.AvailableChoice):
 		pass
 
+common_options = ['format', 'formats', 'optfile', 'config', 'debug']
 
 def handle_parameter(tool, param):
 	pname = param['name']
 	p = None
+	_name = Preprocessor.io_name(pname, onto, common_options)
 	if 'isInputFile' in param.keys():
-		p = GDALInput(prefLabel=locstr(pname, lang='en'))
-		p.isInputFile = True
-		tool.inputData.append(p)
+		p = GDALInput(_name, prefLabel=locstr(pname, lang='en'))
+		p.isInput = True
+		tool.input.append(p)
+		OWLUtils.link_to_domain_concept(p, pname.replace('_', ' '))
 	elif "isOutputFile" in param.keys():
-		p = GDALOutput(prefLabel=locstr(pname, lang='en'))
-		p.isOutputFile = True
-		tool.outputData.append(p)
-	p.parameterName = pname
+		p = GDALOutput(_name, prefLabel=locstr(pname, lang='en'))
+		p.isOutput = True
+		tool.output.append(p)
+		OWLUtils.link_to_domain_concept(p, pname.replace('_', ' '))
+	p.identifier = pname
 	if param['flag']: p.flag = param['flag']
 	p.isOptional = param['isOptional']
 	p.description.append(locstr(param['explanation'], lang='en'))
@@ -62,8 +66,9 @@ def handle_parameter(tool, param):
 
 def handle_options(tool, param, _onto):
 	pname = param['name']
-	p = GDALOption(prefLabel=locstr(pname, lang='en'))
-	p.parameterName = pname
+	_name = Preprocessor.io_name(pname, _onto, common_options)
+	p = GDALOption(_name, prefLabel=locstr(pname, lang='en'))
+	p.identifier = pname
 	if param['flag']: p.flag = param['flag']
 	p.isOptional = param['isOptional']
 	p.description.append(locstr(param['explanation'], lang='en'))
@@ -84,10 +89,11 @@ def handle_task(tool, task_name, des):
 	config = OWLUtils.get_config(module_path + '/config.ini')
 	category = tool_class(task_name)
 	task_cls = config.get('task', category.name)
-	task_name = task_name.replace(".py", "")
+	task_name = Preprocessor.space_2_underline(task_name.replace(".py", ""))
 	if not task[task_name + "_task"]:
 		task_ins = task[task_cls](task_name + "_task", prefLabel=locstr(task_name + " task", lang='en'))
 		task_ins.isAtomicTask = True
+		task_ins.identifier = task_name
 	else:
 		task_ins = task[task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:

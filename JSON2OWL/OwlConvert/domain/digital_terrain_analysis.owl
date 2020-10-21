@@ -36,18 +36,6 @@
     
 
 
-    <!-- http://www.egc.org/ont/base/props#hasAbbreviation -->
-
-    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/base/props#hasAbbreviation"/>
-    
-
-
-    <!-- http://www.egc.org/ont/base/props#hasSymbol -->
-
-    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/base/props#hasSymbol"/>
-    
-
-
     <!-- http://www.egc.org/ont/base/props#reference -->
 
     <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/base/props#reference"/>
@@ -91,9 +79,9 @@
     
 
 
-    <!-- http://www.egc.org/ont/domain/dta#algorithem -->
+    <!-- http://www.egc.org/ont/domain/dta#algorithm -->
 
-    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/domain/dta#algorithem">
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/domain/dta#algorithm">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
         <skos:definition xml:lang="en">algorithem to calculate this factor/attribute/parameter</skos:definition>
     </owl:ObjectProperty>
@@ -161,22 +149,6 @@
     
 
 
-    <!-- http://www.egc.org/ont/domain/dta#hasFormulaDescription -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/domain/dta#hasFormulaDescription">
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.egc.org/ont/domain/dta#hasUnit -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/domain/dta#hasUnit">
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.egc.org/ont/domain/dta#mappedSoilProperties -->
 
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/domain/dta#mappedSoilProperties"/>
@@ -186,15 +158,6 @@
     <!-- http://www.egc.org/ont/domain/dta#significance -->
 
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/domain/dta#significance"/>
-    
-
-
-    <!-- http://www.egc.org/ont/domain/dta#UniProps:hasSymbol -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/domain/dta#UniProps:hasSymbol">
-        <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/base/props#UniProps:hasSymbol"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
     
 
 
@@ -1093,7 +1056,7 @@ SFD has evident defects, i.e. the inability to model divergence of flow and the 
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Computer_Assisted_Mapping">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CAM</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CAM</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en"></skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">计算机辅助地图制图</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1243,7 +1206,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Distributed_Hydrology_Soil_Vegetation_Model">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DHSVM</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DHSVM</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Distributed Hydrology Soil Vegetation Model</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">水文-土壤-植被的分布模型</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1349,7 +1312,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Geographical_Information_System">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
         <owl:sameAs rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/geographic_information_systems"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GIS</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GIS</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Geographical Information System</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">地理信息系统</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1569,7 +1532,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Revised_Universal_Soil_Loss_Equation">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RUSLE</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RUSLE</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Revised Universal Soil Loss Equation</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">改良通用土壤流失方程</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1611,7 +1574,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#contributing_area"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#flow_width"/>
         <hasFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SCA=A/w</hasFormula>
-        <hasFormulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A is contributing area,w is flow width</hasFormulaDescription>
         <skos:prefLabel xml:lang="en">SCA</skos:prefLabel>
     </owl:NamedIndividual>
     
@@ -1672,7 +1634,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Soil_Land_Inference_Model">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SoLIM</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SoLIM</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Soil Land Inference Model</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">土壤景观模型</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1766,7 +1728,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Triangulated_Irregular_Network">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
         <skos:broadMatch rdf:resource="http://www.egc.org/ont/domain/dta#digital_elevation_model"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TIN</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TIN</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Triangulated Irregular Network</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">不规则三角网</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1809,7 +1771,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#Universal_Soil_Loss_Equation">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
         <skos:closeMatch rdf:resource="http://www.egc.org/ont/domain/dta#Revised_Universal_Soil_Loss_Equation"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">USLE</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">USLE</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Universal Soil Loss Equation</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">通用土壤流失方程</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1829,7 +1791,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#accuracy_ratio">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AR</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AR</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">accuracy ratio</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">精度比率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1840,7 +1802,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#active_blocking_edge_segment_sequence">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation xml:lang="en">ABESS</UniProps:hasAbbreviation>
+        <UniProps:abbreviation xml:lang="en">ABESS</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">active blocking edge segment sequence</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">活动障碍边的分割顺序</skos:prefLabel>
     </owl:NamedIndividual>
@@ -1937,13 +1899,12 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SlopeStateTopoAttr"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainPoint"/>
         <owl:sameAs rdf:resource="http://www.egc.org/ont/domain/dta#slope_aspect"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a</UniProps:symbol>
         <significance xml:lang="en">Flow direction, solar insolation, evapotranspiration, flora and fauna distribution and abundance</significance>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Solar insolation, evapotranspira-tion, flora and fauna distribution and abundance</significance>
         <significance xml:lang="zh-cn">流向、太阳日照、土壤水分蒸发、植物群分布</significance>
         <dc:description xml:lang="en">Direction of max downward gradient (Zevenbergen and Thorne, 1987).</dc:description>
         <dc:description xml:lang="zh-cn">地面点法线在水平面投影与北方向之 夹角，</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Slope azimuth</skos:definition>
         <skos:prefLabel xml:lang="en">aspect</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡向</skos:prefLabel>
@@ -2083,7 +2044,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#basin_shape_index">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bs</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bs</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">basin shape index</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">盆地形状指数</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2160,11 +2121,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Runoff volume</significance>
         <significance xml:lang="zh-cn">径流量、径流深</significance>
         <dc:description xml:lang="zh-cn">地表上任意点或等髙线段之上游汇水区的平面投影面积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Area draining to catchment outlet</skos:definition>
         <skos:prefLabel xml:lang="en">catchment area</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">上游汇水面积</skos:prefLabel>
@@ -2190,11 +2150,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">u</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Overland flow attenuation</significance>
         <significance xml:lang="zh-cn">表面径流衰减</significance>
         <dc:description xml:lang="zh-cn">流域中最高点到流域出口的距离</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">u</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Distance from highest point to outlet</skos:definition>
         <skos:prefLabel xml:lang="en">catchment length</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">流域长度</skos:prefLabel>
@@ -2210,11 +2169,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#RegionalLSP"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">o</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">/3c</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Time of concentration</significance>
         <significance xml:lang="zh-cn">地表运动物质聚集时间</significance>
         <dc:description xml:lang="zh-cn">流域坡度平均值</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">/3c</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Average slope over the catchment</skos:definition>
         <skos:prefLabel xml:lang="en">catchment slope</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">流域坡度</skos:prefLabel>
@@ -2276,7 +2234,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#classification_tree_analysis">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CRT</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CRT</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">classification tree analysis</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">分类树分析</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2425,12 +2383,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#contour_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m-1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC</UniProps:symbol>
         <significance xml:lang="en">Movement modes of terrestrial materials</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">地表物质运动的汇合和发散模式</significance>
         <dc:description xml:lang="zh-cn">t 等高线方向曲率， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">contour curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">等髙线曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2595,12 +2552,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#cross_section_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m_1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CS</UniProps:symbol>
         <significance xml:lang="en">Recognition and extraction of terrain features</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">地貌特征识别与提取</significance>
         <dc:description xml:lang="zh-cn">与下坡方向垂直的方向曲率， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CS</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">cross section curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">断面曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2788,9 +2744,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#difference_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CD</UniProps:symbol>
         <significance xml:lang="en">Compares the 1-st and 2-nd mechanisms</significance>
         <significance xml:lang="zh-cn">比较第一和第二累计机理</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CD</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">difference curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">曲率差</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2840,7 +2796,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
         <owl:sameAs rdf:resource="https://gcmdservices.gsfc.nasa.gov/kms/concept/digital_elevation"/>
         <skos:broadMatch rdf:resource="http://www.egc.org/ont/domain/dta#digital_terrain_model"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DEM</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DEM</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">digital elevation model</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">数字髙程模型</skos:prefLabel>
     </owl:NamedIndividual>
@@ -2861,7 +2817,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#digital_terrain_analysis">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DTA</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DTA</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">Digital Terrain Analysis</skos:prefLabel>
         <skos:prefLabel xml:lang="en">digital terrain analysis</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">数字地形分析</skos:prefLabel>
@@ -2907,12 +2863,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#RegionalLSP"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sd</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Soil drainage rate</significance>
         <significance xml:lang="zh-cn">土壤排水速率</significance>
         <dc:description xml:lang="en">Spatial pattern of contributing/dispersal area derived either the D8, Rho8, FD8, FRho8, D8, FD8-Quinn, or ADRA flow algorithm.</dc:description>
         <dc:description xml:lang="zh-cn">散水区域面积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sd</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Area downslope from a short length of contour</skos:definition>
         <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">dispersal area</skos:prefLabel>
@@ -2927,7 +2882,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalTA"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Impedance of soil drainage</significance>
         <significance xml:lang="zh-cn">土壤排水阻抗</significance>
         <dc:description xml:lang="zh-cn">地面某点到散水区域边界之长度</dc:description>
@@ -2945,11 +2899,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">o</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ai</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rate of soil drainage</significance>
         <significance xml:lang="zh-cn">土壤排水速率</significance>
         <dc:description xml:lang="zh-cn">散水区域坡度平均值</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ai</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Mean slope of dispersal area</skos:definition>
         <skos:prefLabel xml:lang="en">dispersal slope</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">散水坡度</skos:prefLabel>
@@ -3255,7 +3208,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#elevation_relative_to_channel_and_divide">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LandSurfaceParameter"/>
         <dc:description xml:lang="en">Elevation relative to nearest channel and divide cells.</dc:description>
-        <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">elevation relative to channel and divide</skos:prefLabel>
     </owl:NamedIndividual>
     
@@ -3346,7 +3298,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#erosion_path_length">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LandSurfaceParameter"/>
         <mappedSoilProperties rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Total phosphorus</mappedSoilProperties>
-        <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">erosion path length</skos:prefLabel>
     </owl:NamedIndividual>
     
@@ -3531,12 +3482,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#flow-path_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m_1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CF</UniProps:symbol>
         <significance xml:lang="en">Directions of flow-line rotation (clockwise or not)</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">水流路径摆动程度</significance>
         <dc:description xml:lang="zh-cn">水流路径方向曲率， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CF</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">flow-path curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">流线曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -3562,10 +3512,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalTA"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#RegionalTopoAttr"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">va</UniProps:symbol>
         <significance xml:lang="zh-cn">径流量、排水网络、地貌特征</significance>
         <dc:description xml:lang="zh-cn">在地表任意点上游坡面水流之总和， 为径流深）</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">va</UniProps:hasSymbol>
         <skos:altLabel xml:lang="zh-cn">累积流量</skos:altLabel>
         <skos:prefLabel xml:lang="en">flow accumulation</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">流量累积</skos:prefLabel>
@@ -3578,12 +3527,12 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#flow_direction">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LandSurfaceParameter"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#水文要素"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#D8"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#DEMON"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#Dinf"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#MFD-md"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#Rho4"/>
-        <algorithem rdf:resource="http://www.egc.org/ont/domain/dta#Rho8"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#D8"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#DEMON"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#Dinf"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#MFD-md"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#Rho4"/>
+        <algorithm rdf:resource="http://www.egc.org/ont/domain/dta#Rho8"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#filled_DEM"/>
         <significance xml:lang="zh-cn">水文模型，土壤,地理单元，流域地貌</significance>
         <dc:description xml:lang="en">Direction of flow calculated using one of seven flow algorithms.</dc:description>
@@ -3619,11 +3568,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#flow_path_length">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">u</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Erosion rates, sediment yield, time of concentration</significance>
         <significance xml:lang="zh-cn">土壤侵蚀、沉积物产生、地表运动物质聚集时间</significance>
         <dc:description xml:lang="zh-cn">流域中，到某点的最大水流长度</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">u</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Maximum distance of water flow to a point in the catchment</skos:definition>
         <skos:prefLabel xml:lang="en">flow path length</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">流线长</skos:prefLabel>
@@ -3689,7 +3637,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#RegionScale"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SlopeScale"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FD</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FD</UniProps:abbreviation>
         <skos:altLabel xml:lang="zh-cn">分形维数</skos:altLabel>
         <skos:altLabel xml:lang="zh-cn">水系分形维数</skos:altLabel>
         <skos:prefLabel xml:lang="en">fractal dimension</skos:prefLabel>
@@ -4003,9 +3951,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#horizontal_curvature_excess">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CHE</UniProps:symbol>
         <significance xml:lang="en">Splits flow-line twisting onto two components</significance>
         <significance xml:lang="zh-cn">将流水线摆动程度分解成两部分</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CHE</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">horizontal curvature excess</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">水平曲率差</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4143,7 +4091,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#institute_for_aerospace_survey_and_Earth_sciences">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ITC</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ITC</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">institute for aerospace survey and Earth sciences</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">航天与地球科学学院(荷兰）</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4187,7 +4135,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#inverse_contributing_area">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LandSurfaceParameter"/>
         <mappedSoilProperties rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Saturated hydraulic conductivity</mappedSoilProperties>
-        <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">inverse contributing area</skos:prefLabel>
     </owl:NamedIndividual>
     
@@ -4431,10 +4378,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#longitudal_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m_1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cl</UniProps:symbol>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <dc:description xml:lang="zh-cn">下坡方向曲率</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cl</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">longitudal curvature</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4445,9 +4391,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#longitudinal_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CL</UniProps:symbol>
         <significance xml:lang="en">Recognition and extraction of terrain features</significance>
         <significance xml:lang="zh-cn">地貌特征识别与提取</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CL</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">longitudinal curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">纵向曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4577,9 +4523,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#maximum_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cmax</UniProps:symbol>
         <significance xml:lang="en">Geometrical C-ridges</significance>
         <significance xml:lang="zh-cn">识别山脊线几何要素</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cmax</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">maximum curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">最大曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4656,12 +4602,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#mean_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m-1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CM</UniProps:symbol>
         <significance xml:lang="en">“Equilibrium” land form state</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">地表距离平衡态程度</significance>
         <dc:description xml:lang="zh-cn">最大、最小曲率的算术平均值， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CM</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">mean curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">平均曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4774,9 +4719,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#minimum_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cmin</UniProps:symbol>
         <significance xml:lang="en">Geometrical C-valleys</significance>
         <significance xml:lang="zh-cn">识别山谷线几何要素</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cmin</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">minimum curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">最小曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4859,7 +4804,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#multiple_directions_based_on_slope_algorithm">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">multiple directions based on slope algorithm</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">基于坡度的多流向法</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4870,7 +4815,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#multiple_flow_direction_algorithm">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MFD</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MFD</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">multiple flow direction algorithm</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">多流向算法</skos:prefLabel>
     </owl:NamedIndividual>
@@ -4996,7 +4941,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#non-cumulative_slope_length">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NCSL</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NCSL</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">cumulative slope length</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">非累计流量</skos:prefLabel>
     </owl:NamedIndividual>
@@ -5262,10 +5207,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SlopeScale"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainSurfaceStatisticsParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S</UniProps:symbol>
         <significance xml:lang="zh-cn">土木工程</significance>
         <dc:description xml:lang="zh-cn">地形单元的投影面积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">plane area</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">面积</skos:prefLabel>
     </owl:NamedIndividual>
@@ -5353,12 +5297,12 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondOrderTopoAttr"/>
         <owl:sameAs rdf:resource="http://www.egc.org/ont/domain/dta#vertical_curvature"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CP</UniProps:symbol>
         <significance xml:lang="en">2-nd accumulation mechanism</significance>
         <significance xml:lang="en">Flow acceleration and deceleration, soil erosion and deposition rates</significance>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Flow acceleration, erosion/ depositionrate, geomorphology</significance>
         <significance xml:lang="zh-cn">第二种物质运动累计机理</significance>
         <dc:description xml:lang="en">Downslope curvature (Zevenbergen and Thorne, 1987).</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CP</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Slope profile curvature</skos:definition>
         <skos:prefLabel xml:lang="en">profile curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">剖面曲率</skos:prefLabel>
@@ -5371,9 +5315,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#profile_curvature_excess">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
         <owl:sameAs rdf:resource="http://www.egc.org/ont/domain/dta#vertical_curvature_excess"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPE</UniProps:symbol>
         <significance xml:lang="en">Splits flow-line twisting onto two components</significance>
         <significance xml:lang="zh-cn">将流水线摆动程度分解成两部分</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPE</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">profile curvature excess</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">剖面曲率差</skos:prefLabel>
     </owl:NamedIndividual>
@@ -5706,10 +5650,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalLSP"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalTA"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainSurfaceStatisticsParameters"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kr</UniProps:symbol>
         <significance xml:lang="en">Terrain complexity</significance>
         <significance xml:lang="zh-cn">土木工程</significance>
         <dc:description xml:lang="zh-cn">单位地表单元地势起伏的复杂程度， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kr</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">roughness</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">粗糙度</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6082,7 +6026,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <owl:sameAs rdf:resource="http://www.egc.org/ont/domain/dta#slope_gradient"/>
         <owl:sameAs rdf:resource="http://www.egc.org/ont/domain/dta#slope_steepness"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#DEM"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">degree</hasUnit>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Overland and subsurface flow velocity and runoff rate, precipitation, vegetation, geomorphology, soil water content, land capability class</significance>
         <significance xml:lang="en">Precipitation, overland and subsurface flow velocity and runoff rate, soil water content</significance>
         <significance xml:lang="zh-cn">径流流速、植被、降雨量、地貌、土壤水分、土地适用性评价</significance>
@@ -6152,10 +6095,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#slope_distance">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Distance"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lp</UniProps:symbol>
         <significance xml:lang="zh-cn">地形复杂度、土木工程</significance>
         <dc:description xml:lang="zh-cn">两点间坡面距离</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lp</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">slope distance</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡面距离</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6243,7 +6185,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainPoint"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TransformRatioTA"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#aspect"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOA</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOA</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">slope of aspect</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡向变率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6270,7 +6212,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainPoint"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TransformRatioTA"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#slope"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOS</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SOS</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">slope of slope</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡度变率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6305,10 +6247,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#slope_profile_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m-1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cP</UniProps:symbol>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <dc:description xml:lang="zh-cn">坡度方向曲率</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cP</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">slope profile curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡度方向曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6358,10 +6299,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SlopeScale"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainSurfaceStatisticsParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m3</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">V</UniProps:symbol>
         <significance xml:lang="zh-cn">土木工程</significance>
         <dc:description xml:lang="zh-cn">地形表面与任意平面之间的体积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">V</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">slope volume</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">体积</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6412,7 +6352,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#soil_similarity_vector">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SSV</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SSV</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">soil similarity vector</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">土壤相似性向量</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6459,11 +6399,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#contributing_area"/>
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#flow_width"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">As</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Runoff volume, steady-state runoff rate, soil characteristics, soil-water content, geomorphology</significance>
         <significance xml:lang="zh-cn">径流量、稳定流径流 流速、土壤水分、地貌特征</significance>
         <dc:description xml:lang="zh-cn">流域面积与流域宽度（即等高线段长 度)L 之比</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">As</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Upslope area per unit width of contour</skos:definition>
         <skos:prefLabel xml:lang="en">specific catchment area</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">单位汇水面积</skos:prefLabel>
@@ -6495,7 +6434,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#standard_deviation">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SD</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SD</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">standard deviation</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">标准差</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6562,7 +6501,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#stream_length_gradient">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SL</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SL</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">stream length gradient</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">河长坡降度</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6646,10 +6585,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SlopeScale"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#TerrainSurfaceStatisticsParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ss</UniProps:symbol>
         <significance xml:lang="zh-cn">土木工程</significance>
         <dc:description xml:lang="zh-cn">地形表面实际面积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ss</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">surface area</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">表面积</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6735,7 +6673,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondOrderTopoAttr"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m_1</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CT</UniProps:symbol>
         <significance xml:lang="en">1-st accumulation mechanism</significance>
         <significance xml:lang="en">Local flow convergence and divergence</significance>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Provides alternative measure of local flow convergence and divergence</significance>
@@ -6743,7 +6681,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <significance xml:lang="zh-cn">第一种物质运动累计机理</significance>
         <dc:description xml:lang="en">Curvature in an inclined plane (Mitasova and Hofierka, 1993).</dc:description>
         <dc:description xml:lang="zh-cn">坡度垂直方向曲率，</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CT</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Plan curvature multiplied by slope</skos:definition>
         <skos:prefLabel xml:lang="en">tangential curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">正切曲率</skos:prefLabel>
@@ -6929,7 +6866,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <dependentAttribute rdf:resource="http://www.egc.org/ont/domain/dta#slope_gradient"/>
         <hasFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TWI = ln( A/tanΔ)</hasFormula>
         <hasFormula rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TWI=ln(SCA/tanβ )</hasFormula>
-        <hasFormulaDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A (m2) being the contributing area, and tanΔ being the slope</hasFormulaDescription>
         <significance xml:lang="en">Spatial distributions and extent of zones of saturation (i.e. variable source areas) for runoff generation as a function of upslope contributing area, soil transmissivity, and slope</significance>
         <significance xml:lang="en">This equation assumes steady-state conditions and describes the spatial distribution and extent of zones of saturation (i.e., variable source areas) for runoff generation as a function of upslope contributing area, soil transmissivity, and slope gradient.</significance>
         <significance xml:lang="zh-cn">流量累积，土壤湿度，饱和区域分布，水位 深度，土壤水分蒸发，土壤中的有机物、 pH、含沙量分布，植被生态分布等</significance>
@@ -6954,12 +6890,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#total_Gaussian_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m-2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CG</UniProps:symbol>
         <significance xml:lang="en">Does not change during surface bending</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">识别地形因子部位</significance>
         <dc:description xml:lang="zh-cn">最大、最小曲率的几何平均值， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CG</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">total Gaussian curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">全髙斯曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6970,9 +6905,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#total_accumulation_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CA</UniProps:symbol>
         <significance xml:lang="en">Relative accumulation and deflection zones</significance>
         <significance xml:lang="zh-cn">地表物质运动累计发散区域</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CA</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">total accumulation curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">全累计曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -6993,9 +6928,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#total_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CTol</UniProps:symbol>
         <significance xml:lang="en">Recognition of terrain features</significance>
         <significance xml:lang="zh-cn">识别地形因子部位</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CTol</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">total curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">全曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7007,12 +6942,11 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#total_ring_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Curvature"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#SecondCurvaturesType"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m-2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CR</UniProps:symbol>
         <significance xml:lang="en">Flow-line twisting</significance>
         <significance xml:lang="zh-cn">分水/汇水流域、土壤水分含量、土壤特性分析、滑坡分布、 径流加速度、侵蚀/分解速率、地貌特征研究、植物分布、水流分解、移动与累积 分布和密度、断层交点、水流分解、移动与累积分布和密度</significance>
         <significance xml:lang="zh-cn">流水线摆动程度</significance>
         <dc:description xml:lang="zh-cn">坡面曲率和正切曲率的几何平均值， </dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CR</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">total ring curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">全环曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7124,9 +7058,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#unsphericity_curvature">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#FirstCurvaturesType"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CU</UniProps:symbol>
         <significance xml:lang="en">Extent to which land form differs from a sphere</significance>
         <significance xml:lang="zh-cn">局部地表与球体接近程度</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CU</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en">unsphericity curvature</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">非球形曲率</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7171,11 +7105,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#WatershedScale"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m2</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Su</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Runoff volume, steady-state runoff rate</significance>
         <significance xml:lang="zh-cn">径流体积、稳定流速率</significance>
         <dc:description xml:lang="zh-cn">上坡区域面积</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Su</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Catchment area above a short length of contour</skos:definition>
         <skos:prefLabel xml:lang="en">upslope area</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">上坡面积</skos:prefLabel>
@@ -7222,11 +7155,10 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalTA"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#PrimaryTopographicAttribute"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lu</UniProps:symbol>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Flow acceleration, erosion rates</significance>
         <significance xml:lang="zh-cn">流速加速度、侵蚀速率</significance>
         <dc:description xml:lang="zh-cn">到某点的上坡区域径流长度平均值</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lu</UniProps:hasSymbol>
         <skos:definition xml:lang="en">Mean length of flow paths to a point in the catchment</skos:definition>
         <skos:prefLabel xml:lang="en">upslope length</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">坡长</skos:prefLabel>
@@ -7239,7 +7171,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#upslope_slope">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#HydrologicParameters"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LocalTA"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">o</hasUnit>
         <significance rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Runoff velocity</significance>
         <significance xml:lang="zh-cn">径流速度</significance>
         <dc:description xml:lang="zh-cn">上坡区域内坡度平均值</dc:description>
@@ -7279,7 +7210,6 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#valley_bottoms">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#LandSurfaceParameter"/>
         <dc:description xml:lang="en">Grid cells for which the steepest downslope neighbour has a steepest upslope that points back to the grid cell. This will only occur along narrow valley bottoms.</dc:description>
-        <skos:prefLabel xml:lang="zh-cn"></skos:prefLabel>
         <skos:prefLabel xml:lang="en">valley bottoms</skos:prefLabel>
     </owl:NamedIndividual>
     
@@ -7363,7 +7293,7 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#very_important_points">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#DomainConcept"/>
-        <UniProps:hasAbbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VIP</UniProps:hasAbbreviation>
+        <UniProps:abbreviation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VIP</UniProps:abbreviation>
         <skos:prefLabel xml:lang="en">very important points</skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">重要点</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7591,8 +7521,8 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#合成长度">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#StatisticalTA"/>
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#坡向数据统计"/>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R</UniProps:symbol>
         <significance xml:lang="zh-cn">反映坡向分布的离散程度，用于地貌形态分析</significance>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">R</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en"></skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">合成长度</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7654,10 +7584,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#投影距离">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Distance"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">L</UniProps:symbol>
         <significance xml:lang="zh-cn">地形复杂度、土木工程</significance>
         <dc:description xml:lang="zh-cn">两点间平面投影之距离</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">L</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en"></skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">投影距离</skos:prefLabel>
     </owl:NamedIndividual>
@@ -7754,10 +7683,9 @@ Ambiguous flow directions (the same minimum downslope gradient is found in two c
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/domain/dta#相对高差">
         <rdf:type rdf:resource="http://www.egc.org/ont/domain/dta#Relief"/>
-        <hasUnit rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m</hasUnit>
+        <UniProps:symbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">\Delta H</UniProps:symbol>
         <significance xml:lang="zh-cn">地势起伏、土壤侵蚀、地形复杂度</significance>
         <dc:description xml:lang="zh-cn">局部山脊线至山谷线之髙差</dc:description>
-        <UniProps:hasSymbol rdf:datatype="http://www.w3.org/2001/XMLSchema#string">\Delta H</UniProps:hasSymbol>
         <skos:prefLabel xml:lang="en"></skos:prefLabel>
         <skos:prefLabel xml:lang="zh-cn">相对高差</skos:prefLabel>
     </owl:NamedIndividual>

@@ -25,15 +25,15 @@ with onto:
 		pass
 
 
-	class ArcGISInput(gb.InputData):
+	class ArcGISInput(cyber.Input):
 		pass
 
 
-	class ArcGISOutput(gb.OutputData):
+	class ArcGISOutput(cyber.Output):
 		pass
 
 
-	class ArcGISOption(gb.Option):
+	class ArcGISOption(cyber.Option):
 		pass
 
 onto.metadata.creator.append('houzhiwei')
@@ -66,6 +66,7 @@ def handle_task(tool, full_name, task_name, des):
 	if not task[task_name + "_task"]:
 		task_ins = task[task_cls](task_name + "_task", prefLabel=locstr(task_name.replace('_', ' ') + " task", lang='en'))
 		task_ins.isAtomicTask = True
+		task_ins.identifier = task_name
 	else:
 		task_ins = task[task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
@@ -77,21 +78,29 @@ def handle_task(tool, full_name, task_name, des):
 
 def handle_parameters(tool, param):
 	# 部分parameter不包含isInputFile等属性
+	_name = Preprocessor.io_name(param['name'], onto)
 	if 'isInputFile' in param.keys() and param['isInputFile']:
-		p = ArcGISInput(prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISInput(_name, prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.inputData.append(p)
-		p.isInputFile = param['isInputFile']
+		tool.input.append(p)
+		p.isInput = param['isInputFile']
+		OWLUtils.link_to_domain_concept(p, param['name'].replace('_', ' '))
 	elif 'isOutputFile' in param.keys() and param['isOutputFile']:
-		p = ArcGISOutput(prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISOutput(_name, prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISOutput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.outputData.append(p)
-		p.isOutputFile = param['isOutputFile']
+		tool.output.append(p)
+		p.isOutput = param['isOutputFile']
+		OWLUtils.link_to_domain_concept(p, param['name'].replace('_', ' '))
 	else:
-		p = ArcGISOption(prefLabel=locstr(param['name'], lang='en'))
+		p = ArcGISOption(_name, prefLabel=locstr(param['name'], lang='en'))
 		# p = ArcGISOption(0, prefLabel=locstr(param['name'], lang='en'))
 		tool.option.append(p)
-	p.parameterName = param['name']
+		dt = param['dataType']
+		if dt:
+			p.datatypeInString.append(param['dataType'])
+			p.datatype.append(OWLUtils.get_datatype_iris(param['dataType']))
+		OWLUtils.link_to_domain_concept(p, param['name'].replace('_', ' '))
+	p.identifier = param['name']
 	p.flag = param['name']
 	if 'dataType' in param.keys() and param['dataType']:
 		p.datatypeInString.append(param['dataType'])
@@ -105,7 +114,9 @@ def handle_parameters(tool, param):
 	dtype = data[dt]
 	if dtype is None: dtype = OWLUtils.get_datatype_iris(dt)
 	p.datatype.append(dtype)
-
+	if "available_values" in param.keys():
+		for value in param['available_values']:
+			p.availableValue.append(value)
 
 def handle_example(example):
 	ex = 'Title: ' + example['title'] if example['title'] else ''

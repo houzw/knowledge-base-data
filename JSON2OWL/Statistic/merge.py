@@ -4,6 +4,7 @@
 # time: 2019/6/20 8:30
 
 # merge all process owl files into one: geoprobase
+# 有问题：生成的文件中有很多 nodeId="-[number]" 的重复数据
 from owlready2 import *
 from os import path
 from JSON2OWL.OwlConvert.OwlUtils import OWLUtils
@@ -61,8 +62,10 @@ graph.bind('process', URIRef('http://www.egc.org/ont/gis/process#'))
 graph.bind('dc', URIRef('http://purl.org/dc/elements/1.1/'))
 graph.bind('foaf', URIRef('http://xmlns.com/foaf/0.1/'))
 graph.bind('owl', URIRef('http://www.w3.org/2002/07/owl#'))
-graph.serialize(destination='geoprobase.owl', format="xml")  # 即rdfxml
-# onto.save('geoprobase.nt','ntriples')
+graph.bind('swrl', URIRef('http://www.w3.org/2003/11/swrl#'))
+graph.bind('hydrology', URIRef('http://www.egc.org/ont/domain/hydrology#'))
+# turtle,xml
+graph.serialize(destination='geoprobase.owl', format="xml",base=model_uri)  # 即rdfxml
 alltriples = len(list(graph.triples((None, None, None))))
-print(alltriples)  # 648998, 2019-10-03
+print(alltriples)  # 611855, 2019-10-27
 print('merge done!')

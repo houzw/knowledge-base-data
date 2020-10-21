@@ -43,6 +43,18 @@
     
 
 
+    <!-- http://www.egc.org/ont/base/props#abbreviation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/base/props#abbreviation"/>
+    
+
+
+    <!-- http://www.egc.org/ont/base/props#abbreviationOf -->
+
+    <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/base/props#abbreviationOf"/>
+    
+
+
     <!-- http://www.egc.org/ont/gis/cyber#schemaSource -->
 
     <owl:AnnotationProperty rdf:about="http://www.egc.org/ont/gis/cyber#schemaSource"/>
@@ -160,7 +172,6 @@
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#executionRelation">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#softRelation"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.egc.org/ont/gis"/>
     </owl:ObjectProperty>
     
 
@@ -173,10 +184,62 @@
     
 
 
+    <!-- http://www.egc.org/ont/gis/cyber#hasInputData -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasInputData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
+        <owl:inverseOf rdf:resource="http://www.egc.org/ont/gis/cyber#isInputDataOf"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/gis/cyber#InputData"/>
+        <dc:description xml:lang="en">input data required by the software</dc:description>
+        <skos:definition xml:lang="en">actual input data node</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#hasInputGeoData -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasInputGeoData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#hasInputData"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.egc.org/ont/gis/cyber#hasOGCService -->
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasOGCService">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#webservice"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#hasOptionData -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasOptionData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/gis/cyber#OptionData"/>
+        <skos:definition xml:lang="en">actual option value node</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#hasOutputData -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasOutputData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
+        <owl:inverseOf rdf:resource="http://www.egc.org/ont/gis/cyber#isOutputDataOf"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:range rdf:resource="http://www.egc.org/ont/gis/cyber#OutputData"/>
+        <dc:description xml:lang="en">output data produced by the software</dc:description>
+        <skos:definition xml:lang="en">actual output data node</skos:definition>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#hasOutputGeoData -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasOutputGeoData">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#hasOutputData"/>
     </owl:ObjectProperty>
     
 
@@ -197,21 +260,19 @@
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#inputData -->
+    <!-- http://www.egc.org/ont/gis/cyber#input -->
 
-    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#inputData">
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#input">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#doResearchRelation"/>
-        <owl:inverseOf rdf:resource="http://www.egc.org/ont/gis/cyber#isInputDataOf"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-        <dc:description xml:lang="en">input file required by the software</dc:description>
+        <dc:description xml:lang="en">definition of input parameter required by the software/processor</dc:description>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#inputGeoData -->
+    <!-- http://www.egc.org/ont/gis/cyber#inputDataOf -->
 
-    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#inputGeoData">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#inputData"/>
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#inputDataOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#parameterDataOf"/>
     </owl:ObjectProperty>
     
 
@@ -263,7 +324,6 @@
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#isOutputDataOf">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#doResearchRelation"/>
-        <owl:inverseOf rdf:resource="http://www.egc.org/ont/gis/cyber#outputData"/>
     </owl:ObjectProperty>
     
 
@@ -282,7 +342,6 @@
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#license">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
         <rdfs:comment xml:lang="en">license of the code released</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.egc.org/ont/gis"/>
         <rdfs:seeAlso rdf:resource="http://purl.org/dc/terms/license"/>
     </owl:ObjectProperty>
     
@@ -299,7 +358,7 @@
     <!-- http://www.egc.org/ont/gis/cyber#mandatoryInput -->
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#mandatoryInput">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#inputData"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#input"/>
         <owl:propertyDisjointWith rdf:resource="http://www.egc.org/ont/gis/cyber#optionalInput"/>
         <dc:description xml:lang="en">Mandatory/required Input data</dc:description>
     </owl:ObjectProperty>
@@ -310,6 +369,15 @@
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#option">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#doResearchRelation"/>
+        <rdfs:comment xml:lang="en">definition of software input option parameter</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#optionDataOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#optionDataOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#parameterDataOf"/>
     </owl:ObjectProperty>
     
 
@@ -317,25 +385,32 @@
     <!-- http://www.egc.org/ont/gis/cyber#optionalInput -->
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#optionalInput">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#inputData"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#input"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#outputData -->
+    <!-- http://www.egc.org/ont/gis/cyber#output -->
 
-    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#outputData">
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#output">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#doResearchRelation"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
-        <dc:description xml:lang="en">output files produced by the software</dc:description>
+        <dc:description xml:lang="en">definition of output parameter produced by the software/processor</dc:description>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#outputGeoData -->
+    <!-- http://www.egc.org/ont/gis/cyber#outputDataOf -->
 
-    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#outputGeoData">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#outputData"/>
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#outputDataOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#parameterDataOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#parameterDataOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#parameterDataOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
     </owl:ObjectProperty>
     
 
@@ -351,7 +426,7 @@
     <!-- http://www.egc.org/ont/gis/cyber#primaryVersionSoftware -->
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#primaryVersionSoftware">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionRelation"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#doResearchRelation"/>
         <rdfs:comment xml:lang="en">which version of the software is primary used</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -417,7 +492,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#softRelation">
         <rdfs:domain rdf:resource="http://www.egc.org/ont/gis/cyber#Software"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.egc.org/ont/gis"/>
+        <terms:references rdf:resource="http://ontosoft.org/software"/>
         <rdfs:label xml:lang="en">cyber object property</rdfs:label>
     </owl:ObjectProperty>
     
@@ -437,7 +512,6 @@
 
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#supportRelation">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#softRelation"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.egc.org/ont/gis"/>
     </owl:ObjectProperty>
     
 
@@ -482,7 +556,6 @@
     <owl:ObjectProperty rdf:about="http://www.egc.org/ont/gis/cyber#supportsProgrammingLanguage">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#understandRelation"/>
         <rdfs:range rdf:resource="http://www.egc.org/ont/gis/cyber#ProgrammingLanguage"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.egc.org/ont/gis"/>
     </owl:ObjectProperty>
     
 
@@ -852,16 +925,6 @@
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#hasExample -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasExample">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#understandInfo"/>
-        <rdfs:seeAlso rdf:resource="http://www.w3.org/2004/02/skos/core#example"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.egc.org/ont/gis/cyber#hasFirstName -->
 
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasFirstName">
@@ -892,33 +955,11 @@
     
 
 
-    <!-- http://www.egc.org/ont/gis/cyber#hasSummary -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasSummary">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#understandInfo"/>
-        <rdfs:seeAlso rdf:resource="http://purl.org/dc/terms/abstract"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.egc.org/ont/gis/cyber#hasSynopsis -->
 
     <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/gis/cyber#hasSynopsis">
         <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#executionInfo"/>
         <terms:isReplacedBy rdf:resource="http://www.egc.org/ont/gis/cyber#hasSyntax"/>
-        <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.egc.org/ont/gis/cyber#identifier -->
-
-    <owl:DatatypeProperty rdf:about="http://www.egc.org/ont/gis/cyber#identifier">
-        <rdfs:subPropertyOf rdf:resource="http://www.egc.org/ont/gis/cyber#identifyInfo"/>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <terms:isReplacedBy rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
         <owl:deprecated rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:deprecated>
     </owl:DatatypeProperty>
     
@@ -1636,6 +1677,14 @@
     
 
 
+    <!-- http://www.egc.org/ont/gis/cyber#AvailableChoice -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#AvailableChoice">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Parameter"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.egc.org/ont/gis/cyber#CSW -->
 
     <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#CSW">
@@ -1679,6 +1728,14 @@ services</rdfs:comment>
 
     <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Company">
         <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#Constraint -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Constraint">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Parameter"/>
     </owl:Class>
     
 
@@ -1829,6 +1886,30 @@ services</rdfs:comment>
     
 
 
+    <!-- http://www.egc.org/ont/gis/cyber#Input -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Input">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Parameter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#InputData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#InputData">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#ParameterData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#InputGeoData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#InputGeoData">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#InputData"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.egc.org/ont/gis/cyber#KML -->
 
     <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#KML">
@@ -1952,6 +2033,58 @@ services</rdfs:comment>
     <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#OperatingSystem">
         <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Cyberinfrastructure"/>
     </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#Option -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Option">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Parameter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#OptionData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#OptionData">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#ParameterData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#Output -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Output">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#Parameter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#OutputData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#OutputData">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#ParameterData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#OutputGeoData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#OutputGeoData">
+        <rdfs:subClassOf rdf:resource="http://www.egc.org/ont/gis/cyber#OutputData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#Parameter -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#Parameter"/>
+    
+
+
+    <!-- http://www.egc.org/ont/gis/cyber#ParameterData -->
+
+    <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#ParameterData"/>
     
 
 
@@ -2108,6 +2241,7 @@ services</rdfs:comment>
     <!-- http://www.egc.org/ont/gis/cyber#SoftwareContact -->
 
     <owl:Class rdf:about="http://www.egc.org/ont/gis/cyber#SoftwareContact">
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.egc.org/ont/gis/cyber#email"/>
@@ -2317,18 +2451,6 @@ services</rdfs:comment>
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
-
-
-    <!-- http://www.egc.org/ont/gis -->
-
-    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis"/>
-    
-
-
-    <!-- http://www.egc.org/ont/gis/cyber# -->
-
-    <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/cyber#"/>
     
 
 
@@ -2837,10 +2959,10 @@ services</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/cyber#GDAL">
         <rdf:type rdf:resource="http://www.egc.org/ont/gis/cyber#GeospatialLibraries"/>
-        <props:abbreviationOf>Geospatial Data Abstraction Library</props:abbreviationOf>
         <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.gdal.org/index.html</cyber:website>
         <dc:description xml:lang="en">GDAL  is a translator library for raster and vector geospatial data formats that is released under an X/MIT style Open Source license by the Open Source Geospatial Foundation. As a library, it presents a single raster abstract data model and single vector abstract data model to the calling application for all supported formats. It also comes with a variety of useful command line utilities for data translation and processing.</dc:description>
         <dc:description xml:lang="zh-cn">GDAL 是一个栅格和矢量空间数据格式转换库，以 Open Source Geospatial Foundation 的 X/MIT style 开源许可发布. 作为一个程序库, 它为所有支持的格式向调用它的应用程序提供了单一栅格抽象数据模型（single raster abstract data model ）和单一矢量抽象数据模型（ single vector abstract data model. 他同时也包括了一系列数据转换和处理的实用的命令行方法</dc:description>
+        <props:abbreviationOf>Geospatial Data Abstraction Library</props:abbreviationOf>
         <rdfs:isDefinedBy rdf:resource="https://www.gdal.org/index.html"/>
         <skos:definition xml:lang="en">Geospatial Data Abstraction Library</skos:definition>
     </owl:NamedIndividual>
@@ -2930,9 +3052,9 @@ GEOS is available under the terms of GNU Lesser General Public License (LGPL).</
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/cyber#GRASS_GIS">
         <rdf:type rdf:resource="http://www.egc.org/ont/gis/cyber#DesktopGIS"/>
         <cyber:softwareProvider rdf:resource="http://www.egc.org/ont/gis/cyber#OSGEO"/>
-        <props:abbreviationOf>Geographic Resources Analysis Support System</props:abbreviationOf>
         <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://grass.osgeo.org/</cyber:website>
         <dc:description xml:lang="en">GRASS GIS, commonly referred to as GRASS (Geographic Resources Analysis Support System), is a free and open source Geographic Information System (GIS) software suite used for geospatial data management and analysis, image processing, graphics and maps production, spatial modeling, and visualization. GRASS GIS is currently used in academic and commercial settings around the world, as well as by many governmental agencies and environmental consulting companies. It is a founding member of the Open Source Geospatial Foundation (OSGeo).</dc:description>
+        <props:abbreviationOf>Geographic Resources Analysis Support System</props:abbreviationOf>
         <skos:definition xml:lang="en">Geographic Resources Analysis Support System</skos:definition>
         <skos:prefLabel xml:lang="en">GRASS GIS</skos:prefLabel>
     </owl:NamedIndividual>
@@ -3562,7 +3684,6 @@ Proj4J - lead - Martin Davis</dc:description>
 
     <owl:NamedIndividual rdf:about="http://www.egc.org/ont/gis/cyber#Open_Source_Geospatial_Foundation">
         <rdf:type rdf:resource="http://www.egc.org/ont/gis/cyber#OpenSourceOrganization"/>
-        <props:abbreviation>OSGeo</props:abbreviation>
         <cyber:website rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://www.osgeo.org/</cyber:website>
         <dc:description xml:lang="zh-cn">OSGeo（开源地理空间基金会）（Open Source Geospatial Foundation）是一个非盈利组织。其主要目标是支持和推广开源地理空间技术和数据的协作开发。OSGeo基金会向许多开源地理空间社区提供了财政、组织和法律方面的支持。它同时也是独立的法人组织机构，社区成员可以贡献代码、资金和其他资源。这些贡献的资源将会以公众利益为目标来维护。OSGeo也作为开源地理空间社区的延伸，提供了公共论坛以及跨项目协作的共享基础。</dc:description>
         <dc:description xml:lang="en">The Open Source Geospatial Foundation (OSGeo) is a not-for-profit organization whose mission is to foster global adoption of open geospatial technology by being an inclusive software foundation devoted to an open philosophy and participatory community driven development.
@@ -3572,6 +3693,7 @@ The foundation provides financial, organizational and legal support to the broad
 The foundation&apos;s projects are all freely available and useable under an Open Source Initiative certified open source license.
 
 OSGeo has US 501(c)(4) legal status as a not-for-profit organization.</dc:description>
+        <props:abbreviation>OSGeo</props:abbreviation>
         <rdfs:isDefinedBy rdf:resource="https://www.osgeo.org/"/>
         <skos:altLabel xml:lang="zh-cn">开源地理空间基金会</skos:altLabel>
     </owl:NamedIndividual>
@@ -4283,9 +4405,6 @@ through more complicated queries.</rdfs:comment>
         <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
         <sh:description>must have a parameter name</sh:description>
         <sh:name>has parameter name</sh:name>
-    </rdf:Description>
-    <rdf:Description>
-        <sh:prefixes rdf:resource="http://www.egc.org/ont/gis"/>
     </rdf:Description>
     <rdf:Description>
         <rdfs:comment>bv</rdfs:comment>

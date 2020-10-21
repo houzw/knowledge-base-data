@@ -4,6 +4,7 @@ from ..items import ArcgisItem
 import glob
 import re
 
+
 # arcinfo chm
 class ArcgisSpider(scrapy.Spider):
 	name = 'arcgis'
@@ -43,9 +44,9 @@ class ArcgisSpider(scrapy.Spider):
 			param = dict()
 			name = tr.xpath("./td[1]/div[1]/text()").extract_first()
 			param['name'] = name
-			if name and name.startswith('out_'):
+			if name and (name.lower().startswith('out_') or name.lower().startswith('output_')):
 				param['isOutputFile'] = True
-			elif name and name.startswith('in_'):
+			elif name and (name.lower().startswith('in_') or name.lower().startswith('input_')):
 				param['isInputFile'] = True
 			optional = tr.xpath("./td[1]/div[2]/text()").extract_first()
 			if optional == '(Optional)':
@@ -60,7 +61,7 @@ class ArcgisSpider(scrapy.Spider):
 		for tr2 in trs2[1:]:
 			param = dict()
 			name = tr2.xpath('./td[@purpose="gptoolretvalname"]//text()').extract_first()
-			if name.startswith('out_'):
+			if name.lower().startswith('out_') or name.lower().startswith('output_'):
 				param['isOutputFile'] = True
 			param['name'] = name
 			optional = tr2.xpath('./td[@purpose="gptoolretvalname"]/div[2]/text()').extract_first()
@@ -81,8 +82,8 @@ class ArcgisSpider(scrapy.Spider):
 		uls = ''
 		if p: ps = ' '.join(p)
 		if ul: uls = ' '.join(ul)
-		desc = ps +' '+ uls
-		desc = re.sub("(\s){2,}",' ',desc)
+		desc = ps + ' ' + uls
+		desc = re.sub("(\s){2,}", ' ', desc)
 		return desc
 
 	def parse_example(self, resp):
@@ -95,10 +96,10 @@ class ArcgisSpider(scrapy.Spider):
 		example['description'] = div.css('div[purpose="codeblockdesc"]>p::text').extract_first()
 		code = div.css('div.highlight span::text').extract()
 		code_str = ' '.join(code)
-		example['code'] = code_str.replace(' . ','.')
+		example['code'] = code_str.replace(' . ', '.')
 		return example
 
-	def parse_dtype(self,tr):
+	def parse_dtype(self, tr):
 		dtype = tr.xpath('./td[@purpose="gptoolparamtype"]/text()').extract_first()
 		if '|' in dtype:
 			dtype.split('|')

@@ -60,15 +60,15 @@ with onto:
 		pass
 
 
-	class TauDEMInput(gb.InputData):
+	class TauDEMInput(cyber.Input):
 		pass
 
 
-	class TauDEMOutput(gb.OutputData):
+	class TauDEMOutput(cyber.Output):
 		pass
 
 
-	class TauDEMOption(gb.Option):
+	class TauDEMOption(cyber.Option):
 		pass
 
 onto.metadata.creator.append('houzhiwei')
@@ -85,6 +85,7 @@ def handle_params(tool_param, param_item):
 		# 数据格式
 		if itemK == 'dataType' and get_format(itemV) is not None:
 			tool_param.supportsDataFormat.append(data[get_format(itemV)])
+			tool_param.datatype.append(OWLUtils.get_datatype_iris(itemV))
 		_prop = get_property(itemK, DataProperty)
 		if type(itemV) == list:
 			itemV = ''.join(itemV)
@@ -115,8 +116,8 @@ def map_to_owl(json_data):
 		toolClass = tool_class(d['name'])
 		tool = toolClass(name, prefLabel=locstr(d['name'], lang='en'))
 		tool.isToolOfSoftware.append(cyber.TauDEM)
+		tool.identifier = name
 		description = OWLUtils.join_list(d['description'])
-
 		keywords = OWLUtils.to_keywords(description)
 		keywords.extend(name.replace('_', ' ').split(' '))
 		# keywords=name.replace('_', ' ').split(' ')
@@ -126,24 +127,30 @@ def map_to_owl(json_data):
 			# 外层, 参数
 			if (k in ['parameters', 'options']) and type(v) == list:
 				for i, item in enumerate(v):
+					param = None
 					# localname = v[i]['parameterName']
 					localname = Preprocessor.space_2_underline(item['parameterName'])
+					_label = localname.replace('_', ' ')
 					if item['isInputFile']:
-						# param = TauDEMInput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-						param = TauDEMInput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						param = TauDEMInput(localname, prefLabel=locstr(_label, lang='en'))
+						# param = TauDEMInput(prefLabel=locstr(_label, lang='en'))
 						# input geo data ? rule: format-> geoformat->geo data
-						tool.inputData.append(param)
+						tool.input.append(param)
 						handle_params(param, item)
-					elif item['isOutputFile']:#localname.lower().startswith('output_', 0, len('output_')):
-						# param = TauDEMOutput(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-						param = TauDEMOutput(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-						tool.outputData.append(param)
+						param.isInput = True
+					elif item['isOutputFile']:  # localname.lower().startswith('output_', 0, len('output_')):
+						param = TauDEMOutput(localname, prefLabel=locstr(_label, lang='en'))
+						# param = TauDEMOutput(prefLabel=locstr(_label, lang='en'))
+						tool.output.append(param)
 						handle_params(param, item)
+						param.isOutput = True
 					else:
-						# o = TauDEMOption(localname, prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-						o = TauDEMOption(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
-						tool.option.append(o)
-						handle_params(o, item)
+						param = TauDEMOption(localname, prefLabel=locstr(_label, lang='en'))
+						# param = TauDEMOption(prefLabel=locstr(localname.replace('_', ' '), lang='en'))
+						tool.option.append(param)
+						handle_params(param, item)
+					OWLUtils.link_to_domain_concept(param, _label)
+					param.identifier = localname
 			else:
 				prop = get_property(k, DataProperty)
 				if not v:

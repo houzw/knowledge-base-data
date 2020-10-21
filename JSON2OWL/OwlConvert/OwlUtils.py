@@ -8,7 +8,9 @@ from os import path
 from gensim.summarization import keywords
 import inspect
 from .Preprocessor import Preprocessor
-
+from nltk.corpus import stopwords
+from rdflib import BNode, RDF, Graph, URIRef, Namespace, Literal
+from rdflib.collection import Collection
 
 class OWLUtils(object):
 
@@ -100,6 +102,17 @@ class OWLUtils(object):
 		geospatial = onto.get_namespace("http://www.egc.org/ont/domain/geospatial")
 		# return gcmd, csdms, cf, dta, hydrology, gis_vocab
 		return geospatial
+
+	@staticmethod
+	def rdfnamespaces():
+		Data = Namespace('http://www.egc.org/ont/data#')
+		Cyber = Namespace('http://www.egc.org/ont/gis/cyber#')
+		Skos = Namespace('http://www.w3.org/2004/02/skos/core#')
+		Sh = Namespace('http://www.w3.org/ns/shacl#')
+		Geo = Namespace('http://www.opengis.net/ont/geosparql#')
+		Sf = Namespace('http://www.opengis.net/ont/sf')
+		Process = Namespace('http://www.egc.org/ont/gis/process#')
+		return Data, Cyber, Skos, Sh, Geo, Sf, Process
 
 	@staticmethod
 	def load_data_soft(onto: Ontology):
@@ -230,24 +243,22 @@ class OWLUtils(object):
 		"""
 		choices_list = []
 		for choice in choices:
-			name = choice['choice'].strip()
-			if type(choice['description']) == list:
-				des = ' '.join( choice['description'])
-			else:
-				des = choice['description'].strip()
-			availableChoice = clazz(Preprocessor.space_2_underline(option_name + ' ' + choice['choice'].strip()),
-			                        comment=locstr(option_name + ' available choice', lang='en'))
-			# availableChoice = clazz(0, prefLabel=locstr(name, lang='en'), comment=locstr(option_name + ' available choice', lang='en'))
-			availableChoice.hasValue.append(name)
-			if choice['description'] is not None and (des != ' ' or des != '-'):
-				availableChoice.description.append(des)
+			choiceValue = choice['choice'].strip()
+			des = ' '.join(choice['description'])
+			name = Preprocessor.replace_2_underline('[ ._]+', option_name + ' ' + choiceValue)
+			# availableChoice = clazz(name, comment=locstr(option_name + ' available choice', lang='en'))
+			availableChoice = clazz(0, prefLabel=locstr(name, lang='en'), comment=locstr(option_name + ' available choice', lang='en'))
+			availableChoice.hasValue.append(choiceValue)
+			if des.strip() != '-':
+				availableChoice.description.append(des.strip())
 				availableChoice.identifier = name.strip()
 			option.availableChoice.append(availableChoice)
 			choices_list.append(availableChoice)
 		onto, rdf_list = OWLUtils.resources_2_rdf_list(onto, choices_list, False)
 		# print(rdf_list)
 		option.availableList.append(rdf_list)
-		return option,onto
+		return option, onto
+
 
 	@staticmethod
 	def resources_2_rdf_list(onto, availables, isLiteral=True):
@@ -294,9 +305,12 @@ class OWLUtils(object):
 
 		def create_list(rdf_list, _resources):
 			if isLiteral:
-				rdf_list.first.append(Literal(_resources[0], namespace=onto, hasValue =[ _resources[0]]))
+				rdf_list.first.append(Literal(_resources[0], namespace=onto, hasValue=[_resources[0]]))
 			else:
-				rdf_list.first.append(_resources[0])
+				if onto[_resources[0]] is None:
+					pass
+				else:
+					rdf_list.first.append(onto[_resources[0]])
 			if len(_resources) == 1:
 				rdf_list.rest.append(nil)
 				return rdf_list
@@ -330,20 +344,28 @@ class OWLUtils(object):
 
 	@staticmethod
 	def link_to_domain_concept(target_tool, tool_keywords):
-		for keyword in tool_keywords:
-			target_tool.subject.append(keyword)
-		if tool_keywords is None or len(tool_keywords) < 2:
+		if tool_keywords is None:  # or len(tool_keywords) < 2:
 			return
-		# tool_keywords = [word for word in tool_keywords if word not in stopwords.words('english')]
+		if type(tool_keywords) is not list:
+			tool_keywords = [tool_keywords]
+		tool_keywords = [word for word in tool_keywords if word not in stopwords.words('english')]
 		for keyword in tool_keywords:
-			if keyword == '':
-				continue
-			keyword = keyword.lower()
-			# it's weird that these words will cause stack overflow
-			if keyword == 'viewshed' or keyword == 'visibility': continue
+			keyword = keyword.strip()
+			if keyword == '': continue
 			# too short, meaningless
 			if len(keyword) < 2: continue
+			keyword = keyword.lower()
+			keyword = re.sub('(input|output|or)', '', keyword)
+			keyword = re.sub('[()*]+', '', keyword)
+			target_tool.subject.append(keyword)
+			keyword = keyword.strip()
+			if keyword == '': continue
+			# it's weird that these words will cause stack overflow
+			if keyword in ['viewshed', 'visibility', 'tangential curvature']:
+				continue
+			# print("keyword: " + keyword)
 			concept = OWLUtils.search_domain_concept(keyword)
+			# print(concept)
 			if concept is None: continue
 			if inspect.isclass(concept):
 				continue

@@ -28,15 +28,15 @@ with onto:
 		pass
 
 
-	class WhiteboxInput(gb.InputData):
+	class WhiteboxInput(cyber.Input):
 		pass
 
 
-	class WhiteboxOutput(gb.OutputData):
+	class WhiteboxOutput(cyber.Output):
 		pass
 
 
-	class WhiteboxOption(gb.Option):
+	class WhiteboxOption(cyber.Option):
 		pass
 
 
@@ -60,11 +60,11 @@ def file_type(flag, cmd):
 	if flag_file is None: return None
 	fformat = flag_file.group()
 	if fformat == '.tif' or fformat == '.dtifep':
-		return data.GeoTIFF
+		return [data.GeoTIFF, data.GRASS, data.Idrisi_Raster, data.SAGA, data.SAGA_GRID, data.Surfer7, data.Whitebox_GAT_raster]
 	elif fformat == '.shp':
-		return data.ESRI_Shapefile
+		return [data.ESRI_Shapefile]
 	elif fformat == '.txt':
-		return data.text_file
+		return [data.text_file]
 	else:
 		return None
 
@@ -77,27 +77,31 @@ def handle_parameter(tool, param):
 		pname = param['flag_long'].replace('--', '')
 	else:
 		pname = param['flag'].replace('--', '')
+	_name =  Preprocessor.io_name(pname, onto)
 	if ptype == 1:
-		p = WhiteboxInput(prefLabel=locstr(pname, lang='en'))
+		p = WhiteboxInput(_name, prefLabel=locstr(pname, lang='en'))
 		# p = OTBInput(0, prefLabel=locstr(param['name'], lang='en'))
-		tool.inputData.append(p)
-		p.isInputFile = True
+		tool.input.append(p)
+		p.isInput = True
+		OWLUtils.link_to_domain_concept(p, pname.replace('_', ' '))
 	elif ptype == 2:
-		p = WhiteboxOutput(prefLabel=locstr(pname, lang='en'))
+		p = WhiteboxOutput(_name, prefLabel=locstr(pname, lang='en'))
 		# p = OTBOutput(0, prefLabel=locstr(param['parameter_name'], lang='en'))
-		tool.outputData.append(p)
-		p.isOutputFile = True
+		tool.output.append(p)
+		p.isOutput = True
+		OWLUtils.link_to_domain_concept(p, pname.replace('_', ' '))
 	elif ptype == 3:
-		p = WhiteboxOption(prefLabel=locstr(pname, lang='en'))
+		p = WhiteboxOption(_name, prefLabel=locstr(pname, lang='en'))
 		tool.option.append(p)
 		p.isOptional = True
+		OWLUtils.link_to_domain_concept(p, pname.replace('_', ' '))
 	else:
-		p = WhiteboxOption(prefLabel=locstr(pname, lang='en'))
+		p = WhiteboxOption(_name, prefLabel=locstr(pname, lang='en'))
 		tool.option.append(p)
 		avaliable_choices(p, param['description'])
 	if dformat:
-		p.supportsDataFormat.append(dformat)
-	p.parameterName = pname
+		p.supportsDataFormat = dformat
+	p.identifier = pname
 	p.flag = param['flag']
 	if 'flag_long' in param.keys():
 		p.longFlag.append(param['flag_long'])
@@ -124,6 +128,7 @@ def handle_task(tool, category, task_name, des):
 	if not task[i_task_name + "_task"]:
 		task_ins = task[task_cls](i_task_name + "_task", prefLabel=locstr(task_name + " task", lang='en'))
 		task_ins.isAtomicTask = True
+		task_ins.identifier = i_task_name
 	else:
 		task_ins = task[i_task_name + "_task"]
 	if (task_ins in tool.usedByTask) is False:
@@ -164,7 +169,7 @@ def map_to_owl(json_data):
 		OWLUtils.link_to_domain_concept(tool, keywords)
 
 		handle_task(tool, d['category'], d['title'], d['description'])
-		OWLUtils.application_category(tool, [],d['category'].replace(' Tools',''),[])
+		OWLUtils.application_category(tool, [], d['category'].replace(' Tools', ''), [])
 		for parameter in d['parameter']:
 			handle_parameter(tool, parameter)
 
